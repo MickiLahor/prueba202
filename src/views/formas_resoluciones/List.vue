@@ -1,5 +1,5 @@
 <template>
-  <h1>About page</h1>
+  <h1>Formas de Resoluciones</h1>
 </template>
 
 <script>
