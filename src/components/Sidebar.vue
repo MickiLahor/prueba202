@@ -10,12 +10,12 @@
     </router-link>
     <ul class="c-sidebar-nav">
       <li class="c-sidebar-nav-title">Menu Principal</li>
-      <!--<router-link class="c-sidebar-nav-item" tag="li" to="/">
+      <!-- <router-link class="c-sidebar-nav-item" tag="li" to="/">
         <a class="c-sidebar-nav-link">
           <i class="cil-speedometer c-sidebar-nav-icon"></i> Inicio
         </a>
-      </router-link>-->
-      <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+      </router-link> -->
+      <!-- <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"> -->
         <router-link class="c-sidebar-nav-item" tag="li" to="/materias">
           <a class="c-sidebar-nav-link">
             <i class="cil-menu c-sidebar-nav-icon"></i> Materias
@@ -41,7 +41,7 @@
             <i class="cil-user-follow c-sidebar-nav-icon"></i> Usuarios
           </a>
         </router-link>
-      </li>
+      <!-- </li> -->
       <router-link class="c-sidebar-nav-item" tag="li" to="/resoluciones">
         <a class="c-sidebar-nav-link">
           <i class="cil-color-border c-sidebar-nav-icon"></i> Resoluciones
@@ -56,3 +56,17 @@
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
   </div>
 </template>
+
+<style>
+#sidebar a {
+  font-weight:normal;
+  color:rgb(255, 255, 255);
+}
+
+#sidebar a.router-link-active {
+  background-color: rgb(0, 9, 61);
+  cursor: pointer;
+  /* font-weight:bold;
+  color:rgb(15, 236, 26); */
+}
+</style>
