@@ -7,7 +7,7 @@ import TipoResolucionList from '../views/tipos_resoluciones/List.vue'
 import FormaResolucionList from '../views/formas_resoluciones/List.vue'
 import UsuarioList from '../views/usuarios/List.vue'
 import ResolucionList from '../views/resoluciones/List.vue'
-import AgregarMateriaList from '../views/materias/AgregarMaterias.vue'
+import AddMateriasList from '../views/materias/AddMaterias.vue'
 
 const routes = [
   {
@@ -98,13 +98,13 @@ const routes = [
     }
   },
   {
-    path: '/materias/agregarMaterias',
+    path: '/materias/addMaterias',
     name: 'Agregar Materia',
-    component: AgregarMateriaList,
+    component: AddMateriasList,
     meta: {
       breadcrumb: [
         { name: 'Inicio', link: '/' },
-        { name: 'Materia', link: '/materias' },
+        { name: 'Materias', link: '/materias' },
         { name: 'Agregar Materia' }
       ]
     }

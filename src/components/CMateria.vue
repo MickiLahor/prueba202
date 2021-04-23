@@ -10,7 +10,7 @@
               <div class="form-row " style="background:#ebebeb">
                 <div class="col-md-8 align-self-center">
 
-                    <router-link to="/materias/agregarMaterias" tag="a">
+                    <router-link to="/materias/addMaterias" tag="a">
                         <button type="button" class="btn btn-success my-1 my-sm-3"><i class="cil-note-add"></i> <strong> Agregar nuevo</strong> </button>
                     </router-link>
 
@@ -46,37 +46,27 @@
                   <tr align="center">
                     <th scope="col">ID</th>
                     <th scope="col">Descripción</th>
-                    <th scope="col">Fecha Reg.</th>
-                    <th scope="col" >Acciones</th>
+                    <th scope="col">Den. demandante</th>
+                    <th scope="col">Den. demandado</th>
+                    <th scope="col">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr align="center">
-                    <th scope="row">1</th>
-                    <td>Penal</td>
-                    <td>15/04/2021</td>
+                  <tr align="center" v-bind:key="materia.id" v-for="materia in materias">
+                    <th scope="row">{{materia.id}}</th>
+                    <td>{{materia.nombre}}</td>
+                    <td>{{materia.demandante}}</td>
+                    <td>{{materia.demandado}}</td>
                     <td>
                       <button type="button" class="btn btn-pill btn-info" style="margin-left: 5px"><i class="cil-find-in-page"></i></button>
                       <button type="button" class="btn btn-pill btn-warning" style="margin-left: 5px"><i class="cil-color-border"></i></button>
                       <button type="button" class="btn btn-pill btn-danger" style="margin-left: 5px"><i class="cil-trash"></i></button>
                     </td>
                   </tr>
-                  <tr align="center">
-                    <th scope="row">2</th>
-                    <td>Civil</td>
-                    <td>15/04/2021</td>
-                    <td>+ -</td>
-                  </tr>
-                  <tr align="center">
-                    <th scope="row">3</th>
-                    <td>Laboral</td>
-                    <td>15/04/2021</td>
-                    <td>+ -</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
-            <div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite">
+            <div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite" style="margin:15px">
                 Mostrando 1 a 10 de N entradas
             </div>
             <nav aria-label="...">
@@ -103,10 +93,8 @@
 
 
 <script>
-// import Sidebar from "./Sidebar";
-// export default {
-//   components: {
-//     Sidebar
-//   },
-// };
+  export default {
+    name: "CMateria",
+    props: ["materias"]
+  }
 </script>

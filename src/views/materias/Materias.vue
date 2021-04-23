@@ -1,25 +1,34 @@
 <template>
-  <div>
-    <Materia/>
+  <div id="app">
+    <CMateria v-bind:materias="materias"/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import Materia from "@/components/Materia.vue";
+import CMateria from "@/components/CMateria.vue";
 
 export default {
+  name: 'App',
   components:{
-    Materia
+    CMateria,
   },
   data(){
     return{
-      arreglo: [1,2,3]
-    }
-
-  },
-  methods:{
-    agregarNuevo(){
-      this.$router.push('/materias/agregarMateria')
+      materias: [
+        {
+          id:1,
+          nombre: "Penal",
+          demandante: "AAA",
+          demandado: "BBB"
+        },
+        {
+          id:2,
+          nombre: "Civil",
+          demandante: "CCC",
+          demandado: "DDD"
+        },
+      ]
     }
   }
 }
