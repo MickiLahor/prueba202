@@ -9,10 +9,30 @@
     
     <div class="modal-body">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label" for="descripcion">Descripción:</label>
-        <div class="col-sm-9">
+        <label class="col-sm-4 col-form-label text-right" for="id_padre">Padre:</label>
+        <div class="col-sm-8">
+          <!--<Multiselect v-model="tipoResolucion.id_padre" :options="tiposResoluciones" class="form-control"/>-->
+          <Select2 v-model="tipoResolucion.id_padre" :options="[{value: 1, text: 'Item 1'}, {value: 2, text: 'Item 2'}]" :settings="{ width: '100%', dropdownCssClass: 'select2bs4' }"/>
+          <!--<vue-select v-model="tipoResolucion.id_padre" :options="tiposResoluciones" label-by="id_padre" searchable clear-on-select></vue-select>-->
+          <em class="error-message"></em>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label text-right" for="descripcion">Descripción:</label>
+        <div class="col-sm-8">
           <input v-model="tipoResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" />
           <em class="error-message"></em>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-4"></div>
+        <div class="col">
+          <div class="custom-control custom-checkbox">
+            <input v-model="tipoResolucion.activo" type="checkbox" class="custom-control-input" id="activo">
+            <label class="custom-control-label" for="activo">Activo</label>
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +66,7 @@
         submitted: false
       };
     },
-    computed: { ...mapGetters(["isModalVisibleTipoRes", "isSavingTipoRes", "isEditModeTipoRes"]) },
+    computed: { ...mapGetters(["tiposResoluciones", "isModalVisibleTipoRes", "isSavingTipoRes", "isEditModeTipoRes"]) },
     methods: {
       ...mapActions(["storeTipoResolucion", "updateTipoResolucion"]),
       ...mapMutations(['SET_MODAL_VISIBLE_TIPO_RES']),

@@ -3,8 +3,8 @@
 		<div class="col-lg-12">
 			<div class="card card-accent-primary">
 				<div class="card-header d-flex align-items-center">
-					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Tipos de Resoluciones</h5>
-					<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nuevo Tipo de Resolución</button>
+					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Formas de Resoluciones</h5>
+					<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Forma de Resolución</button>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -33,17 +33,17 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-if="!tiposResoluciones.length">
+								<tr v-if="!formasResoluciones.length">
 									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
 								</tr>
-								<tr v-if="isLoadingTipoRes">
+								<tr v-if="isLoadingFormaRes">
 									<td class="lead text-center" colspan="8">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>
 									</td>
 								</tr>
-								<tr v-for="(item, index) in tiposResoluciones" :key="index">
+								<tr v-for="(item, index) in formasResoluciones" :key="index">
 									<td class="text-center">{{item.id}}</td>
 									<td>{{item.descripcion}}</td>
 									<td>
@@ -68,18 +68,18 @@
 		<!-- /.col-->
 	</div>
 
-	<tipo-resolucion-modal/>
+	<forma-resolucion-modal/>
 
 </template>
 
 <script>
 	import { mapGetters, mapActions, mapMutations } from "vuex"
-	import TipoResolucionModal from './TipoResolucionModal.vue'
+	import FormaResolucionModal from './FormaResolucionModal.vue'
 
 	export default {
-		name: "TipoResolucionList",
+		name: "FormaResolucionList",
 		components: {
-			TipoResolucionModal
+			FormaResolucionModal
 		},
 		data() {
 			return {
@@ -92,27 +92,27 @@
 			};
 		},
 		created() {
-			this.fetchAllTiposResoluciones(this.params);
+			this.fetchAllFormasResoluciones(this.params);
 		},
-		computed: { ...mapGetters(["tiposResoluciones", "isLoadingTipoRes"]) },
+		computed: { ...mapGetters(["formasResoluciones", "isLoadingFormaRes"]) },
 		methods: {
-			...mapActions(["fetchAllTiposResoluciones", "deleteTipoResolucion"]),
-			...mapMutations(["SET_MODAL_VISIBLE_TIPO_RES", "SET_EDIT_MODE_TIPO_RES"]),
+			...mapActions(["fetchAllFormasResoluciones", "deleteFormaResolucion"]),
+			...mapMutations(["SET_MODAL_VISIBLE_FORMA_RES", "SET_EDIT_MODE_FORMA_RES"]),
 
 			getItems() {
-				this.fetchAllTiposResoluciones(this.params);
+				this.fetchAllFormasResoluciones(this.params);
 			},
 			sortItems: function(column) {
 				this.params.orderBy = column;
-				this.fetchAllTiposResoluciones(this.params);
+				this.fetchAllFormasResoluciones(this.params);
 			},
 			addItem() {
-				this.SET_MODAL_VISIBLE_TIPO_RES(true);
-				this.SET_EDIT_MODE_TIPO_RES(false);
+				this.SET_MODAL_VISIBLE_FORMA_RES(true);
+				this.SET_EDIT_MODE_FORMA_RES(false);
 			},
 			editItem(item) {
-				this.SET_MODAL_VISIBLE_TIPO_RES(true);
-				this.SET_EDIT_MODE_TIPO_RES(true);
+				this.SET_MODAL_VISIBLE_FORMA_RES(true);
+				this.SET_EDIT_MODE_FORMA_RES(true);
 			},
 			deleteItem(id) {
 				Swal.fire({
@@ -126,7 +126,7 @@
 					cancelButtonText: "Cancelar"
 				}).then(result => {
 					if (result.value) {
-						this.deleteTipoResolucion(id);
+						this.deleteFormaResolucion(id);
 					}
 				});
 			}
