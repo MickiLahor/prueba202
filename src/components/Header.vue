@@ -13,7 +13,7 @@
     </button>
     <ul class="c-header-nav d-md-down-none">
       <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Dashboard</a></li>
-      <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Ajustes</a></li>
+      <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li>
     </ul>
     <ul class="c-header-nav ml-auto mr-4">
       <li class="c-header-nav-item dropdown">

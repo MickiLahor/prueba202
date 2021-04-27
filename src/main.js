@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+//import VeeValidate from "vee-validate";
 import App from './App.vue'
 import axios from 'axios'
 import router from './router'
