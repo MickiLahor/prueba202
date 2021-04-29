@@ -2,9 +2,11 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="card card-accent-primary">
-				<div class="card-header d-flex align-items-center">
-					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Materias</h5>
-					<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Materia</button>
+				<div class="card-header d-flex justify-content-between align-items-center">
+						<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Resoluciones</h5>
+						<router-link to="/resoluciones/nueva_resolucion">
+							<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
+						</router-link>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -26,38 +28,39 @@
 						<table class="table table-hover table-sm datatable">
 							<thead>
 								<tr>
-									<th @click="sort('id')" style="width: 10%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('descriMat')" class="pr-4">Descripcion <i class="c-icon arrow-position" :class="params.orderBy === 'descriMat' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-                  					<th @click="sort('denDemandante')" class="pr-4">Den. Demandante <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandante' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-                  					<th @click="sort('denDemandado')" class="pr-4">Den. Demandado <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandado' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('id')" style="width: 5%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('num_res')" class="pr-4">Num. Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'num_res' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('fecha')" class="pr-4">Fecha <i class="c-icon arrow-position" :class="params.orderBy === 'fecha' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('codigo')" class="pr-4">Codigo <i class="c-icon arrow-position" :class="params.orderBy === 'codigo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th @click="sort('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-if="!materias.length">
+								<tr v-if="!resoluciones.length">
 									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
 								</tr>
-								<tr v-if="isLoadingMateria">
+								<tr v-if="isLoadingResolucion">
 									<td class="lead text-center" colspan="8">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>
 									</td>
 								</tr>
-								<tr v-for="(item, index) in materias" :key="index">
-									<td class="text-center">{{item.id}}</td>
-									<td>{{item.descriMat}}</td>
-                  					<td>{{item.denDemandante}}</td>
-                  					<td>{{item.denDemandado}}</td>
+								<tr v-for="(item, index) in resoluciones" :key="index">
+									<td class="text-left">{{item.id}}</td>
+									<td>{{item.num_res}}</td>
+									<td>{{item.fecha}}</td>
+									<td>{{item.codigo}}</td>
 									<td>
 										<span v-if="item.activo" class="badge badge-success">Activo</span>
 										<span v-else class="badge badge-danger">Inactivo</span>
 									</td>
 									<td class="fit">
-										<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
-											<i class="c-icon cil-pencil"></i>
-										</button>
+										<router-link to="/resoluciones/editar_resolucion">
+											<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
+											<i class="c-icon cil-pencil"></i></button>
+										</router-link>
 										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.id)">
 											<i class="c-icon cil-trash"></i>
 										</button>
@@ -69,21 +72,18 @@
 				</div>
 			</div>
 		</div>
-		<!-- /.col-->
 	</div>
-
-	<materia-modal/>
 
 </template>
 
 <script>
 	import { mapGetters, mapActions, mapMutations } from "vuex"
-	import MateriaModal from './MateriaModal.vue'
+	import ResolucionAdd from './ResolucionAdd.vue'
 
 	export default {
-		name: "MateriaList",
+		name: "ResolucionList",
 		components: {
-			MateriaModal
+			ResolucionAdd
 		},
 		data() {
 			return {
@@ -96,31 +96,31 @@
 			};
 		},
 		created() {
-			this.fetchAllMaterias(this.params);
+			this.fetchAllResoluciones(this.params);
 		},
-		computed: { ...mapGetters(["materias", "isLoadingMateria"]) },
+		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion"]) },
 		methods: {
-			...mapActions(["fetchAllMaterias", "deleteMateria"]),
-			...mapMutations(["SET_MODAL_VISIBLE_MATERIA", "SET_EDIT_MODE_MATERIA"]),
+			...mapActions(["fetchAllResoluciones", "deleteResolucion"]),
+			...mapMutations(["SET_FORM_VISIBLE_RESOLUCION", "SET_EDIT_MODE_RESOLUCION"]),
 
 			getItems() {
-				this.fetchAllMaterias(this.params);
+				this.fetchAllResoluciones(this.params);
 			},
 			sortItems: function(column) {
 				this.params.orderBy = column;
-				this.fetchAllMaterias(this.params);
+				this.fetchAllResoluciones(this.params);
 			},
 			addItem() {
-				this.SET_MODAL_VISIBLE_MATERIA(true);
-				this.SET_EDIT_MODE_MATERIA(false);
+				this.SET_FORM_VISIBLE_RESOLUCION(true);
+				this.SET_EDIT_MODE_RESOLUCION(false);
 			},
 			editItem(item) {
-				this.SET_MODAL_VISIBLE_MATERIA(true);
-				this.SET_EDIT_MODE_MATERIA(true);
+				this.SET_FORM_VISIBLE_RESOLUCION(true);
+				this.SET_EDIT_MODE_RESOLUCION(true);
 			},
 			deleteItem(id) {
 				Swal.fire({
-					title: "Esta seguro que desea Eliminar esta Materia?",
+					title: "Esta seguro que desea Eliminar esta Resolucion?",
 					text: "No podrá revertir esto!",
 					icon: "warning",
 					showCancelButton: true,
@@ -130,7 +130,7 @@
 					cancelButtonText: "Cancelar"
 				}).then(result => {
 					if (result.value) {
-						this.deleteMateria(id);
+						this.deleteResolucion(id);
 					}
 				});
 			}

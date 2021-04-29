@@ -87,7 +87,7 @@ const actions = {
 
 		/*await axios.get(url)
 		.then(res => {
-			const lista = res.data.data.data;
+			const listaPro = res.data.data.data;
 			commit('SET_PROCESOS', listaPro);
 			const pagination = {
 				total: res.data.data.total,

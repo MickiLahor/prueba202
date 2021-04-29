@@ -6,7 +6,8 @@ import ProcesoList from '../views/procesos/ProcesoList.vue'
 import TipoResolucionList from '../views/tipos_resoluciones/TipoResolucionList.vue'
 import FormaResolucionList from '../views/formas_resoluciones/List.vue'
 import UsuarioList from '../views/usuarios/List.vue'
-import ResolucionList from '../views/resoluciones/List.vue'
+import ResolucionList from '../views/resoluciones/ResolucionList.vue'
+import ResolucionAdd from '../views/resoluciones/ResolucionAdd.vue'
 
 const routes = [
   {
@@ -93,6 +94,30 @@ const routes = [
       breadcrumb: [
         { name: 'Inicio', link: '/' },
         { name: 'Resoluciones' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones/nueva_resolucion',
+    name: 'NuevaResolucion',
+    component: ResolucionAdd,
+    meta: {
+      breadcrumb: [
+        { name: 'Inicio', link: '/' },
+        { name: 'Resoluciones', link: '/resoluciones' },
+        { name: 'Nueva Resolucion' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones/editar_resolucion',
+    name: 'EditarResolucion',
+    component: ResolucionAdd,
+    meta: {
+      breadcrumb: [
+        { name: 'Inicio', link: '/' },
+        { name: 'Resoluciones', link: '/resoluciones' },
+        { name: 'Editar Resolucion' }
       ]
     }
   }

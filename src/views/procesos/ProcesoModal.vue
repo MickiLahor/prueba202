@@ -16,9 +16,9 @@
         </div>
         <label class="col-sm-3 col-form-label my-1" for="descriMat">Materia:</label>
         <div class="col-sm-9">
-          <select v-model="proceso.descriMat" type="text" id="descriMat" placeholder="Descripción Materia" class="form-control">
-            <option v-for="materia in listaMat" :value="materia.descriMat" v-bind:key="materia.id">{{materia.descriMat}}</option>
-          </select>
+          <input v-model="proceso.descriMat" type="text" id="descriMat" placeholder="Descripción Materia" class="form-control">
+            <!-- <option v-for="materia in listaMat" :value="materia.descriMat" v-bind:key="materia.id">{{materia.descriMat}}</option> -->
+          <!-- </select> -->
           <em class="error-message"></em>
         </div>
       </div>
@@ -46,8 +46,9 @@
       return {
         proceso: {
           id: '',
-          id_padre: '',
-          descripcion: '',
+          id_materia: '',
+          descriPro: '',
+
           activo: false
         },
         submitted: false

@@ -49,7 +49,6 @@
       return {
         materia: {
           id: '',
-          id_padre: '',
           descriMat: '',
           denDemandante: '',
           denDemandado: '',
