@@ -8,8 +8,8 @@ import './assets/icons/css/free.min.css'
 import './assets/icons/css/brand.min.css'
 import './assets/coreui/css/coreui.min.css'
 import './assets/coreui/js/coreui.bundle.min.js'
-
-//createApp(App).use(store).use(router).mount('#app')
+import Swal from 'sweetalert2'
+window.Swal = Swal
 
 const app = createApp(App)
 //app.config.globalProperties.$axios = axios
