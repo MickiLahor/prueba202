@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
-import MateriaList from '../views/materias/List.vue'
-import ProcesoList from '../views/procesos/List.vue'
+import MateriaList from '../views/materias/MateriaList.vue'
+import ProcesoList from '../views/procesos/ProcesoList.vue'
 import TipoResolucionList from '../views/tipos_resoluciones/TipoResolucionList.vue'
 import FormaResolucionList from '../views/formas_resoluciones/FormaResolucionList.vue'
 import UsuarioList from '../views/usuarios/List.vue'
-import ResolucionList from '../views/resoluciones/List.vue'
+import ResolucionList from '../views/resoluciones/ResolucionList.vue'
+import ResolucionAdd from '../views/resoluciones/ResolucionAdd.vue'
 
 const routes = [
   {
@@ -93,6 +94,30 @@ const routes = [
       breadcrumb: [
         { name: 'Inicio', link: '/' },
         { name: 'Resoluciones' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones/nueva_resolucion',
+    name: 'NuevaResolucion',
+    component: ResolucionAdd,
+    meta: {
+      breadcrumb: [
+        { name: 'Inicio', link: '/' },
+        { name: 'Resoluciones', link: '/resoluciones' },
+        { name: 'Nueva Resolucion' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones/editar_resolucion',
+    name: 'EditarResolucion',
+    component: ResolucionAdd,
+    meta: {
+      breadcrumb: [
+        { name: 'Inicio', link: '/' },
+        { name: 'Resoluciones', link: '/resoluciones' },
+        { name: 'Editar Resolucion' }
       ]
     }
   }

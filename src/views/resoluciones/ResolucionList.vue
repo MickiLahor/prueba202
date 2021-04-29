@@ -1,0 +1,139 @@
+<template>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card card-accent-primary">
+				<div class="card-header d-flex justify-content-between align-items-center">
+						<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Resoluciones</h5>
+						<router-link to="/resoluciones/nueva_resolucion">
+							<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
+						</router-link>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-6 form-inline">
+							<label class="mr-2">Buscar:</label>
+							<input class="form-control" type="search" v-model="params.search" placeholder="Ingrese texto..." @input="getItems()"/>
+						</div>
+						<div class="col-sm-12 col-md-6 form-inline justify-content-sm-end">
+							<label class="mr-2">Mostrar:</label>
+							<select @change="getItems()" class="form-control">
+								<option value="10">10</option>
+								<option value="25">25</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+							</select>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-hover table-sm datatable">
+							<thead>
+								<tr>
+									<th @click="sort('id')" style="width: 5%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('num_res')" class="pr-4">Num. Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'num_res' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('fecha')" class="pr-4">Fecha <i class="c-icon arrow-position" :class="params.orderBy === 'fecha' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('codigo')" class="pr-4">Codigo <i class="c-icon arrow-position" :class="params.orderBy === 'codigo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th>Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-if="!resoluciones.length">
+									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
+								</tr>
+								<tr v-if="isLoadingResolucion">
+									<td class="lead text-center" colspan="8">
+										<div class="spinner-border" role="status">
+											<span class="sr-only">Cargando...</span>
+										</div>
+									</td>
+								</tr>
+								<tr v-for="(item, index) in resoluciones" :key="index">
+									<td class="text-left">{{item.id}}</td>
+									<td>{{item.num_res}}</td>
+									<td>{{item.fecha}}</td>
+									<td>{{item.codigo}}</td>
+									<td>
+										<span v-if="item.activo" class="badge badge-success">Activo</span>
+										<span v-else class="badge badge-danger">Inactivo</span>
+									</td>
+									<td class="fit">
+										<router-link to="/resoluciones/editar_resolucion">
+											<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
+											<i class="c-icon cil-pencil"></i></button>
+										</router-link>
+										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.id)">
+											<i class="c-icon cil-trash"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</template>
+
+<script>
+	import { mapGetters, mapActions, mapMutations } from "vuex"
+	import ResolucionAdd from './ResolucionAdd.vue'
+
+	export default {
+		name: "ResolucionList",
+		components: {
+			ResolucionAdd
+		},
+		data() {
+			return {
+				params: {
+					page: 1,
+					orderBy: "id",
+					orderType: "desc",
+					search: "",
+				}
+			};
+		},
+		created() {
+			this.fetchAllResoluciones(this.params);
+		},
+		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion"]) },
+		methods: {
+			...mapActions(["fetchAllResoluciones", "deleteResolucion"]),
+			...mapMutations(["SET_FORM_VISIBLE_RESOLUCION", "SET_EDIT_MODE_RESOLUCION"]),
+
+			getItems() {
+				this.fetchAllResoluciones(this.params);
+			},
+			sortItems: function(column) {
+				this.params.orderBy = column;
+				this.fetchAllResoluciones(this.params);
+			},
+			addItem() {
+				this.SET_FORM_VISIBLE_RESOLUCION(true);
+				this.SET_EDIT_MODE_RESOLUCION(false);
+			},
+			editItem(item) {
+				this.SET_FORM_VISIBLE_RESOLUCION(true);
+				this.SET_EDIT_MODE_RESOLUCION(true);
+			},
+			deleteItem(id) {
+				Swal.fire({
+					title: "Esta seguro que desea Eliminar esta Resolucion?",
+					text: "No podrá revertir esto!",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Si, Eliminar!",
+					cancelButtonText: "Cancelar"
+				}).then(result => {
+					if (result.value) {
+						this.deleteResolucion(id);
+					}
+				});
+			}
+		}
+	}
+</script>
