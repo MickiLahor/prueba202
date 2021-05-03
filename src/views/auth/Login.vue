@@ -6,14 +6,14 @@
           <div class="card-body">
             <h1>Iniciar Sesión</h1>
             <p class="text-muted">Ingrese sus datos de Acceso</p>
-            <form @submit.prevent="login" method="post" autocomplete="off">
+            <form @submit.prevent='login(usuario)' method="post" autocomplete="off">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
                     <i class="fa fa-user"></i>
                   </span>
                 </div>
-                <input type="text" class="form-control" placeholder="Username" v-model="username" autofocus/>
+                <input type="text" class="form-control" placeholder="Usuario" v-model="usuario.usuario" autofocus/>
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -21,14 +21,14 @@
                     <i class="fa fa-lock"></i>
                   </span>
                 </div>
-                <input type="password" class="form-control" v-model="password" placeholder="Contraseña"/>
+                <input type="password" class="form-control" v-model="usuario.contraseña" placeholder="Contraseña"/>
               </div>
-              <div class="input-group mb-4">
+              <!-- <div class="input-group mb-4">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" v-model="remember" class="custom-control-input"/>
                   <label class="custom-control-label" for="remember">Recordarme</label>
                 </div>
-              </div>
+              </div> -->
 
               <div class="row">
                 <div class="col-6">
@@ -38,13 +38,13 @@
             </form>
           </div>
         </div>
-        <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+        <div class="card text-white bg-light py-5 d-md-down-none" style="width:44%">
           <div class="card-body text-center">
             <div>
-              <h2>SISTEMA TDJ</h2>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin
-              </p>
+              <h2 style="color:gray">SISTEMA JURISPRUDENCIA</h2>
+              <div>
+                <img class="img-fluid" src="https://daf.organojudicial.gob.bo/Images/logo-meet.png">
+              </div>
             </div>
           </div>
         </div>
@@ -54,18 +54,22 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
   export default {
     data() {
       return {
-        username: null,
-        password: null,
-        remember: null
-      };
+        usuario: {
+          usuario:'wwin',
+          contraseña:'1234'
+        }
+      }
     },
     methods: {
-      async login(e) {
-        await this.$store.dispatch("login", { username: this.username, password: this.password});
-      },
+      ...mapActions(['login'])
+      // async login(e) {
+      //   await this.$store.dispatch("login", { username: this.username, password: this.password});
+      // },
     }
-  };
+  }
 </script>

@@ -16,6 +16,7 @@ import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 import store from './store'
+import Login from './views/auth/Login.vue'
 
 import './assets/icons/css/free.min.css'
 import './assets/icons/css/brand.min.css'

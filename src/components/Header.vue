@@ -26,7 +26,7 @@
             <i class="cil-user c-sidebar-nav-icon"></i> Mi Perfil
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">
+          <a @click="cerrarSesion"  class="dropdown-item" href="#">
             <i class="cil-account-logout c-sidebar-nav-icon"></i> Cerrar Sesión
           </a>
         </div>
@@ -38,10 +38,17 @@
 
 <script>
 import Breadcrumbs from "./Breadcrumbs";
+import {mapActions} from 'vuex'
 
 export default {
   components: {
     Breadcrumbs
   },
+  methods: {
+    ...mapActions(['leerToken', 'cerrarSesion'])
+  },
+  created(){
+    this.leerToken()
+  }
 };
 </script>

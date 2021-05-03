@@ -8,6 +8,8 @@ import FormaResolucionList from '../views/formas_resoluciones/FormaResolucionLis
 import UsuarioList from '../views/usuarios/List.vue'
 import ResolucionList from '../views/resoluciones/ResolucionList.vue'
 import ResolucionAdd from '../views/resoluciones/ResolucionAdd.vue'
+import Login from '../views/auth/Login.vue'
+import store from '../store'
 
 const routes = [
   {
@@ -17,7 +19,7 @@ const routes = [
     meta: {
       breadcrumb: [
           { name: 'Inicio' }
-      ]
+      ], rutaProtegida: true
     }
   },
   {
@@ -39,7 +41,7 @@ const routes = [
       breadcrumb: [
         { name: 'Inicio', link: '/' },
         { name: 'Materias' }
-      ]
+      ] , rutaProtegida: true
     }
   },
   {
@@ -106,7 +108,7 @@ const routes = [
         { name: 'Inicio', link: '/' },
         { name: 'Resoluciones', link: '/resoluciones' },
         { name: 'Nueva Resolucion' }
-      ]
+      ],rutaProtegida: true
     }
   },
   {
@@ -118,14 +120,37 @@ const routes = [
         { name: 'Inicio', link: '/' },
         { name: 'Resoluciones', link: '/resoluciones' },
         { name: 'Editar Resolucion' }
+      ], rutaProtegida: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      breadcrumb: [
+          { name: 'Login' }
       ]
     }
-  }
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const rutaEsProtegida = to.matched.some(item => item.meta.rutaProtegida)
+
+  if (rutaEsProtegida && store.state.token ===null) {
+    //console.log('es protegida')
+    next('/login')
+  } else {
+    //console.log('no es protegida')
+    next()
+  }
+
 })
 
 export default router
