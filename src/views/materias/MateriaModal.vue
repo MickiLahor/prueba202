@@ -11,18 +11,18 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label my-1" for="descriMat">Descripción:</label>
         <div class="col-sm-8">
-          <input v-model="materia.descriMat" type="text" id="descriMat" placeholder="Descripción Materia" class="form-control" />
+          <input v-model="materia.descripcion" type="text" id="descriMat" placeholder="Descripción Materia" class="form-control" />
           <em class="error-message"></em>
         </div>
         <label class="col-sm-4 col-form-label my-1" for="denDemandante">Den. Demandante:</label>
         <div class="col-sm-8">
-            <input v-model="materia.denDemandante" type="text" id="denDemandante" placeholder="Denominacion Demandante" class="form-control" />
-            <em class="error-message"></em>
+          <input v-model="materia.denominacionDemandante" type="text" id="denDemandante" placeholder="Denominacion Demandante" class="form-control" />
+          <em class="error-message"></em>
         </div>
         <label class="col-sm-4 col-form-label my-1" for="denDemandado">Den. Demandado:</label>
         <div class="col-sm-8">
-            <input v-model="materia.denDemandado" type="text" id="denDemandado" placeholder="Denominacion Demandado" class="form-control" />
-            <em class="error-message"></em>
+          <input v-model="materia.denominacionDemandado" type="text" id="denDemandado" placeholder="Denominacion Demandado" class="form-control" />
+          <em class="error-message"></em>
         </div>
       </div>
     </div>
@@ -45,18 +45,35 @@
     components: {
       ModalComponent
     },
+    /*props: {
+      materia: {
+        type: Object,
+        default: () => ({
+          idMateria: null,
+          descripcion: null,
+          denominacionDemandante: null,
+          denominacionDemandado: null,
+          registroActivo: true
+        }),
+      },
+    },*/
     data() {
       return {
         materia: {
-          id: '',
-          descriMat: '',
-          denDemandante: '',
-          denDemandado: '',
-          activo: false
+          idMateria: null,
+          descripcion: null,
+          denominacionDemandante: null,
+          denominacionDemandado: null,
+          registroActivo: false,
+          usuarioRegistro: "usuarioPrueba"
         },
         submitted: false
       };
     },
+    /*created: function () {
+      this.id = this.$route.params.id;
+      this.fetchDetailProduct(this.id);
+    },*/
     computed: { ...mapGetters(["isModalVisibleMateria", "isSavingMateria", "isEditModeMateria"]) },
     methods: {
       ...mapActions(["storeMateria", "updateMateria"]),
@@ -65,6 +82,15 @@
       storeItem() {
         this.submitted = true;
         this.storeMateria(this.materia);
+      },
+
+      loadItem(item) {
+        this.materia.idMateria = item.idMateria;
+        this.materia.descripcion = item.descripcion;
+        this.materia.denominacionDemandante = item.denominacionDemandante;
+        this.materia.denominacionDemandado = item.denominacionDemandado;
+        this.materia.registroActivo = item.registroActivo;
+        this.materia.usuarioRegistro = item.usuarioRegistro;
       },
 
       updateItem() {

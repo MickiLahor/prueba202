@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-axios.interceptors.request.use(function(config) {
+/*axios.interceptors.request.use(function(config) {
     const access_token = localStorage.getItem('access_token');
     config.headers.Authorization = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYxOTcxMDMwNCwiZXhwIjoxNjIyMzAyMzA0fQ.PJJMmUijPUKzYjkFPg-_To18xiMOg6Ldz7eZmIrS2C0';
 	config.headers.Accept = 'application/json';
     return config;
 }, function(err) {
     return Promise.reject(err);
-});
+});*/
 
 const state = {
 	resoluciones: [],
@@ -65,7 +65,7 @@ const mutations = {
 		}
 	},
 
-	SET_TIPOS_RESOLUCIONES_ALL: (state, items) => {
+	SET_resolucion_ALL: (state, items) => {
 		state.tiposResolucionesDropList = items
 	},
 
@@ -92,8 +92,8 @@ const actions = {
 		}
 
 		commit('SET_IS_LOADING_RESOLUCION', true);
-		let url = `${process.env.VUE_APP_API_URL}tipos_resoluciones`;
-		if (search === null) {
+		let url = `${process.env.VUE_APP_API_URL}resolucion`;
+		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
@@ -111,15 +111,16 @@ const actions = {
 
 		await axios.get(url)
 		.then(res => {
-			const listaRes = res.data.data.data;
+			//console.log(res.data)
+			const listaRes = res.data;
 			commit('SET_RESOLUCIONES', listaRes);
-			const pagination = {
+			/*const pagination = {
 				total: res.data.data.total,
 				per_page: res.data.data.per_page,
 				current_page: res.data.data.current_page,
 				total_pages: res.data.data.last_page
 			}
-			commit('SET_PAGINATE_RESOLUCIONES', pagination);
+			commit('SET_PAGINATE_RESOLUCIONES', pagination);*/
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		})
 		.catch(err => {
@@ -130,7 +131,7 @@ const actions = {
 
 	async fetchDetailResolucion({ commit }, id) {
 		commit('SET_IS_LOADING_RESOLUCION', true);
-		await axios.get(`${process.env.VUE_APP_API_URL}tipos_resoluciones/${id}`)
+		await axios.get(`${process.env.VUE_APP_API_URL}resolucion/${id}`)
 		.then(res => {
 			commit('SET_RESOLUCION', res.data.data);
 			commit('SET_IS_LOADING_RESOLUCION', false);
@@ -142,8 +143,9 @@ const actions = {
 	},
 
 	async storeResolucion({ commit }, item) {
+		console.log(item);
 		commit('SET_SAVING_RESOLUCION', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}tipos_resoluciones`, item)
+		await axios.post(`${process.env.VUE_APP_API_URL}resolucion`, item)
 		.then(res => {
 			commit('INSERT_RESOLUCION', res.data.data);
 			commit('SET_SAVING_RESOLUCION', false);
@@ -156,7 +158,7 @@ const actions = {
 
 	async updateResolucion({ commit }, item) {
 		commit('SET_SAVING_RESOLUCION', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}tipos_resoluciones/${item.id}?_method=PUT`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}resolucion/${item.idFallo}`, item)
 		.then(res => {
 			commit('UPDATE_RESOLUCION', res.data.data);
 			commit('SET_SAVING_RESOLUCION', false);
@@ -168,7 +170,7 @@ const actions = {
 	},
 
 	async deleteResolucion({ commit }, id) {
-		await axios.delete(`${process.env.VUE_APP_API_URL}tipos_resoluciones/${id}`)
+		await axios.delete(`${process.env.VUE_APP_API_URL}resolucion/${id}`)
 		.then(res => {
 			commit('DELETE_RESOLUCION', id);
 		})
@@ -185,15 +187,15 @@ const actions = {
 		{value: 3, text: "Sentencia"}
 		];
 
-		commit('SET_TIPOS_RESOLUCIONES_ALL', lista);
+		commit('SET_resolucion_ALL', lista);
 
-		/*await axios.get(`${process.env.VUE_APP_API_URL}tipos_resoluciones`)
+		/*await axios.get(`${process.env.VUE_APP_API_URL}resolucion`)
 		.then(res => {
 			const lista = [];
 			res.data.data.forEach((item, index) => {
 			    lista.push({value: item.id, text: item.descripcion});
 			});
-			commit('SET_TIPOS_RESOLUCIONES_ALL', lista);
+			commit('SET_resolucion_ALL', lista);
 		})
 		.catch(err => {
 			console.log('error', err);

@@ -8,20 +8,35 @@
     </div>
     
     <div class="modal-body">
+      
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label my-1" for="descriPro">Descripción:</label>
+        <label class="col-sm-3 col-form-label my-1" for="descripcion">Descripción:</label>
         <div class="col-sm-9">
-          <input v-model="proceso.descriPro" type="text" id="descriPro" placeholder="Descripción Proceso" class="form-control" />
-          <em class="error-message"></em>
-        </div>
-        <label class="col-sm-3 col-form-label my-1" for="descriMat">Materia:</label>
-        <div class="col-sm-9">
-          <input v-model="proceso.descriMat" type="text" id="descriMat" placeholder="Descripción Materia" class="form-control">
-            <!-- <option v-for="materia in listaMat" :value="materia.descriMat" v-bind:key="materia.id">{{materia.descriMat}}</option> -->
-          <!-- </select> -->
+          <input v-model="proceso.descripcion" type="text" id="descripcion" placeholder="Descripción Proceso" class="form-control" />
           <em class="error-message"></em>
         </div>
       </div>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label my-1" for="descriMat">Materia:</label>
+        <div class="col-sm-9">
+          <select class="form-control" id="idMateria" v-model="proceso.idMateria">
+            <option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
+          </select>
+          <em class="error-message"></em>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-3"></div>
+        <div class="col">
+          <div class="custom-control custom-checkbox">
+            <input v-model="proceso.registroActivo" type="checkbox" class="custom-control-input" id="activo">
+            <label class="custom-control-label" for="activo">Activo</label>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="modal-footer py-2">
@@ -45,23 +60,34 @@
     data() {
       return {
         proceso: {
-          id: '',
-          id_materia: '',
-          descriPro: '',
-
-          activo: false
+          idProceso: '',
+          idMateria: '',
+          descripcion: '',
+          registroActivo: false,
+          usuarioRegistro: "usuarioPrueba"
         },
         submitted: false
       };
     },
-    computed: { ...mapGetters(["isModalVisibleProceso", "isSavingProceso", "isEditModeProceso"]) },
+    created() {
+      this.fetchMateriasDropList();
+    },
+    computed: { ...mapGetters(["isModalVisibleProceso", "isSavingProceso", "isEditModeProceso", "materiasDropList"]) },
     methods: {
-      ...mapActions(["storeProceso", "updateProceso"]),
+      ...mapActions(["storeProceso", "updateProceso", "fetchMateriasDropList"]),
       ...mapMutations(['SET_MODAL_VISIBLE_PROCESO']),
 
       storeItem() {
         this.submitted = true;
         this.storeProceso(this.proceso);
+      },
+
+      loadItem(item) {
+        this.proceso.idProceso = item.idProceso;
+        this.proceso.idMateria = item.idMateria;
+        this.proceso.descripcion = item.descripcion;
+        this.proceso.registroActivo = item.registroActivo;
+        this.proceso.usuarioRegistro = item.usuarioRegistro;
       },
 
       updateItem() {

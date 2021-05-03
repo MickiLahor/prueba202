@@ -8,15 +8,14 @@
     </div>
     
     <div class="modal-body">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label text-right" for="id_padre">Padre:</label>
+      <!--<div class="form-group row">
+        <label class="col-sm-4 col-form-label text-right" for="idPadre">Padre:</label>
         <div class="col-sm-8">
-          <!--<Multiselect v-model="tipoResolucion.id_padre" :options="tiposResoluciones" class="form-control"/>-->
-          <Select2 v-model="tipoResolucion.id_padre" :options="[{value: 1, text: 'Item 1'}, {value: 2, text: 'Item 2'}]" :settings="{ width: '100%', theme: 'bootstrap4' }"/>
-          <!--<vue-select v-model="tipoResolucion.id_padre" :options="tiposResoluciones" label-by="id_padre" searchable clear-on-select></vue-select>-->
+          <Select2 v-model="tipoResolucion.idPadre" :options="[{value: 1, text: 'Item 1'}, {value: 2, text: 'Item 2'}]" :settings="{ width: '100%', theme: 'bootstrap4' }"/>
+          <vue-select v-model="tipoResolucion.idPadre" :options="tiposResoluciones" label-by="idPadre" searchable clear-on-select></vue-select>
           <em class="error-message"></em>
         </div>
-      </div>
+      </div>-->
 
       <div class="form-group row">
         <label class="col-sm-4 col-form-label text-right" for="descripcion">Descripción:</label>
@@ -30,8 +29,8 @@
         <div class="col-sm-4"></div>
         <div class="col">
           <div class="custom-control custom-checkbox">
-            <input v-model="tipoResolucion.activo" type="checkbox" class="custom-control-input" id="activo">
-            <label class="custom-control-label" for="activo">Activo</label>
+            <input v-model="tipoResolucion.registroActivo" type="checkbox" class="custom-control-input" id="registroActivo">
+            <label class="custom-control-label" for="registroActivo">Activo</label>
           </div>
         </div>
       </div>
@@ -58,10 +57,11 @@
     data() {
       return {
         tipoResolucion: {
-          id: '',
-          id_padre: '',
+          idTipoFallo: '',
+          //idPadre: '',
           descripcion: '',
-          activo: false
+          registroActivo: false,
+          usuarioRegistro: "usuarioPrueba"
         },
         submitted: false
       };
@@ -74,6 +74,13 @@
       storeItem() {
         this.submitted = true;
         this.storeTipoResolucion(this.tipoResolucion);
+      },
+
+      loadItem(item) {
+        this.tipoResolucion.idTipoFallo = item.idTipoFallo;
+        this.tipoResolucion.descripcion = item.descripcion;
+        this.tipoResolucion.registroActivo = item.registroActivo;
+        this.tipoResolucion.usuarioRegistro = item.usuarioRegistro;
       },
 
       updateItem() {

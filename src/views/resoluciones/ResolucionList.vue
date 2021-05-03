@@ -4,7 +4,7 @@
 			<div class="card card-accent-primary">
 				<div class="card-header d-flex justify-content-between align-items-center">
 						<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Resoluciones</h5>
-						<router-link to="/resoluciones/nueva_resolucion">
+						<router-link to="/resoluciones/create">
 							<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
 						</router-link>
 				</div>
@@ -38,7 +38,7 @@
 							</thead>
 							<tbody>
 								<tr v-if="!resoluciones.length">
-									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
+									<td class="lead text-center" colspan="8">No se encontraron resultados.</td>
 								</tr>
 								<tr v-if="isLoadingResolucion">
 									<td class="lead text-center" colspan="8">
@@ -112,6 +112,7 @@
 			},
 			addItem() {
 				this.SET_EDIT_MODE_RESOLUCION(false);
+				//this.$router.push({ name: "resoluciones.create" });
 			},
 			editItem(item) {
 				this.SET_EDIT_MODE_RESOLUCION(true);
@@ -126,7 +127,8 @@
 					cancelButtonColor: "#d33",
 					confirmButtonText: "Si, Eliminar!",
 					cancelButtonText: "Cancelar"
-				}).then(result => {
+				})
+				.then(result => {
 					if (result.value) {
 						this.deleteResolucion(id);
 					}

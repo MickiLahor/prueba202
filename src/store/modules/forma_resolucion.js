@@ -68,8 +68,8 @@ const actions = {
 		}
 
 		commit('SET_IS_LOADING_FORMA_RES', true);
-		let url = `${process.env.VUE_APP_API_URL}formas_resoluciones`;
-		if (search === null) {
+		let url = `${process.env.VUE_APP_API_URL}forma_resolucion`;
+		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
@@ -77,9 +77,9 @@ const actions = {
 		}
 
 		let lista = [
-			{id: 1, descripcion: "Fundado", activo: true},
-			{id: 2, descripcion: "Infundado", activo: true},
-			{id: 3, descripcion: "Improcedente", activo: true}
+			{idTipoResolucion: 1, descripcion: "Fundado", activo: true},
+			{idTipoResolucion: 2, descripcion: "Infundado", activo: true},
+			{idTipoResolucion: 3, descripcion: "Improcedente", activo: true}
 		];
 
 		commit('SET_FORMAS_RESOLUCIONES', lista);
@@ -87,15 +87,9 @@ const actions = {
 
 		/*await axios.get(url)
 		.then(res => {
-			const lista = res.data.data.data;
+			console.log(res.data);
+			const lista = res.data;
 			commit('SET_FORMAS_RESOLUCIONES', lista);
-			const pagination = {
-				total: res.data.data.total,
-				per_page: res.data.data.per_page,
-				current_page: res.data.data.current_page,
-				total_pages: res.data.data.last_page
-			}
-			commit('SET_PAGINATE_FORMA_RES', pagination);
 			commit('SET_IS_LOADING_FORMA_RES', false);
 		})
 		.catch(err => {
@@ -106,7 +100,7 @@ const actions = {
 
 	async fetchDetailFormaResolucion({ commit }, id) {
 		commit('SET_IS_LOADING_FORMA_RES', true);
-		await axios.get(`${process.env.VUE_APP_API_URL}formas_resoluciones/${id}`)
+		await axios.get(`${process.env.VUE_APP_API_URL}forma_resolucion/${id}`)
 		.then(res => {
 			commit('SET_FORMA_RESOLUCION', res.data.data);
 			commit('SET_IS_LOADING_FORMA_RES', false);
@@ -119,7 +113,7 @@ const actions = {
 
 	async storeFormaResolucion({ commit }, item) {
 		commit('SET_SAVING_FORMA_RES', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}formas_resoluciones`, item)
+		await axios.post(`${process.env.VUE_APP_API_URL}forma_resolucion`, item)
 		.then(res => {
 			commit('INSERT_FORMA_RESOLUCION', res.data.data);
 			commit('SET_SAVING_FORMA_RES', false);
@@ -133,7 +127,7 @@ const actions = {
 
 	async updateFormaResolucion({ commit }, item) {
 		commit('SET_SAVING_FORMA_RES', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}formas_resoluciones/${item.id}?_method=PUT`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}forma_resolucion`, item)
 		.then(res => {
 			commit('UPDATE_FORMA_RESOLUCION', res.data.data);
 			commit('SET_SAVING_FORMA_RES', false);
@@ -146,7 +140,7 @@ const actions = {
 	},
 
 	async deleteFormaResolucion({ commit }, id) {
-		await axios.delete(`${process.env.VUE_APP_API_URL}formas_resoluciones/${id}`)
+		await axios.delete(`${process.env.VUE_APP_API_URL}forma_resolucion/${id}`)
 		.then(res => {
 			commit('DELETE_FORMA_RESOLUCION', id);
 		})

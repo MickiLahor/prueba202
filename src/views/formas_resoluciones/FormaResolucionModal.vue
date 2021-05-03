@@ -20,8 +20,8 @@
         <div class="col-sm-3"></div>
         <div class="col">
           <div class="custom-control custom-checkbox">
-            <input v-model="formaResolucion.activo" type="checkbox" class="custom-control-input" id="activo">
-            <label class="custom-control-label" for="activo">Activo</label>
+            <input v-model="formaResolucion.registroActivo" type="checkbox" class="custom-control-input" id="registroActivo">
+            <label class="custom-control-label" for="registroActivo">Activo</label>
           </div>
         </div>
       </div>
@@ -48,10 +48,10 @@
     data() {
       return {
         formaResolucion: {
-          id: '',
-          id_padre: '',
+          idTipoResolucion: '',
           descripcion: '',
-          activo: false
+          registroActivo: false,
+          usuarioRegistro: "usuarioPrueba"
         },
         submitted: false
       };
@@ -64,6 +64,13 @@
       storeItem() {
         this.submitted = true;
         this.storeFormaResolucion(this.formaResolucion);
+      },
+
+      loadItem(item) {
+        this.formaResolucion.idTipoResolucion = item.idTipoResolucion;
+        this.formaResolucion.descripcion = item.descripcion;
+        this.formaResolucion.registroActivo = item.registroActivo;
+        this.formaResolucion.usuarioRegistro = item.usuarioRegistro;
       },
 
       updateItem() {

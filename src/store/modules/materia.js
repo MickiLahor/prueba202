@@ -5,7 +5,13 @@ const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsI
 const state = {
   	materias: [],
 	paginationMateria: null,
-  	materia: null,
+  	materia: {
+  		idMateria: null,
+  		descripcion: null,
+	    denominacionDemandante: null,
+	    denominacionDemandado: null,
+	    registroActivo: false
+  	},
 	isLoadingMateria: false,
 	isModalVisibleMateria: false,
 	isSavingMateria: false,
@@ -71,12 +77,12 @@ const actions = {
 
 		commit('SET_IS_LOADING_MATERIA', true);
 		let url = `${process.env.VUE_APP_API_URL}materia`;
-		/*if (search == "") {
+		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
 			url = `${url}?page=${page}&search=${search}`;
-		}*/
+		}
 
 		/*let listaMat = [
 			{id: 1, descriMat: "Penal", denDemandante: "a1", denDemandado: "a2", activo: true},
@@ -87,27 +93,18 @@ const actions = {
 		commit('SET_MATERIAS', listaMat);
 		commit('SET_IS_LOADING_MATERIA', false);*/
 
-		await axios.get(url, {
-			headers: {
-				'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYxOTcxMDMwNCwiZXhwIjoxNjIyMzAyMzA0fQ.PJJMmUijPUKzYjkFPg-_To18xiMOg6Ldz7eZmIrS2C0',
-				//'Accept': 'application/json',
-				//'Origin': '*',
-				'Access-Control-Allow-Origin': '*',
-				//'access-control-allow-origin':'*',
-				'origin': '192.168.5.121:8080'
-			}
-		})
+		await axios.get(url)
 		.then(res => {
-			console.log(res);
-			const lista = res.data.data.data;
-			commit('SET_MATERIAS', listaMat);
-			const pagination = {
+			console.log(res.data);
+			const lista = res.data;
+			commit('SET_MATERIAS', lista);
+			/*const pagination = {
 				total: res.data.data.total,
 				per_page: res.data.data.per_page,
 				current_page: res.data.data.current_page,
 				total_pages: res.data.data.last_page
 			}
-			commit('SET_PAGINATE_MATERIAS', pagination);
+			commit('SET_PAGINATE_MATERIAS', pagination);*/
 			commit('SET_IS_LOADING_MATERIA', false);
 		})
 		.catch(err => {
@@ -120,7 +117,8 @@ const actions = {
 		commit('SET_IS_LOADING_MATERIA', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}materia/${id}`)
 		.then(res => {
-			commit('SET_MATERIA', res.data.data);
+			console.log(res);
+			commit('SET_MATERIA', res.data);
 			commit('SET_IS_LOADING_MATERIA', false);
 		})
 		.catch(err => {
@@ -133,7 +131,7 @@ const actions = {
 		commit('SET_SAVING_MATERIA', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}materia`, item)
 		.then(res => {
-			commit('INSERT_MATERIA', res.data.data);
+			commit('INSERT_MATERIA', res.data);
 			commit('SET_SAVING_MATERIA', false);
 			commit('SET_MODAL_VISIBLE_MATERIA', false);
 		})
@@ -144,10 +142,11 @@ const actions = {
 	},
 
 	async updateMateria({ commit }, item) {
+		console.log(item);
 		commit('SET_SAVING_MATERIA', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}materia/${item.id}?_method=PUT`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}materia`, item)
 		.then(res => {
-			commit('UPDATE_MATERIA', res.data.data);
+			commit('UPDATE_MATERIA', res.data);
 			commit('SET_SAVING_MATERIA', false);
 			commit('SET_MODAL_VISIBLE_MATERIA', false);
 		})

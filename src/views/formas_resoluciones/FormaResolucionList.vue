@@ -44,7 +44,7 @@
 									</td>
 								</tr>
 								<tr v-for="(item, index) in formasResoluciones" :key="index">
-									<td class="text-center">{{item.id}}</td>
+									<td class="text-center">{{item.idTipoResolucion}}</td>
 									<td>{{item.descripcion}}</td>
 									<td>
 										<span v-if="item.activo" class="badge badge-success">Activo</span>
@@ -54,7 +54,7 @@
 										<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
 											<i class="c-icon cil-pencil"></i>
 										</button>
-										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.id)">
+										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idTipoResolucion)">
 											<i class="c-icon cil-trash"></i>
 										</button>
 									</td>
@@ -68,7 +68,7 @@
 		<!-- /.col-->
 	</div>
 
-	<forma-resolucion-modal/>
+	<forma-resolucion-modal ref="modal_forma_resolucion"></forma-resolucion-modal>
 
 </template>
 
@@ -113,6 +113,7 @@
 			editItem(item) {
 				this.SET_MODAL_VISIBLE_FORMA_RES(true);
 				this.SET_EDIT_MODE_FORMA_RES(true);
+				this.$refs.modal_forma_resolucion.loadItem(item);
 			},
 			deleteItem(id) {
 				Swal.fire({

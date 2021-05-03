@@ -98,21 +98,21 @@ const routes = [
     }
   },
   {
-    path: '/resoluciones/nueva_resolucion',
-    name: 'NuevaResolucion',
+    path: '/resoluciones/create',
+    name: 'resoluciones.create',
     component: ResolucionAdd,
     meta: {
       breadcrumb: [
         { name: 'Inicio', link: '/' },
         { name: 'Resoluciones', link: '/resoluciones' },
-        { name: 'Nueva Resolucion' }
+        { name: 'Registrar' }
       ]
     }
   },
-  {
-    path: '/resoluciones/editar_resolucion',
-    name: 'EditarResolucion',
-    component: ResolucionAdd,
+  /*{
+    path: '/resoluciones/:id/edit',
+    name: 'resoluciones.edit',
+    component: ResolucionEdit,
     meta: {
       breadcrumb: [
         { name: 'Inicio', link: '/' },
@@ -120,7 +120,7 @@ const routes = [
         { name: 'Editar Resolucion' }
       ]
     }
-  }
+  }*/
 ]
 
 const router = createRouter({

@@ -14,60 +14,60 @@
 							<div class="row">
 
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
-									<label for="nro_resolucion">Nro. Resolución</label>
-									<input v-model="resolucion.nro_resolucion" type="text" id="nro_resolucion" placeholder="Numero Resolución" class="form-control">
+									<label for="numeroFallo">Nro. Resolución</label>
+									<input v-model="resolucion.numeroFallo" type="text" id="numeroFallo" placeholder="Numero Resolución" class="form-control">
 									<em class="error-message"></em>
 								</div>
 
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
-									<label for="codigo">Codigo Nurej</label>
-									<input v-model="resolucion.codigo" type="text" id="codigo" placeholder="Codigo" class="form-control">
+									<label for="codigoFallo">Codigo Expediente</label>
+									<input v-model="resolucion.codigoFallo" type="text" id="codigoFallo" placeholder="Codigo" class="form-control">
 									<em class="error-message"></em>
 								</div>
 
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
-									<label for="fecha_emision">Fecha de Emisión</label>
-									<input v-model="resolucion.fecha_resolucion" type="date" id="fecha_emision" placeholder="Fecha" class="form-control">
+									<label for="fechaFallo">Fecha de Emisión</label>
+									<input v-model="resolucion.fechaFallo" type="date" id="fechaFallo" placeholder="Fecha" class="form-control">
 									<em class="error-message"></em>
 								</div>
 								
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
 									<label for="nombre_oficina">Sala o Juzgado:</label>
-									<input v-model="resolucion.oficina" type="text" id="nombre_oficina" class="form-control" readonly>
+									<input type="text" id="nombre_oficina" class="form-control" value="Sala Penal 1era" readonly>
 								</div>
 
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
-									<label for="id_tipo_res">Tipo de Resolución</label>
-									<!--<Select2 id="id_tipo_res" v-model="resolucion.id_tipo_res" :options="tiposResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
-									<!--<vue-select v-model="resolucion.id_tipo_res" :options="tiposResolucionesDropList" label-by="text" valuel-by="value" searchable clear-on-select close-on-select search-placeholder="Escriba para buscar"></vue-select>-->
-									<select class="form-control" id="id_tipo_res" v-model="resolucion.id_tipo_res">
+									<label for="idTipoResolucion">Tipo de Resolución</label>
+									<!--<Select2 id="idTipoResolucion" v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
+									<!--<vue-select v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" label-by="text" valuel-by="value" searchable clear-on-select close-on-select search-placeholder="Escriba para buscar"></vue-select>-->
+									<select class="form-control" id="idTipoResolucion" v-model="resolucion.idTipoResolucion">
 										<option v-for="item in tiposResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
 									</select>
 									<em class="error-message"></em>
 								</div>
 
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
-									<label for="id_forma_res">Forma de Resolución</label>
-									<!--<Select2 id="id_forma_res" v-model="resolucion.id_forma_res" :options="formasResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
-									<select class="form-control" id="id_forma_res" v-model="resolucion.id_forma_res">
+									<label for="idFormaResolucion">Forma de Resolución</label>
+									<!--<Select2 id="idFormaResolucion" v-model="resolucion.idFormaResolucion" :options="formasResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
+									<select class="form-control" id="idFormaResolucion" v-model="resolucion.idFormaResolucion">
 										<option v-for="item in formasResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
 									</select>
 									<em class="error-message"></em>
 								</div>
 
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
-									<label for="id_materia">Materia</label>
-									<!--<Select2 id="id_materia" v-model="id_materia" :options="materiasDropList" @update="onSelectMateria" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
-									<select class="form-control" id="id_materia" v-model="resolucion.id_materia" @change="onSelectMateria($event)">
+									<label for="idMateria">Materia</label>
+									<!--<Select2 id="idMateria" v-model="idMateria" :options="materiasDropList" @update="onSelectMateria" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
+									<select class="form-control" id="idMateria" v-model="resolucion.idMateria" @change="onSelectMateria($event)">
 										<option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
 									</select>
 									<em class="error-message"></em>
 								</div>
 
 								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
-									<label for="id_proceso">Proceso</label>
-									<!--<Select2 id="id_proceso" v-model="resolucion.id_proceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
-									<select class="form-control" id="id_proceso" v-model="resolucion.id_proceso">
+									<label for="idProceso">Proceso</label>
+									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
+									<select class="form-control" id="idProceso" v-model="resolucion.idProceso">
 										<option v-for="item in procesosDropList" v-bind:value="item.value">{{ item.text }}</option>
 									</select>
 									<em class="error-message"></em>
@@ -106,7 +106,7 @@
 					<div class="card">
 						<div class="card-body">
 							<h5>Contenido de la Resolución</h5>
-							<QuillEditor style="min-height:200px;" v-model="resolucion.contenido_html" theme="snow" placeholder="Pegue aquí el texto del documento"/>
+							<QuillEditor style="min-height:200px;" v-model="resolucion.contenidoHtml" theme="snow" placeholder="Pegue aquí el texto del documento"/>
 						</div>
 					</div>
 				</div>
@@ -133,22 +133,21 @@
 		data() {
 			return {
 				resolucion: {
-					id: '',
-					id_oficina: '',
-					id_tipo_res: '',
-					id_proceso: '',
-					id_forma_res: '',
-					nro_resolucion: '',
-					fecha_emision: '',
-					id_funcionario: '',
-					codigo: '',
-					contenido_html: '',
+					idFallo: '',
+					idOficina: 1,
+					idTipoResolucion: '',
+					idProceso: '',
+					idFormaResolucion: '',
+					numeroFallo: '',
+					fechaFallo: '',
+					idFuncionarioRelator: '',
+					codigoFallo: '',
+					contenidoHtml: '<h1>Some initial content</h1>',
 					demandante: '',
 					demandado: '',
-					visible: false,
-					activo: false
+					visible: false
 				},
-				id_materia: ''
+				idMateria: ''
 			};
 		},
 		created() {
@@ -162,6 +161,8 @@
 			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList", "fetchProcesosByMateriaDropList", "storeResolucion", "updateResolucion"]),
 
 			storeItem() {
+				//resolucion.contenidoHtml = getHTML();
+				console.log(this.resolucion);
 				this.submitted = true;
 				this.storeResolucion(this.resolucion);
 			},
@@ -172,8 +173,8 @@
 			},
 			onSelectMateria(event) {
 				//console.log(event.target.value);
-				//console.log(this.resolucion.id_materia);
-				this.fetchProcesosByMateriaDropList(this.resolucion.id_materia);
+				//console.log(this.resolucion.idMateria);
+				this.fetchProcesosByMateriaDropList(this.resolucion.idMateria);
 			},
 		}
 	};
