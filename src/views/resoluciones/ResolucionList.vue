@@ -101,7 +101,7 @@
 		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion"]) },
 		methods: {
 			...mapActions(["fetchAllResoluciones", "deleteResolucion"]),
-			...mapMutations(["SET_FORM_VISIBLE_RESOLUCION", "SET_EDIT_MODE_RESOLUCION"]),
+			...mapMutations(["SET_EDIT_MODE_RESOLUCION"]),
 
 			getItems() {
 				this.fetchAllResoluciones(this.params);
@@ -111,17 +111,15 @@
 				this.fetchAllResoluciones(this.params);
 			},
 			addItem() {
-				this.SET_FORM_VISIBLE_RESOLUCION(true);
 				this.SET_EDIT_MODE_RESOLUCION(false);
 			},
 			editItem(item) {
-				this.SET_FORM_VISIBLE_RESOLUCION(true);
 				this.SET_EDIT_MODE_RESOLUCION(true);
 			},
 			deleteItem(id) {
 				Swal.fire({
-					title: "Esta seguro que desea Eliminar esta Resolucion?",
-					text: "No podrá revertir esto!",
+					title: "Esta seguro que desea eliminar esta Resolución?",
+					text: "No podrás revertir esto!",
 					icon: "warning",
 					showCancelButton: true,
 					confirmButtonColor: "#3085d6",

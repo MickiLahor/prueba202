@@ -12,7 +12,7 @@
         <label class="col-sm-4 col-form-label text-right" for="id_padre">Padre:</label>
         <div class="col-sm-8">
           <!--<Multiselect v-model="tipoResolucion.id_padre" :options="tiposResoluciones" class="form-control"/>-->
-          <Select2 v-model="tipoResolucion.id_padre" :options="[{value: 1, text: 'Item 1'}, {value: 2, text: 'Item 2'}]" :settings="{ width: '100%', dropdownCssClass: 'select2bs4' }"/>
+          <Select2 v-model="tipoResolucion.id_padre" :options="[{value: 1, text: 'Item 1'}, {value: 2, text: 'Item 2'}]" :settings="{ width: '100%', theme: 'bootstrap4' }"/>
           <!--<vue-select v-model="tipoResolucion.id_padre" :options="tiposResoluciones" label-by="id_padre" searchable clear-on-select></vue-select>-->
           <em class="error-message"></em>
         </div>

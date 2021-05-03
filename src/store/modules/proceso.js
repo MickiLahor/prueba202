@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const state = {
-  procesos: [],
+	procesos: [],
 	paginationProceso: null,
-  	proceso: null,
+	proceso: null,
 	isLoadingProceso: false,
 	isModalVisibleProceso: false,
 	isSavingProceso: false,
@@ -77,9 +77,9 @@ const actions = {
 		}
 
 		let listaPro = [
-			{id: 1, descriPro: "Proceso 1", descriMat: "Penal", activo: true},
-			{id: 2, descriPro: "Proceso 2", descriMat: "Civil", activo: true},
-			{id: 3, descriPro: "Proceso 3", descriMat: "Penal", activo: true}
+		{id: 1, descriPro: "Proceso 1", descriMat: "Penal", activo: true},
+		{id: 2, descriPro: "Proceso 2", descriMat: "Civil", activo: true},
+		{id: 3, descriPro: "Proceso 3", descriMat: "Penal", activo: true}
 		];
 
 		commit('SET_PROCESOS', listaPro);
