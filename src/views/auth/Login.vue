@@ -4,7 +4,7 @@
       <div class="card-group">
         <div class="card p-4">
           <div class="card-body">
-            <h1>Iniciar Sesión</h1>
+            <h2 style="color:#323232; font-family: Impact, helvética;">Iniciar Sesión</h2>
             <p class="text-muted">Ingrese sus datos de Acceso</p>
             <form @submit.prevent='login(usuario)' method="post" autocomplete="off">
               <div class="input-group mb-3">
@@ -41,7 +41,7 @@
         <div class="card text-white bg-light py-5 d-md-down-none" style="width:44%">
           <div class="card-body text-center">
             <div>
-              <h2 style="color:gray">SISTEMA JURISPRUDENCIA</h2>
+              <h2 style="color:#323232; font-family: Impact, helvética;">SISTEMA REGISTRO DE RESOLUCIONES</h2>
               <div>
                 <img class="img-fluid" src="https://daf.organojudicial.gob.bo/Images/logo-meet.png">
               </div>

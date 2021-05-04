@@ -13,13 +13,23 @@ import store from '../store'
 
 const routes = [
   {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      breadcrumb: [
+          { name: 'Login' }
+      ]
+    }
+  },
+  {
     path: '/',
     name: 'Home',
     component: Home,
     meta: {
       breadcrumb: [
           { name: 'Inicio' }
-      ], rutaProtegida: true
+      ]
     }
   },
   {
@@ -41,7 +51,7 @@ const routes = [
       breadcrumb: [
         { name: 'Inicio', link: '/' },
         { name: 'Materias' }
-      ] , rutaProtegida: true
+      ]
     }
   },
   {
@@ -108,7 +118,7 @@ const routes = [
         { name: 'Inicio', link: '/' },
         { name: 'Resoluciones', link: '/resoluciones' },
         { name: 'Nueva Resolucion' }
-      ],rutaProtegida: true
+      ]
     }
   },
   {
@@ -120,19 +130,15 @@ const routes = [
         { name: 'Inicio', link: '/' },
         { name: 'Resoluciones', link: '/resoluciones' },
         { name: 'Editar Resolucion' }
-      ], rutaProtegida: true
-    }
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      breadcrumb: [
-          { name: 'Login' }
       ]
     }
   },
+  //404
+  // {
+  //   path: '*',
+  //   name:"NotFound",
+  //   component:NotFound
+  // },
 ]
 
 const router = createRouter({
@@ -141,16 +147,26 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const rutaEsProtegida = to.matched.some(item => item.meta.rutaProtegida)
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('token');
 
-  if (rutaEsProtegida && store.state.token ===null) {
-    //console.log('es protegida')
-    next('/login')
+  if (authRequired && !loggedIn) {
+    next('/login');
   } else {
-    //console.log('no es protegida')
-    next()
+    next();
   }
+});
 
-})
+// router.beforeEach((to, from, next) => {
+//   const rutaEsProtegida = to.matched.some(item => item.meta.rutaProtegida)
+//   if (rutaEsProtegida && store.state.token === null) {
+//     console.log('es protegida')
+//     next('/login')
+//   } else {
+//     console.log('no es protegida')
+//     next()
+//   }
+// })
 
 export default router
