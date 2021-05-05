@@ -45,20 +45,21 @@ const mutations = {
 	},
 
 	INSERT_PROCESO: (state, item) => {
-		state.procesos.unshift(item);
+		//state.procesos.unshift(item);
+		state.procesos.push(item);
 	},
 
 	UPDATE_PROCESO: (state, item) => {
-		let index = state.procesos.findIndex(x => x.id === item.id);
+		let index = state.procesos.findIndex(x => x.idProceso === item.id);
 		if(index > -1) {
 			state.procesos[index] = item;
 		}
 	},
 
 	DELETE_PROCESO: (state, id) => {
-		let index = state.procesos.findIndex(x => x.id === id);
+		let index = state.procesos.findIndex(x => x.idProceso === id);
 		if(index > -1) {
-			state.procesos.slice(index, 1);
+			state.procesos.splice(index, 1);
 		}
 	},
 }
@@ -73,7 +74,7 @@ const actions = {
 		}
 
 		commit('SET_IS_LOADING_PROCESO', true);
-		let url = `${process.env.VUE_APP_API_URL}proceso`;
+		let url = `${process.env.VUE_APP_API_URL}procesos`;
 		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
@@ -92,7 +93,7 @@ const actions = {
 
 		await axios.get(url)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			const lista = res.data;
 			commit('SET_PROCESOS', lista);
 			/*const pagination = {
@@ -112,7 +113,7 @@ const actions = {
 
 	async fetchDetailProceso({ commit }, id) {
 		commit('SET_IS_LOADING_PROCESO', true);
-		await axios.get(`${process.env.VUE_APP_API_URL}proceso/${id}`)
+		await axios.get(`${process.env.VUE_APP_API_URL}procesos/${id}`)
 		.then(res => {
 			commit('SET_PROCESO', res.data);
 			commit('SET_IS_LOADING_PROCESO', false);
@@ -125,8 +126,9 @@ const actions = {
 
 	async storeProceso({ commit }, item) {
 		commit('SET_SAVING_PROCESO', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}proceso`, item)
+		await axios.post(`${process.env.VUE_APP_API_URL}procesos`, item)
 		.then(res => {
+			//console.log(res.data);
 			commit('INSERT_PROCESO', res.data);
 			commit('SET_SAVING_PROCESO', false);
 			commit('SET_MODAL_VISIBLE_PROCESO', false);
@@ -138,8 +140,9 @@ const actions = {
 	},
 
 	async updateProceso({ commit }, item) {
+		console.log(item);
 		commit('SET_SAVING_PROCESO', true);
-		await axios.put(`${process.env.VUE_APP_API_URL}proceso`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}procesos`, item)
 		.then(res => {
 			commit('UPDATE_PROCESO', res.data);
 			commit('SET_SAVING_PROCESO', false);
@@ -152,7 +155,7 @@ const actions = {
 	},
 
 	async deleteProceso({ commit }, id) {
-		await axios.delete(`${process.env.VUE_APP_API_URL}proceso/${id}`)
+		await axios.delete(`${process.env.VUE_APP_API_URL}procesos/${id}`)
 		.then(res => {
 			commit('DELETE_PROCESO', id);
 		})

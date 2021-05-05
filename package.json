@@ -16,6 +16,7 @@
     "vue": "^3.0.0",
     "vue-next-select": "^2.2.0",
     "vue-router": "^4.0.0-0",
+    "vue3-quill": "^0.2.4",
     "vue3-select2-component": "^0.1.7",
     "vuex": "^4.0.0-0"
   },

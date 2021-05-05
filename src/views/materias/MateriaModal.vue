@@ -9,17 +9,21 @@
     
     <div class="modal-body">
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label my-1" for="descriMat">Descripción:</label>
+        <label class="col-sm-4 col-form-label text-sm-right" for="descriMat">Descripción:</label>
         <div class="col-sm-8">
           <input v-model="materia.descripcion" type="text" id="descriMat" placeholder="Descripción Materia" class="form-control" />
           <em class="error-message"></em>
         </div>
-        <label class="col-sm-4 col-form-label my-1" for="denDemandante">Den. Demandante:</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label text-sm-right" for="denDemandante">Den. Demandante:</label>
         <div class="col-sm-8">
           <input v-model="materia.denominacionDemandante" type="text" id="denDemandante" placeholder="Denominacion Demandante" class="form-control" />
           <em class="error-message"></em>
         </div>
-        <label class="col-sm-4 col-form-label my-1" for="denDemandado">Den. Demandado:</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label text-sm-right" for="denDemandado">Den. Demandado:</label>
         <div class="col-sm-8">
           <input v-model="materia.denominacionDemandado" type="text" id="denDemandado" placeholder="Denominacion Demandado" class="form-control" />
           <em class="error-message"></em>
@@ -27,7 +31,7 @@
       </div>
     </div>
 
-    <div class="modal-footer py-2">
+    <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
       <button type="button" v-show="isEditModeMateria" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
       <button type="button" v-show="!isEditModeMateria" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>

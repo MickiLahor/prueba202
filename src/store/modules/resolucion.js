@@ -47,8 +47,9 @@ const mutations = {
 		state.isEditModeResolucion = value;
 	},
 
-	INSERT_RESOLUCION: (state, item) => {
-		state.resoluciones.unshift(item);
+	/*INSERT_RESOLUCION: (state, item) => {
+		//state.resoluciones.unshift(item);
+		state.resoluciones.push(item);
 	},
 
 	UPDATE_RESOLUCION: (state, item) => {
@@ -56,16 +57,23 @@ const mutations = {
 		if(index > -1) {
 			state.resoluciones[index] = item;
 		}
-	},
+	},*/
 
 	DELETE_RESOLUCION: (state, id) => {
-		let index = state.resoluciones.findIndex(x => x.id === id);
+		let index = state.resoluciones.findIndex(x => x.idResolucion === id);
 		if(index > -1) {
-			state.resoluciones.slice(index, 1);
+			state.resoluciones[index].registroActivo = false;
 		}
 	},
 
-	SET_resolucion_ALL: (state, items) => {
+	ACTIVAR_RESOLUCION: (state, id) => {
+		let index = state.resoluciones.findIndex(x => x.idResolucion === id);
+		if(index > -1) {
+			state.resoluciones[index].registroActivo = true;
+		}
+	},
+
+	SET_TIPOS_RESOLUCIONES_ALL: (state, items) => {
 		state.tiposResolucionesDropList = items
 	},
 
@@ -92,7 +100,7 @@ const actions = {
 		}
 
 		commit('SET_IS_LOADING_RESOLUCION', true);
-		let url = `${process.env.VUE_APP_API_URL}resolucion`;
+		let url = `${process.env.VUE_APP_API_URL}resoluciones`;
 		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
@@ -111,9 +119,22 @@ const actions = {
 
 		await axios.get(url)
 		.then(res => {
-			//console.log(res.data)
-			const listaRes = res.data;
-			commit('SET_RESOLUCIONES', listaRes);
+			const lista = [];
+			res.data.forEach(function(item, index) {
+				lista.push({
+					idResolucion: item.idResolucion,
+					numeroResolucion: item.numeroResolucion,
+					tipoResolucion: item.TipoResolucion.descripcion,
+					formaResolucion: item.FormaResolucion.descripcion,
+					proceso: item.Proceso.descripcion,
+					materia: item.Proceso.Materium.descripcion,
+					fechaResolucion: item.fechaResolucion.split("-").reverse().join("-"),
+					codigoResolucion: item.codigoResolucion,
+					registroActivo: item.registroActivo
+				});
+			});
+			commit('SET_RESOLUCIONES', lista);
+
 			/*const pagination = {
 				total: res.data.data.total,
 				per_page: res.data.data.per_page,
@@ -131,9 +152,10 @@ const actions = {
 
 	async fetchDetailResolucion({ commit }, id) {
 		commit('SET_IS_LOADING_RESOLUCION', true);
-		await axios.get(`${process.env.VUE_APP_API_URL}resolucion/${id}`)
+		await axios.get(`${process.env.VUE_APP_API_URL}resoluciones/${id}`)
 		.then(res => {
-			commit('SET_RESOLUCION', res.data.data);
+			console.log(res.data);
+			commit('SET_RESOLUCION', res.data);
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		})
 		.catch(err => {
@@ -143,11 +165,10 @@ const actions = {
 	},
 
 	async storeResolucion({ commit }, item) {
-		console.log(item);
 		commit('SET_SAVING_RESOLUCION', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}resolucion`, item)
+		await axios.post(`${process.env.VUE_APP_API_URL}resoluciones`, item)
 		.then(res => {
-			commit('INSERT_RESOLUCION', res.data.data);
+			//commit('INSERT_RESOLUCION', res.data);
 			commit('SET_SAVING_RESOLUCION', false);
 		})
 		.catch(err => {
@@ -158,9 +179,9 @@ const actions = {
 
 	async updateResolucion({ commit }, item) {
 		commit('SET_SAVING_RESOLUCION', true);
-		await axios.put(`${process.env.VUE_APP_API_URL}resolucion/${item.idFallo}`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones`, item)
 		.then(res => {
-			commit('UPDATE_RESOLUCION', res.data.data);
+			//commit('UPDATE_RESOLUCION', res.data);
 			commit('SET_SAVING_RESOLUCION', false);
 		})
 		.catch(err => {
@@ -170,7 +191,7 @@ const actions = {
 	},
 
 	async deleteResolucion({ commit }, id) {
-		await axios.delete(`${process.env.VUE_APP_API_URL}resolucion/${id}`)
+		await axios.delete(`${process.env.VUE_APP_API_URL}resoluciones/${id}`)
 		.then(res => {
 			commit('DELETE_RESOLUCION', id);
 		})
@@ -179,98 +200,111 @@ const actions = {
 		});
 	},
 
+	async activarResolucion({ commit }, id) {
+		await axios.delete(`${process.env.VUE_APP_API_URL}resoluciones/${id}`)
+		.then(res => {
+			commit('ACTIVAR_RESOLUCION', id);
+		})
+		.catch(err => {
+			console.log('error', err);
+		});
+	},
+
 	async fetchTiposResolucionesDropList({ commit }) {
 
-		let lista = [
+		/*let lista = [
 		{value: 1, text: "Auto"},
 		{value: 2, text: "Auto de Vista"},
 		{value: 3, text: "Sentencia"}
 		];
 
-		commit('SET_resolucion_ALL', lista);
+		commit('SET_RESOLUCION_ALL', lista);*/
 
-		/*await axios.get(`${process.env.VUE_APP_API_URL}resolucion`)
+		await axios.get(`${process.env.VUE_APP_API_URL}tipos_resoluciones`)
 		.then(res => {
 			const lista = [];
-			res.data.data.forEach((item, index) => {
-			    lista.push({value: item.id, text: item.descripcion});
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idTipoResolucion, text: item.descripcion});
 			});
-			commit('SET_resolucion_ALL', lista);
+			commit('SET_TIPOS_RESOLUCIONES_ALL', lista);
 		})
 		.catch(err => {
 			console.log('error', err);
-		});*/
+		});
 	},
 
 	async fetchFormasResolucionesDropList({ commit }) {
 
-		let lista = [
+		/*let lista = [
 		{value: "1", text: "Infundado"},
 		{value: "2", text: "Fundado"},
 		{value: "3", text: "Procedente"},
 		{value: "4", text: "Improcedente"}
 		];
 
-		commit('SET_FORMAS_RESOLUCIONES_ALL', lista);
+		commit('SET_FORMAS_RESOLUCIONES_ALL', lista);*/
 
-		/*await axios.get(`${process.env.VUE_APP_API_URL}formas_resoluciones`)
+		await axios.get(`${process.env.VUE_APP_API_URL}formas_resoluciones`)
 		.then(res => {
 			const lista = [];
-			res.data.data.forEach((item, index) => {
-			    lista.push({value: item.id, text: item.descripcion});
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idFormaResolucion, text: item.descripcion});
 			});
 			commit('SET_FORMAS_RESOLUCIONES_ALL', lista);
 		})
 		.catch(err => {
 			console.log('error', err);
-		});*/
+		});
 	},
 
 	async fetchMateriasDropList({ commit }) {
 
-		let lista = [
+		/*let lista = [
 		{value: 1, text: "Penal"},
 		{value: 2, text: "Civil"},
 		{value: 3, text: "Familiar"},
 		{value: 4, text: "Laboral"}
 		];
 
-		commit('SET_MATERIAS_ALL', lista);
+		commit('SET_MATERIAS_ALL', lista);*/
 
-		/*await axios.get(`${process.env.VUE_APP_API_URL}materias`)
+		await axios.get(`${process.env.VUE_APP_API_URL}materias`)
 		.then(res => {
 			const lista = [];
-			res.data.data.forEach((item, index) => {
-			    lista.push({value: item.id, text: item.descripcion});
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idMateria, text: item.descripcion});
 			});
 			commit('SET_MATERIAS_ALL', lista);
 		})
 		.catch(err => {
 			console.log('error', err);
-		});*/
+		});
 	},
 
 	async fetchProcesosByMateriaDropList({ commit }, id_materia) {
 
-		let lista = [
+		/*let lista = [
 		{value: 1, text: "Proceso 1"},
 		{value: 2, text: "Proceso 2"},
 		{value: 3, text: "Proceso 3"}
 		];
 
-		commit('SET_PROCESOS_POR_MATERIA', lista);
+		commit('SET_PROCESOS_POR_MATERIA', lista);*/
+		//let url = 'http://192.168.5.128:4000/api/proceso/busca_procesos_materia/'+id_materia;
 
-		/*await axios.get(`${process.env.VUE_APP_API_URL}tipos_procesos_por_materia/${id_materia}`)
+		await axios.get(`${process.env.VUE_APP_API_URL}procesos/por_materia/${id_materia}`)
+		//await axios.get(url)
 		.then(res => {
+			//console.log(res);
 			const lista = [];
-			res.data.data.forEach((item, index) => {
-			    lista.push({value: item.id, text: item.descripcion});
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idProceso, text: item.descripcion});
 			});
 			commit('SET_PROCESOS_POR_MATERIA', lista);
 		})
 		.catch(err => {
 			console.log('error', err);
-		});*/
+		});
 	},
 }
 

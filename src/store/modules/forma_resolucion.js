@@ -40,20 +40,21 @@ const mutations = {
 	},
 
 	INSERT_FORMA_RESOLUCION: (state, item) => {
-		state.formasResoluciones.unshift(item);
+		//state.formasResoluciones.unshift(item);
+		state.formasResoluciones.push(item);
 	},
 
 	UPDATE_FORMA_RESOLUCION: (state, item) => {
-		let index = state.formasResoluciones.findIndex(x => x.id === item.id);
+		let index = state.formasResoluciones.findIndex(x => x.idFormaResolucion === item.id);
 		if(index > -1) {
 			state.formasResoluciones[index] = item;
 		}
 	},
 
 	DELETE_FORMA_RESOLUCION: (state, id) => {
-		let index = state.formasResoluciones.findIndex(x => x.id === id);
+		let index = state.formasResoluciones.findIndex(x => x.idFormaResolucion === id);
 		if(index > -1) {
-			state.formasResoluciones.slice(index, 1);
+			state.formasResoluciones.splice(index, 1);
 		}
 	},
 }
@@ -68,7 +69,7 @@ const actions = {
 		}
 
 		commit('SET_IS_LOADING_FORMA_RES', true);
-		let url = `${process.env.VUE_APP_API_URL}forma_resolucion`;
+		let url = `${process.env.VUE_APP_API_URL}formas_resoluciones`;
 		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
@@ -76,18 +77,18 @@ const actions = {
 			url = `${url}?page=${page}&search=${search}`;
 		}
 
-		let lista = [
+		/*let lista = [
 			{idTipoResolucion: 1, descripcion: "Fundado", activo: true},
 			{idTipoResolucion: 2, descripcion: "Infundado", activo: true},
 			{idTipoResolucion: 3, descripcion: "Improcedente", activo: true}
 		];
 
 		commit('SET_FORMAS_RESOLUCIONES', lista);
-		commit('SET_IS_LOADING_FORMA_RES', false);
+		commit('SET_IS_LOADING_FORMA_RES', false);*/
 
-		/*await axios.get(url)
+		await axios.get(url)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			const lista = res.data;
 			commit('SET_FORMAS_RESOLUCIONES', lista);
 			commit('SET_IS_LOADING_FORMA_RES', false);
@@ -95,14 +96,14 @@ const actions = {
 		.catch(err => {
 			console.log('error', err);
 			commit('SET_IS_LOADING_FORMA_RES', false);
-		});*/
+		});
 	},
 
 	async fetchDetailFormaResolucion({ commit }, id) {
 		commit('SET_IS_LOADING_FORMA_RES', true);
-		await axios.get(`${process.env.VUE_APP_API_URL}forma_resolucion/${id}`)
+		await axios.get(`${process.env.VUE_APP_API_URL}formas_resoluciones/${id}`)
 		.then(res => {
-			commit('SET_FORMA_RESOLUCION', res.data.data);
+			commit('SET_FORMA_RESOLUCION', res.data);
 			commit('SET_IS_LOADING_FORMA_RES', false);
 		})
 		.catch(err => {
@@ -113,9 +114,9 @@ const actions = {
 
 	async storeFormaResolucion({ commit }, item) {
 		commit('SET_SAVING_FORMA_RES', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}forma_resolucion`, item)
+		await axios.post(`${process.env.VUE_APP_API_URL}formas_resoluciones`, item)
 		.then(res => {
-			commit('INSERT_FORMA_RESOLUCION', res.data.data);
+			commit('INSERT_FORMA_RESOLUCION', res.data);
 			commit('SET_SAVING_FORMA_RES', false);
 			commit('SET_MODAL_VISIBLE_FORMA_RES', false);
 		})
@@ -127,9 +128,9 @@ const actions = {
 
 	async updateFormaResolucion({ commit }, item) {
 		commit('SET_SAVING_FORMA_RES', true);
-		await axios.put(`${process.env.VUE_APP_API_URL}forma_resolucion`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}formas_resoluciones`, item)
 		.then(res => {
-			commit('UPDATE_FORMA_RESOLUCION', res.data.data);
+			commit('UPDATE_FORMA_RESOLUCION', res.data);
 			commit('SET_SAVING_FORMA_RES', false);
 			commit('SET_MODAL_VISIBLE_FORMA_RES', false);
 		})
@@ -140,7 +141,7 @@ const actions = {
 	},
 
 	async deleteFormaResolucion({ commit }, id) {
-		await axios.delete(`${process.env.VUE_APP_API_URL}forma_resolucion/${id}`)
+		await axios.delete(`${process.env.VUE_APP_API_URL}formas_resoluciones/${id}`)
 		.then(res => {
 			commit('DELETE_FORMA_RESOLUCION', id);
 		})

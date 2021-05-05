@@ -9,14 +9,14 @@
     
     <div class="modal-body">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label" for="descripcion">Descripción:</label>
+        <label class="col-sm-3 col-form-label text-sm-right" for="descripcion">Descripción:</label>
         <div class="col-sm-9">
           <input v-model="formaResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" />
           <em class="error-message"></em>
         </div>
       </div>
 
-      <div class="form-group row">
+      <!--<div class="form-group row">
         <div class="col-sm-3"></div>
         <div class="col">
           <div class="custom-control custom-checkbox">
@@ -24,10 +24,10 @@
             <label class="custom-control-label" for="registroActivo">Activo</label>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
 
-    <div class="modal-footer py-2">
+    <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
       <button type="button" v-show="isEditModeFormaRes" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
       <button type="button" v-show="!isEditModeFormaRes" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
@@ -48,7 +48,7 @@
     data() {
       return {
         formaResolucion: {
-          idTipoResolucion: '',
+          idFormaResolucion: '',
           descripcion: '',
           registroActivo: false,
           usuarioRegistro: "usuarioPrueba"
@@ -67,7 +67,8 @@
       },
 
       loadItem(item) {
-        this.formaResolucion.idTipoResolucion = item.idTipoResolucion;
+        console.log(item);
+        this.formaResolucion.idFormaResolucion = item.idFormaResolucion;
         this.formaResolucion.descripcion = item.descripcion;
         this.formaResolucion.registroActivo = item.registroActivo;
         this.formaResolucion.usuarioRegistro = item.usuarioRegistro;

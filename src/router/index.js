@@ -5,14 +5,15 @@ import MateriaList from '../views/materias/MateriaList.vue'
 import ProcesoList from '../views/procesos/ProcesoList.vue'
 import TipoResolucionList from '../views/tipos_resoluciones/TipoResolucionList.vue'
 import FormaResolucionList from '../views/formas_resoluciones/FormaResolucionList.vue'
-import UsuarioList from '../views/usuarios/List.vue'
 import ResolucionList from '../views/resoluciones/ResolucionList.vue'
 import ResolucionAdd from '../views/resoluciones/ResolucionAdd.vue'
+import ResolucionEdit from '../views/resoluciones/ResolucionEdit.vue'
+import ResolucionDetail from '../views/resoluciones/ResolucionDetail.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home,
     meta: {
       breadcrumb: [
@@ -22,7 +23,7 @@ const routes = [
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'about',
     component: About,
     meta: {
       breadcrumb: [
@@ -33,7 +34,7 @@ const routes = [
   },
   {
     path: '/materias',
-    name: 'Materias',
+    name: 'materias',
     component: MateriaList,
     meta: {
       breadcrumb: [
@@ -44,7 +45,7 @@ const routes = [
   },
   {
     path: '/procesos',
-    name: 'Procesos',
+    name: 'procesos',
     component: ProcesoList,
     meta: {
       breadcrumb: [
@@ -55,7 +56,7 @@ const routes = [
   },
   {
     path: '/tipos_resoluciones',
-    name: 'TiposResoluciones',
+    name: 'tipos_resoluciones',
     component: TipoResolucionList,
     meta: {
       breadcrumb: [
@@ -66,7 +67,7 @@ const routes = [
   },
   {
     path: '/formas_resoluciones',
-    name: 'FormasResoluciones',
+    name: 'formas_resoluciones',
     component: FormaResolucionList,
     meta: {
       breadcrumb: [
@@ -76,19 +77,8 @@ const routes = [
     }
   },
   {
-    path: '/usuarios',
-    name: 'Usuarios',
-    component: UsuarioList,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Usuarios' }
-      ]
-    }
-  },
-  {
     path: '/resoluciones',
-    name: 'Resoluciones',
+    name: 'resoluciones',
     component: ResolucionList,
     meta: {
       breadcrumb: [
@@ -109,7 +99,7 @@ const routes = [
       ]
     }
   },
-  /*{
+  {
     path: '/resoluciones/:id/edit',
     name: 'resoluciones.edit',
     component: ResolucionEdit,
@@ -120,7 +110,19 @@ const routes = [
         { name: 'Editar Resolucion' }
       ]
     }
-  }*/
+  },
+  {
+    path: '/resoluciones/:id/detail',
+    name: 'resoluciones.detail',
+    component: ResolucionDetail,
+    meta: {
+      breadcrumb: [
+        { name: 'Inicio', link: '/' },
+        { name: 'Resoluciones', link: '/resoluciones' },
+        { name: 'Ver Resolucion' }
+      ]
+    }
+  }
 ]
 
 const router = createRouter({

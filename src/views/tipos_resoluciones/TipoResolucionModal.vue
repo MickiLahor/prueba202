@@ -18,14 +18,14 @@
       </div>-->
 
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label text-right" for="descripcion">Descripción:</label>
+        <label class="col-sm-4 col-form-label text-sm-right" for="descripcion">Descripción:</label>
         <div class="col-sm-8">
           <input v-model="tipoResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" />
           <em class="error-message"></em>
         </div>
       </div>
 
-      <div class="form-group row">
+      <!--<div class="form-group row">
         <div class="col-sm-4"></div>
         <div class="col">
           <div class="custom-control custom-checkbox">
@@ -33,10 +33,10 @@
             <label class="custom-control-label" for="registroActivo">Activo</label>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
 
-    <div class="modal-footer py-2">
+    <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
       <button type="button" v-show="isEditModeTipoRes" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
       <button type="button" v-show="!isEditModeTipoRes" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
@@ -57,7 +57,7 @@
     data() {
       return {
         tipoResolucion: {
-          idTipoFallo: '',
+          idTipoResolucion: '',
           //idPadre: '',
           descripcion: '',
           registroActivo: false,
@@ -77,7 +77,7 @@
       },
 
       loadItem(item) {
-        this.tipoResolucion.idTipoFallo = item.idTipoFallo;
+        this.tipoResolucion.idTipoResolucion = item.idTipoResolucion;
         this.tipoResolucion.descripcion = item.descripcion;
         this.tipoResolucion.registroActivo = item.registroActivo;
         this.tipoResolucion.usuarioRegistro = item.usuarioRegistro;

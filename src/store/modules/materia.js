@@ -48,20 +48,21 @@ const mutations = {
 	},
 
 	INSERT_MATERIA: (state, item) => {
-		state.materias.unshift(item);
+		//state.materias.unshift(item);
+		state.materias.push(item);
 	},
 
 	UPDATE_MATERIA: (state, item) => {
-		let index = state.materias.findIndex(x => x.id === item.id);
+		let index = state.materias.findIndex(x => x.idMateria === item.id);
 		if(index > -1) {
 			state.materias[index] = item;
 		}
 	},
 
 	DELETE_MATERIA: (state, id) => {
-		let index = state.materias.findIndex(x => x.id === id);
+		let index = state.materias.findIndex(x => x.idMateria === id);
 		if(index > -1) {
-			state.materias.slice(index, 1);
+			state.materias.splice(index, 1);
 		}
 	},
 }
@@ -76,7 +77,7 @@ const actions = {
 		}
 
 		commit('SET_IS_LOADING_MATERIA', true);
-		let url = `${process.env.VUE_APP_API_URL}materia`;
+		let url = `${process.env.VUE_APP_API_URL}materias`;
 		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
@@ -95,7 +96,7 @@ const actions = {
 
 		await axios.get(url)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			const lista = res.data;
 			commit('SET_MATERIAS', lista);
 			/*const pagination = {
@@ -115,7 +116,7 @@ const actions = {
 
 	async fetchDetailMateria({ commit }, id) {
 		commit('SET_IS_LOADING_MATERIA', true);
-		await axios.get(`${process.env.VUE_APP_API_URL}materia/${id}`)
+		await axios.get(`${process.env.VUE_APP_API_URL}materias/${id}`)
 		.then(res => {
 			console.log(res);
 			commit('SET_MATERIA', res.data);
@@ -129,7 +130,7 @@ const actions = {
 
 	async storeMateria({ commit }, item) {
 		commit('SET_SAVING_MATERIA', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}materia`, item)
+		await axios.post(`${process.env.VUE_APP_API_URL}materias`, item)
 		.then(res => {
 			commit('INSERT_MATERIA', res.data);
 			commit('SET_SAVING_MATERIA', false);
@@ -144,7 +145,7 @@ const actions = {
 	async updateMateria({ commit }, item) {
 		console.log(item);
 		commit('SET_SAVING_MATERIA', true);
-		await axios.put(`${process.env.VUE_APP_API_URL}materia`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}materias`, item)
 		.then(res => {
 			commit('UPDATE_MATERIA', res.data);
 			commit('SET_SAVING_MATERIA', false);
@@ -157,7 +158,8 @@ const actions = {
 	},
 
 	async deleteMateria({ commit }, id) {
-		await axios.delete(`${process.env.VUE_APP_API_URL}materia/${id}`)
+		//await axios.delete(`${process.env.VUE_APP_API_URL}materias`, id)
+		await axios.delete(`${process.env.VUE_APP_API_URL}materias/${id}`)
 		.then(res => {
 			commit('DELETE_MATERIA', id);
 		})

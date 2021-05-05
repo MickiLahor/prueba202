@@ -28,8 +28,8 @@
 								<tr>
 									<th @click="sort('id')" style="width: 10%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th @click="sort('descriMat')" class="pr-4">Descripcion <i class="c-icon arrow-position" :class="params.orderBy === 'descriMat' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('denDemandante')" class="pr-4">Titulo Demandante <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandante' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('denDemandado')" class="pr-4">Titulo Demandado <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandado' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('denDemandante')" class="pr-4">Denominación Demandante <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandante' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('denDemandado')" class="pr-4">Denominación Demandado <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandado' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th @click="sort('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th>Acciones</th>
 								</tr>
@@ -59,7 +59,7 @@
 											<i class="c-icon cil-pencil"></i>
 										</button>
 										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idMateria)">
-											<i class="c-icon cil-trash"></i>
+											<i class="c-icon cil-x"></i>
 										</button>
 									</td>
 								</tr>

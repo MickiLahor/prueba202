@@ -47,7 +47,7 @@
 								<tr v-for="(item, index) in procesos" :key="index">
 									<td class="text-center">{{item.idProceso}}</td>
 									<td>{{item.descripcion}}</td>
-									<td>{{item.idMateria}}</td>
+									<td>{{item.Materium.descripcion}}</td>
 									<td>
 										<span v-if="item.registroActivo" class="badge badge-success">Activo</span>
 										<span v-else class="badge badge-danger">Inactivo</span>
@@ -57,7 +57,7 @@
 											<i class="c-icon cil-pencil"></i>
 										</button>
 										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idProceso)">
-											<i class="c-icon cil-trash"></i>
+											<i class="c-icon cil-x"></i>
 										</button>
 									</td>
 								</tr>
@@ -119,7 +119,7 @@
 			},
 			deleteItem(id) {
 				Swal.fire({
-					title: "Esta seguro que desea Eliminar este Proceso?",
+					title: "Esta seguro que desea eliminar este Proceso?",
 					text: "No podrá revertir esto!",
 					icon: "warning",
 					showCancelButton: true,

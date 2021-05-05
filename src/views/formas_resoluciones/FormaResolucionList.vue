@@ -37,25 +37,25 @@
 									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
 								</tr>
 								<tr v-if="isLoadingFormaRes">
-									<td class="lead text-center" colspan="8">
+									<td class="lead text-center" colspan="4">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>
 									</td>
 								</tr>
 								<tr v-for="(item, index) in formasResoluciones" :key="index">
-									<td class="text-center">{{item.idTipoResolucion}}</td>
+									<td class="text-center">{{item.idFormaResolucion}}</td>
 									<td>{{item.descripcion}}</td>
 									<td>
-										<span v-if="item.activo" class="badge badge-success">Activo</span>
+										<span v-if="item.registroActivo" class="badge badge-success">Activo</span>
 										<span v-else class="badge badge-danger">Inactivo</span>
 									</td>
 									<td class="fit">
 										<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
 											<i class="c-icon cil-pencil"></i>
 										</button>
-										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idTipoResolucion)">
-											<i class="c-icon cil-trash"></i>
+										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idFormaResolucion)">
+											<i class="c-icon cil-x"></i>
 										</button>
 									</td>
 								</tr>
