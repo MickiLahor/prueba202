@@ -1,9 +1,13 @@
 <template>
-	<h1>Homepage</h1>
+	<h1>Bienvenido {{dataUsuario.nombres}}</h1>
 </template>
 
 <script>
+	import {mapState} from 'vuex'
 	export default {
-		name: 'Home'
+
+		computed: {
+    ...mapState('auth',['dataUsuario'])
+  },
 	}
 </script>

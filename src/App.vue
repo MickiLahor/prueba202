@@ -1,7 +1,7 @@
 <template>
-  <Sidebar/>
+  <Sidebar v-if="estado()"/>
   <div class="c-wrapper c-fixed-components">
-    <Header/>
+    <Header v-if="estado()"/>
     <div class="c-body">
       <main class="c-main">
         <div class="container-fluid">
@@ -10,10 +10,50 @@
           </div>
         </div>
       </main>
-      <Footer/>
+      <Footer v-if="estado()"/>
     </div>
   </div>
 </template>
+
+<script>
+  import Sidebar from "./components/Sidebar.vue";
+  import Header from "./components/Header.vue";
+  import Footer from "./components/Footer.vue";
+  import {mapState, mapActions} from 'vuex'
+  
+  export default {
+    data() {
+      return {
+      }
+    },
+    components: {
+      Header,
+      Sidebar,
+      Footer
+    },
+    methods: {
+      ...mapActions('auth',['leerIsLogin']),
+    
+      estado: function (){
+        return this.isLogin 
+      }
+    },
+    created(){
+      this.leerIsLogin()
+      this.estado()
+    },
+    computed: {
+      ...mapState('auth',['isLogin'])
+    }
+    // computed: {
+    //   isLogin() {
+    //     return this.$route.name === 'Login'
+    //   }
+    // }
+  };
+
+</script>
+
 
 <style>
 table.datatable {
@@ -91,17 +131,3 @@ table.datatable {
   font-weight: 500;
 }
 </style>
-
-<script>
-  import Sidebar from "./components/Sidebar.vue";
-  import Header from "./components/Header.vue";
-  import Footer from "./components/Footer.vue";
-
-  export default {
-    components: {
-      Header,
-      Sidebar,
-      Footer
-    }
-  };
-</script>
