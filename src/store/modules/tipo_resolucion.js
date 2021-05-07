@@ -40,20 +40,21 @@ const mutations = {
 	},
 
 	INSERT_TIPO_RESOLUCION: (state, item) => {
-		state.tiposResoluciones.unshift(item);
+		//state.tiposResoluciones.unshift(item);
+		state.tiposResoluciones.push(item);
 	},
 
 	UPDATE_TIPO_RESOLUCION: (state, item) => {
-		let index = state.tiposResoluciones.findIndex(x => x.id === item.id);
+		let index = state.tiposResoluciones.findIndex(x => x.idTipoResolucion === item.idTipoResolucion);
 		if(index > -1) {
 			state.tiposResoluciones[index] = item;
 		}
 	},
 
 	DELETE_TIPO_RESOLUCION: (state, id) => {
-		let index = state.tiposResoluciones.findIndex(x => x.id === id);
+		let index = state.tiposResoluciones.findIndex(x => x.idTipoResolucion === id);
 		if(index > -1) {
-			state.tiposResoluciones.slice(index, 1);
+			state.tiposResoluciones.splice(index, 1);
 		}
 	},
 }
@@ -69,39 +70,33 @@ const actions = {
 
 		commit('SET_IS_LOADING_TIPO_RES', true);
 		let url = `${process.env.VUE_APP_API_URL}tipos_resoluciones`;
-		if (search === null) {
+		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
 			url = `${url}?page=${page}&search=${search}`;
 		}
 
-		let lista = [
-			{id: 1, descripcion: "Auto", activo: true},
-			{id: 2, descripcion: "Auto de Vista", activo: true},
-			{id: 3, descripcion: "Sentencia", activo: true}
+		/*let lista = [
+			{idTipoFallo: 1, descripcion: "Auto", activo: true},
+			{idTipoFallo: 2, descripcion: "Auto de Vista", activo: true},
+			{idTipoFallo: 3, descripcion: "Sentencia", activo: true}
 		];
 
 		commit('SET_TIPOS_RESOLUCIONES', lista);
-		commit('SET_IS_LOADING_TIPO_RES', false);
+		commit('SET_IS_LOADING_TIPO_RES', false);*/
 
-		/*await axios.get(url)
+		await axios.get(url)
 		.then(res => {
-			const lista = res.data.data.data;
+			//console.log(res.data);
+			const lista = res.data;
 			commit('SET_TIPOS_RESOLUCIONES', lista);
-			const pagination = {
-				total: res.data.data.total,
-				per_page: res.data.data.per_page,
-				current_page: res.data.data.current_page,
-				total_pages: res.data.data.last_page
-			}
-			commit('SET_PAGINATE_TIPO_RES', pagination);
 			commit('SET_IS_LOADING_TIPO_RES', false);
 		})
 		.catch(err => {
 			console.log('error', err);
 			commit('SET_IS_LOADING_TIPO_RES', false);
-		});*/
+		});
 	},
 
 	async fetchDetailTipoResolucion({ commit }, id) {
@@ -121,9 +116,11 @@ const actions = {
 		commit('SET_SAVING_TIPO_RES', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}tipos_resoluciones`, item)
 		.then(res => {
-			commit('INSERT_TIPO_RESOLUCION', res.data.data);
-			commit('SET_SAVING_TIPO_RES', false);
-			commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			setTimeout(function() {
+				commit('INSERT_TIPO_RESOLUCION', res.data);
+				commit('SET_SAVING_TIPO_RES', false);
+				commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -133,11 +130,13 @@ const actions = {
 
 	async updateTipoResolucion({ commit }, item) {
 		commit('SET_SAVING_TIPO_RES', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}tipos_resoluciones/${item.id}?_method=PUT`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}tipos_resoluciones`, item)
 		.then(res => {
-			commit('UPDATE_TIPO_RESOLUCION', res.data.data);
-			commit('SET_SAVING_TIPO_RES', false);
-			commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			setTimeout(function() {
+				commit('UPDATE_TIPO_RESOLUCION', res.data);
+				commit('SET_SAVING_TIPO_RES', false);
+				commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);

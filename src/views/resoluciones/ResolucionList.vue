@@ -4,7 +4,7 @@
 			<div class="card card-accent-primary">
 				<div class="card-header d-flex justify-content-between align-items-center">
 						<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Resoluciones</h5>
-						<router-link to="/resoluciones/nueva_resolucion">
+						<router-link to="/resoluciones/create">
 							<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
 						</router-link>
 				</div>
@@ -29,40 +29,53 @@
 							<thead>
 								<tr>
 									<th @click="sort('id')" style="width: 5%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('num_res')" class="pr-4">Num. Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'num_res' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('num_res')" class="pr-4">Nro. Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'num_res' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('tipoResolucion')" class="pr-4">Tipo Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'tipoResolucion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('formaResolucion')" class="pr-4">Forma Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'formaResolucion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('proceso')" class="pr-4">Proceso <i class="c-icon arrow-position" :class="params.orderBy === 'proceso' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('materia')" class="pr-4">Materia <i class="c-icon arrow-position" :class="params.orderBy === 'materia' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th @click="sort('fecha')" class="pr-4">Fecha <i class="c-icon arrow-position" :class="params.orderBy === 'fecha' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th @click="sort('codigo')" class="pr-4">Codigo <i class="c-icon arrow-position" :class="params.orderBy === 'codigo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('activo')" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-if="!resoluciones.length">
-									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
+									<td class="lead text-center" colspan="10">No se encontraron resultados.</td>
 								</tr>
 								<tr v-if="isLoadingResolucion">
-									<td class="lead text-center" colspan="8">
+									<td class="lead text-center" colspan="10">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>
 									</td>
 								</tr>
 								<tr v-for="(item, index) in resoluciones" :key="index">
-									<td class="text-left">{{item.id}}</td>
-									<td>{{item.num_res}}</td>
-									<td>{{item.fecha}}</td>
-									<td>{{item.codigo}}</td>
+									<td class="text-left">{{item.idResolucion}}</td>
+									<td>{{item.numeroResolucion}}</td>
+									<td>{{item.tipoResolucion}}</td>
+									<td>{{item.formaResolucion}}</td>
+									<td>{{item.proceso}}</td>
+									<td>{{item.materia}}</td>
+									<td>{{item.fechaResolucion}}</td>
+									<td>{{item.codigoResolucion}}</td>
 									<td>
-										<span v-if="item.activo" class="badge badge-success">Activo</span>
+										<span v-if="item.registroActivo" class="badge badge-success">Activo</span>
 										<span v-else class="badge badge-danger">Inactivo</span>
 									</td>
 									<td class="fit">
-										<router-link to="/resoluciones/editar_resolucion">
-											<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
-											<i class="c-icon cil-pencil"></i></button>
+										<router-link class="btn btn-success btn-sm" :to="{ name: 'resoluciones.detail', params: { id: item.idResolucion } }">
+											<i class="c-icon cil-zoom-in"></i>
 										</router-link>
-										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.id)">
-											<i class="c-icon cil-trash"></i>
+										<router-link class="btn btn-primary btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
+											<i class="c-icon cil-pencil"></i>
+										</router-link>
+										<button v-if="item.registroActivo" title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idResolucion)">
+											<i class="c-icon cil-x"></i>
+										</button>
+										<button v-else title="Activar" class="btn btn-warning btn-sm ml-1" @click="restoreItem(item.idResolucion)">
+											<i class="c-icon cil-reload"></i>
 										</button>
 									</td>
 								</tr>
@@ -100,8 +113,8 @@
 		},
 		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion"]) },
 		methods: {
-			...mapActions(["fetchAllResoluciones", "deleteResolucion"]),
-			...mapMutations(["SET_FORM_VISIBLE_RESOLUCION", "SET_EDIT_MODE_RESOLUCION"]),
+			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion"]),
+			...mapMutations(["SET_EDIT_MODE_RESOLUCION"]),
 
 			getItems() {
 				this.fetchAllResoluciones(this.params);
@@ -111,26 +124,43 @@
 				this.fetchAllResoluciones(this.params);
 			},
 			addItem() {
-				this.SET_FORM_VISIBLE_RESOLUCION(true);
 				this.SET_EDIT_MODE_RESOLUCION(false);
+				//this.$router.push({ name: "resoluciones.create" });
 			},
 			editItem(item) {
-				this.SET_FORM_VISIBLE_RESOLUCION(true);
 				this.SET_EDIT_MODE_RESOLUCION(true);
 			},
 			deleteItem(id) {
 				Swal.fire({
-					title: "Esta seguro que desea Eliminar esta Resolucion?",
-					text: "No podrá revertir esto!",
+					title: "Esta seguro que desea eliminar esta Resolución?",
+					text: "La resolucion pasará a estado Inactivo!",
 					icon: "warning",
 					showCancelButton: true,
 					confirmButtonColor: "#3085d6",
 					cancelButtonColor: "#d33",
 					confirmButtonText: "Si, Eliminar!",
 					cancelButtonText: "Cancelar"
-				}).then(result => {
+				})
+				.then(result => {
 					if (result.value) {
 						this.deleteResolucion(id);
+					}
+				});
+			},
+			restoreItem(id) {
+				Swal.fire({
+					title: "Esta seguro que desea Activar esta Resolución?",
+					text: "La resolución pasará a estado Activo!",
+					icon: "info",
+					showCancelButton: true,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Si, Eliminar!",
+					cancelButtonText: "Cancelar"
+				})
+				.then(result => {
+					if (result.value) {
+						this.activarResolucion(id);
 					}
 				});
 			}

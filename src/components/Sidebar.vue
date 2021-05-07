@@ -36,22 +36,17 @@
             <i class="cil-screen-smartphone c-sidebar-nav-icon"></i> Formas de Resoluciones
           </a>
         </router-link>
-        <router-link class="c-sidebar-nav-item" tag="li" to="/usuarios">
-          <a class="c-sidebar-nav-link">
-            <i class="cil-user-follow c-sidebar-nav-icon"></i> Usuarios
-          </a>
-        </router-link>
       </li>
       <router-link class="c-sidebar-nav-item" tag="li" to="/resoluciones">
         <a class="c-sidebar-nav-link">
           <i class="cil-color-border c-sidebar-nav-icon"></i> Resoluciones
         </a>
       </router-link>
-      <router-link class="c-sidebar-nav-item" tag="li" to="/about">
+      <!--<router-link class="c-sidebar-nav-item" tag="li" to="/about">
         <a class="c-sidebar-nav-link">
           <i class="cil-color-border c-sidebar-nav-icon"></i> Acerca De
         </a>
-      </router-link>
+      </router-link>-->
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
   </div>

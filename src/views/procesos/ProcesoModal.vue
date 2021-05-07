@@ -8,26 +8,51 @@
     </div>
     
     <div class="modal-body">
+      
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label my-1" for="descriPro">Descripción:</label>
+        <label class="col-sm-3 col-form-label text-sm-right" for="descripcion">Descripción:</label>
         <div class="col-sm-9">
-          <input v-model="proceso.descriPro" type="text" id="descriPro" placeholder="Descripción Proceso" class="form-control" />
-          <em class="error-message"></em>
-        </div>
-        <label class="col-sm-3 col-form-label my-1" for="descriMat">Materia:</label>
-        <div class="col-sm-9">
-          <input v-model="proceso.descriMat" type="text" id="descriMat" placeholder="Descripción Materia" class="form-control">
-            <!-- <option v-for="materia in listaMat" :value="materia.descriMat" v-bind:key="materia.id">{{materia.descriMat}}</option> -->
-          <!-- </select> -->
-          <em class="error-message"></em>
+          <input v-model="proceso.descripcion" type="text" id="descripcion" placeholder="Descripción Proceso" class="form-control" :class="{ 'is-invalid': error.descripcion }"/>
+          <em class="invalid-feedback">{{error.descripcion}}</em>
         </div>
       </div>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-sm-right" for="fidMateria">Materia:</label>
+        <div class="col-sm-9">
+          <select v-model="proceso.fidMateria" id="fidMateria" class="form-control" :class="{ 'is-invalid': error.fidMateria }">
+            <option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
+          </select>
+          <em class="invalid-feedback">{{error.fidMateria}}</em>
+        </div>
+      </div>
+
+      <!--<div class="form-group row">
+        <div class="col-sm-3"></div>
+        <div class="col">
+          <div class="custom-control custom-checkbox">
+            <input v-model="proceso.registroActivo" type="checkbox" class="custom-control-input" id="activo">
+            <label class="custom-control-label" for="activo">Activo</label>
+          </div>
+        </div>
+      </div>-->
+
     </div>
 
-    <div class="modal-footer py-2">
+    <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
-      <button type="button" v-show="isEditModeProceso" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
-      <button type="button" v-show="!isEditModeProceso" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
+      
+      <button v-if="isEditModeProceso" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingProceso">
+        <i v-if="!isSavingProceso" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingProceso ? 'Actualizando...' : 'Actualizar' }}
+      </button>
+
+      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingProceso">
+        <i v-if="!isSavingProceso" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingProceso ? 'Guardando...' : 'Guardar' }}
+      </button>
     </div>
 
   </modal-component>
@@ -45,28 +70,66 @@
     data() {
       return {
         proceso: {
-          id: '',
-          id_materia: '',
-          descriPro: '',
-
-          activo: false
+          idProceso: '',
+          fidMateria: '',
+          descripcion: '',
+          registroActivo: false,
+          usuarioRegistro: "usuarioPrueba"
         },
-        submitted: false
+        error: {},
+        valid: false
       };
     },
-    computed: { ...mapGetters(["isModalVisibleProceso", "isSavingProceso", "isEditModeProceso"]) },
+    created() {
+      this.fetchMateriasDropList();
+    },
+    computed: { ...mapGetters(["isModalVisibleProceso", "isSavingProceso", "isEditModeProceso", "materiasDropList"]) },
     methods: {
-      ...mapActions(["storeProceso", "updateProceso"]),
+      ...mapActions(["storeProceso", "updateProceso", "fetchMateriasDropList"]),
       ...mapMutations(['SET_MODAL_VISIBLE_PROCESO']),
 
+      validate() {
+        this.valid = false;
+        this.error = {};
+
+        if(!this.proceso.descripcion)
+          this.error.descripcion = 'El campo descripción es obligatorio.';
+        else if(this.proceso.descripcion.length > 50)
+          this.error.descripcion = 'El campo descripción debe tener como máximo 50 carateres.';
+
+        if(!this.proceso.fidMateria)
+          this.error.fidMateria = 'El campo materia es obligatorio.';
+
+        if(Object.entries(this.error).length === 0)
+          this.valid = true;
+      },
+
       storeItem() {
-        this.submitted = true;
-        this.storeProceso(this.proceso);
+        this.validate();
+        if(this.valid) {
+          this.storeProceso(this.proceso);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
+      },
+
+      loadItem(item) {
+        this.proceso.idProceso = item.idProceso;
+        this.proceso.fidMateria = item.fidMateria;
+        this.proceso.descripcion = item.descripcion;
+        this.proceso.registroActivo = item.registroActivo;
+        this.proceso.usuarioRegistro = item.usuarioRegistro;
       },
 
       updateItem() {
-        this.submitted = true;
-        this.updateProceso(this.proceso);
+        this.validate();
+        if(this.valid) {
+          this.updateProceso(this.proceso);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
       },
       
       cancel() {

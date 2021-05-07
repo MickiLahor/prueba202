@@ -8,39 +8,48 @@
     </div>
     
     <div class="modal-body">
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label text-right" for="id_padre">Padre:</label>
+      <!--<div class="form-group row">
+        <label class="col-sm-4 col-form-label text-right" for="idPadre">Padre:</label>
         <div class="col-sm-8">
-          <!--<Multiselect v-model="tipoResolucion.id_padre" :options="tiposResoluciones" class="form-control"/>-->
-          <Select2 v-model="tipoResolucion.id_padre" :options="[{value: 1, text: 'Item 1'}, {value: 2, text: 'Item 2'}]" :settings="{ width: '100%', dropdownCssClass: 'select2bs4' }"/>
-          <!--<vue-select v-model="tipoResolucion.id_padre" :options="tiposResoluciones" label-by="id_padre" searchable clear-on-select></vue-select>-->
+          <Select2 v-model="tipoResolucion.idPadre" :options="[{value: 1, text: 'Item 1'}, {value: 2, text: 'Item 2'}]" :settings="{ width: '100%', theme: 'bootstrap4' }"/>
+          <vue-select v-model="tipoResolucion.idPadre" :options="tiposResoluciones" label-by="idPadre" searchable clear-on-select></vue-select>
           <em class="error-message"></em>
+        </div>
+      </div>-->
+
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label text-sm-right" for="descripcion">Descripción:</label>
+        <div class="col-sm-8">
+          <input v-model="tipoResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" :class="{ 'is-invalid': error.descripcion }"/>
+          <em class="invalid-feedback">{{error.descripcion}}</em>
         </div>
       </div>
 
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label text-right" for="descripcion">Descripción:</label>
-        <div class="col-sm-8">
-          <input v-model="tipoResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" />
-          <em class="error-message"></em>
-        </div>
-      </div>
-
-      <div class="form-group row">
+      <!--<div class="form-group row">
         <div class="col-sm-4"></div>
         <div class="col">
           <div class="custom-control custom-checkbox">
-            <input v-model="tipoResolucion.activo" type="checkbox" class="custom-control-input" id="activo">
-            <label class="custom-control-label" for="activo">Activo</label>
+            <input v-model="tipoResolucion.registroActivo" type="checkbox" class="custom-control-input" id="registroActivo">
+            <label class="custom-control-label" for="registroActivo">Activo</label>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
 
-    <div class="modal-footer py-2">
+    <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
-      <button type="button" v-show="isEditModeTipoRes" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
-      <button type="button" v-show="!isEditModeTipoRes" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
+      
+      <button v-if="isEditModeTipoRes" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingTipoRes">
+        <i v-if="!isSavingTipoRes" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingTipoRes ? 'Actualizando...' : 'Actualizar' }}
+      </button>
+
+      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingTipoRes">
+        <i v-if="!isSavingTipoRes" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingTipoRes ? 'Guardando...' : 'Guardar' }}
+      </button>
     </div>
 
   </modal-component>
@@ -58,12 +67,14 @@
     data() {
       return {
         tipoResolucion: {
-          id: '',
-          id_padre: '',
+          idTipoResolucion: '',
+          //idPadre: '',
           descripcion: '',
-          activo: false
+          registroActivo: false,
+          usuarioRegistro: "usuarioPrueba"
         },
-        submitted: false
+        error: {},
+        valid: false
       };
     },
     computed: { ...mapGetters(["tiposResoluciones", "isModalVisibleTipoRes", "isSavingTipoRes", "isEditModeTipoRes"]) },
@@ -71,14 +82,44 @@
       ...mapActions(["storeTipoResolucion", "updateTipoResolucion"]),
       ...mapMutations(['SET_MODAL_VISIBLE_TIPO_RES']),
 
+      validate() {
+        this.valid = false;
+        this.error = {};
+
+        if(!this.tipoResolucion.descripcion)
+          this.error.descripcion = 'El campo descripción es obligatorio.';
+        else if(this.tipoResolucion.descripcion.length > 50)
+          this.error.descripcion = 'El campo descripción debe tener como máximo 50 carateres.';
+
+        if(Object.entries(this.error).length === 0)
+          this.valid = true;
+      },
+
       storeItem() {
-        this.submitted = true;
-        this.storeTipoResolucion(this.tipoResolucion);
+        this.validate();
+        if(this.valid) {
+          this.storeTipoResolucion(this.tipoResolucion);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
+      },
+
+      loadItem(item) {
+        this.tipoResolucion.idTipoResolucion = item.idTipoResolucion;
+        this.tipoResolucion.descripcion = item.descripcion;
+        this.tipoResolucion.registroActivo = item.registroActivo;
+        this.tipoResolucion.usuarioRegistro = item.usuarioRegistro;
       },
 
       updateItem() {
-        this.submitted = true;
-        this.updateTipoResolucion(this.tipoResolucion);
+        this.validate();
+        if(this.valid) {
+          this.updateTipoResolucion(this.tipoResolucion);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
       },
       
       cancel() {

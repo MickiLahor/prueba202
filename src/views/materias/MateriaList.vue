@@ -28,38 +28,38 @@
 								<tr>
 									<th @click="sort('id')" style="width: 10%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th @click="sort('descriMat')" class="pr-4">Descripcion <i class="c-icon arrow-position" :class="params.orderBy === 'descriMat' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-                  					<th @click="sort('denDemandante')" class="pr-4">Den. Demandante <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandante' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-                  					<th @click="sort('denDemandado')" class="pr-4">Den. Demandado <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandado' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('denDemandante')" class="pr-4">Denominación Demandante <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandante' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('denDemandado')" class="pr-4">Denominación Demandado <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandado' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th @click="sort('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-if="!materias.length">
-									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
+									<td class="lead text-center" colspan="6">No se encontraron resultados.</td>
 								</tr>
 								<tr v-if="isLoadingMateria">
-									<td class="lead text-center" colspan="8">
+									<td class="lead text-center" colspan="6">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>
 									</td>
 								</tr>
 								<tr v-for="(item, index) in materias" :key="index">
-									<td class="text-center">{{item.id}}</td>
-									<td>{{item.descriMat}}</td>
-                  					<td>{{item.denDemandante}}</td>
-                  					<td>{{item.denDemandado}}</td>
+									<td class="text-center">{{item.idMateria}}</td>
+									<td>{{item.descripcion}}</td>
+									<td>{{item.denominacionDemandante}}</td>
+									<td>{{item.denominacionDemandado}}</td>
 									<td>
-										<span v-if="item.activo" class="badge badge-success">Activo</span>
+										<span v-if="item.registroActivo" class="badge badge-success">Activo</span>
 										<span v-else class="badge badge-danger">Inactivo</span>
 									</td>
 									<td class="fit">
 										<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
 											<i class="c-icon cil-pencil"></i>
 										</button>
-										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.id)">
-											<i class="c-icon cil-trash"></i>
+										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idMateria)">
+											<i class="c-icon cil-x"></i>
 										</button>
 									</td>
 								</tr>
@@ -72,7 +72,7 @@
 		<!-- /.col-->
 	</div>
 
-	<materia-modal/>
+	<materia-modal ref="modal_materia"></materia-modal>
 
 </template>
 
@@ -85,6 +85,7 @@
 		components: {
 			MateriaModal
 		},
+		
 		data() {
 			return {
 				params: {
@@ -119,6 +120,8 @@
 			editItem(item) {
 				this.SET_MODAL_VISIBLE_MATERIA(true);
 				this.SET_EDIT_MODE_MATERIA(true);
+				this.$refs.modal_materia.loadItem(item);
+				//this.fetchDetailMateria(item);
 			},
 			deleteItem(id) {
 				Swal.fire({

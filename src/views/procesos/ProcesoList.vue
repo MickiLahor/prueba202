@@ -27,37 +27,37 @@
 							<thead>
 								<tr>
 									<th @click="sort('id')" style="width: 10%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('descriPro')" class="pr-4">Descripcion <i class="c-icon arrow-position" :class="params.orderBy === 'descriPro' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('descriMat')" class="pr-4">Materia <i class="c-icon arrow-position" :class="params.orderBy === 'descriMat' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('descripcion')" class="pr-4">Descripcion <i class="c-icon arrow-position" :class="params.orderBy === 'descripcion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('materia')" class="pr-4">Materia <i class="c-icon arrow-position" :class="params.orderBy === 'materia' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th @click="sort('registroActivo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'registroActivo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-if="!procesos.length">
-									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
+									<td class="lead text-center" colspan="5">No se encontraron resultados.</td>
 								</tr>
 								<tr v-if="isLoadingProceso">
-									<td class="lead text-center" colspan="8">
+									<td class="lead text-center" colspan="5">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>
 									</td>
 								</tr>
 								<tr v-for="(item, index) in procesos" :key="index">
-									<td class="text-center">{{item.id}}</td>
-									<td>{{item.descriPro}}</td>
-									<td>{{item.descriMat}}</td>
+									<td class="text-center">{{item.idProceso}}</td>
+									<td>{{item.descripcion}}</td>
+									<td>{{item.Materium.descripcion}}</td>
 									<td>
-										<span v-if="item.activo" class="badge badge-success">Activo</span>
+										<span v-if="item.registroActivo" class="badge badge-success">Activo</span>
 										<span v-else class="badge badge-danger">Inactivo</span>
 									</td>
 									<td class="fit">
 										<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
 											<i class="c-icon cil-pencil"></i>
 										</button>
-										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.id)">
-											<i class="c-icon cil-trash"></i>
+										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idProceso)">
+											<i class="c-icon cil-x"></i>
 										</button>
 									</td>
 								</tr>
@@ -70,7 +70,7 @@
 		<!-- /.col-->
 	</div>
 
-	<proceso-modal/>
+	<proceso-modal ref="modal_proceso"></proceso-modal>
 
 </template>
 
@@ -115,10 +115,11 @@
 			editItem(item) {
 				this.SET_MODAL_VISIBLE_PROCESO(true);
 				this.SET_EDIT_MODE_PROCESO(true);
+				this.$refs.modal_proceso.loadItem(item);
 			},
 			deleteItem(id) {
 				Swal.fire({
-					title: "Esta seguro que desea Eliminar este Proceso?",
+					title: "Esta seguro que desea eliminar este Proceso?",
 					text: "No podrá revertir esto!",
 					icon: "warning",
 					showCancelButton: true,

@@ -9,28 +9,38 @@
     
     <div class="modal-body">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label" for="descripcion">Descripción:</label>
+        <label class="col-sm-3 col-form-label text-sm-right" for="descripcion">Descripción:</label>
         <div class="col-sm-9">
-          <input v-model="formaResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" />
-          <em class="error-message"></em>
+          <input v-model="formaResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" :class="{ 'is-invalid': error.descripcion }"/>
+          <em class="invalid-feedback">{{error.descripcion}}</em>
         </div>
       </div>
 
-      <div class="form-group row">
+      <!--<div class="form-group row">
         <div class="col-sm-3"></div>
         <div class="col">
           <div class="custom-control custom-checkbox">
-            <input v-model="formaResolucion.activo" type="checkbox" class="custom-control-input" id="activo">
-            <label class="custom-control-label" for="activo">Activo</label>
+            <input v-model="formaResolucion.registroActivo" type="checkbox" class="custom-control-input" id="registroActivo">
+            <label class="custom-control-label" for="registroActivo">Activo</label>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
 
-    <div class="modal-footer py-2">
+    <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
-      <button type="button" v-show="isEditModeFormaRes" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
-      <button type="button" v-show="!isEditModeFormaRes" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
+      
+      <button v-if="isEditModeFormaRes" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingFormaRes">
+        <i v-if="!isSavingFormaRes" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingFormaRes ? 'Actualizando...' : 'Actualizar' }}
+      </button>
+
+      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingFormaRes">
+        <i v-if="!isSavingFormaRes" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingFormaRes ? 'Guardando...' : 'Guardar' }}
+      </button>
     </div>
 
   </modal-component>
@@ -48,12 +58,13 @@
     data() {
       return {
         formaResolucion: {
-          id: '',
-          id_padre: '',
+          idFormaResolucion: '',
           descripcion: '',
-          activo: false
+          registroActivo: false,
+          usuarioRegistro: "usuarioPrueba"
         },
-        submitted: false
+        error: {},
+        valid: false
       };
     },
     computed: { ...mapGetters(["isModalVisibleFormaRes", "isSavingFormaRes", "isEditModeFormaRes"]) },
@@ -61,14 +72,44 @@
       ...mapActions(["storeFormaResolucion", "updateFormaResolucion"]),
       ...mapMutations(['SET_MODAL_VISIBLE_FORMA_RES']),
 
+      validate() {
+        this.valid = false;
+        this.error = {};
+
+        if(!this.formaResolucion.descripcion)
+          this.error.descripcion = 'El campo descripción es obligatorio.';
+        else if(this.formaResolucion.descripcion.length > 50)
+          this.error.descripcion = 'El campo descripción debe tener como máximo 50 carateres.';
+
+        if(Object.entries(this.error).length === 0)
+          this.valid = true;
+      },
+
       storeItem() {
-        this.submitted = true;
-        this.storeFormaResolucion(this.formaResolucion);
+        this.validate();
+        if(this.valid) {
+          this.storeFormaResolucion(this.formaResolucion);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
+      },
+
+      loadItem(item) {
+        this.formaResolucion.idFormaResolucion = item.idFormaResolucion;
+        this.formaResolucion.descripcion = item.descripcion;
+        this.formaResolucion.registroActivo = item.registroActivo;
+        this.formaResolucion.usuarioRegistro = item.usuarioRegistro;
       },
 
       updateItem() {
-        this.submitted = true;
-        this.updateFormaResolucion(this.formaResolucion);
+        this.validate();
+        if(this.valid) {
+          this.updateFormaResolucion(this.formaResolucion);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
       },
       
       cancel() {

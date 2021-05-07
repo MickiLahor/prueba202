@@ -40,20 +40,22 @@ const mutations = {
 	},
 
 	INSERT_FORMA_RESOLUCION: (state, item) => {
-		state.formasResoluciones.unshift(item);
+		//state.formasResoluciones.unshift(item);
+		state.formasResoluciones.push(item);
 	},
 
 	UPDATE_FORMA_RESOLUCION: (state, item) => {
-		let index = state.formasResoluciones.findIndex(x => x.id === item.id);
+		let index = state.formasResoluciones.findIndex(x => x.idFormaResolucion === item.idFormaResolucion);
+		console.log(index);
 		if(index > -1) {
 			state.formasResoluciones[index] = item;
 		}
 	},
 
 	DELETE_FORMA_RESOLUCION: (state, id) => {
-		let index = state.formasResoluciones.findIndex(x => x.id === id);
+		let index = state.formasResoluciones.findIndex(x => x.idFormaResolucion === id);
 		if(index > -1) {
-			state.formasResoluciones.slice(index, 1);
+			state.formasResoluciones.splice(index, 1);
 		}
 	},
 }
@@ -69,46 +71,40 @@ const actions = {
 
 		commit('SET_IS_LOADING_FORMA_RES', true);
 		let url = `${process.env.VUE_APP_API_URL}formas_resoluciones`;
-		if (search === null) {
+		if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
 			url = `${url}?page=${page}&search=${search}`;
 		}
 
-		let lista = [
-			{id: 1, descripcion: "Fundado", activo: true},
-			{id: 2, descripcion: "Infundado", activo: true},
-			{id: 3, descripcion: "Improcedente", activo: true}
+		/*let lista = [
+			{idTipoResolucion: 1, descripcion: "Fundado", activo: true},
+			{idTipoResolucion: 2, descripcion: "Infundado", activo: true},
+			{idTipoResolucion: 3, descripcion: "Improcedente", activo: true}
 		];
 
 		commit('SET_FORMAS_RESOLUCIONES', lista);
-		commit('SET_IS_LOADING_FORMA_RES', false);
+		commit('SET_IS_LOADING_FORMA_RES', false);*/
 
-		/*await axios.get(url)
+		await axios.get(url)
 		.then(res => {
-			const lista = res.data.data.data;
+			//console.log(res.data);
+			const lista = res.data;
 			commit('SET_FORMAS_RESOLUCIONES', lista);
-			const pagination = {
-				total: res.data.data.total,
-				per_page: res.data.data.per_page,
-				current_page: res.data.data.current_page,
-				total_pages: res.data.data.last_page
-			}
-			commit('SET_PAGINATE_FORMA_RES', pagination);
 			commit('SET_IS_LOADING_FORMA_RES', false);
 		})
 		.catch(err => {
 			console.log('error', err);
 			commit('SET_IS_LOADING_FORMA_RES', false);
-		});*/
+		});
 	},
 
 	async fetchDetailFormaResolucion({ commit }, id) {
 		commit('SET_IS_LOADING_FORMA_RES', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}formas_resoluciones/${id}`)
 		.then(res => {
-			commit('SET_FORMA_RESOLUCION', res.data.data);
+			commit('SET_FORMA_RESOLUCION', res.data);
 			commit('SET_IS_LOADING_FORMA_RES', false);
 		})
 		.catch(err => {
@@ -121,9 +117,11 @@ const actions = {
 		commit('SET_SAVING_FORMA_RES', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}formas_resoluciones`, item)
 		.then(res => {
-			commit('INSERT_FORMA_RESOLUCION', res.data.data);
-			commit('SET_SAVING_FORMA_RES', false);
-			commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			setTimeout(function() {
+				commit('INSERT_FORMA_RESOLUCION', res.data);
+				commit('SET_SAVING_FORMA_RES', false);
+				commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -133,11 +131,13 @@ const actions = {
 
 	async updateFormaResolucion({ commit }, item) {
 		commit('SET_SAVING_FORMA_RES', true);
-		await axios.post(`${process.env.VUE_APP_API_URL}formas_resoluciones/${item.id}?_method=PUT`, item)
+		await axios.put(`${process.env.VUE_APP_API_URL}formas_resoluciones`, item)
 		.then(res => {
-			commit('UPDATE_FORMA_RESOLUCION', res.data.data);
-			commit('SET_SAVING_FORMA_RES', false);
-			commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			setTimeout(function() {
+				commit('UPDATE_FORMA_RESOLUCION', res.data);
+				commit('SET_SAVING_FORMA_RES', false);
+				commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
