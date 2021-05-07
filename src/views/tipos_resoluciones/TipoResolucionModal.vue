@@ -20,8 +20,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label text-sm-right" for="descripcion">Descripción:</label>
         <div class="col-sm-8">
-          <input v-model="tipoResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" />
-          <em class="error-message"></em>
+          <input v-model="tipoResolucion.descripcion" type="text" id="descripcion" placeholder="Descripción" class="form-control" :class="{ 'is-invalid': error.descripcion }"/>
+          <em class="invalid-feedback">{{error.descripcion}}</em>
         </div>
       </div>
 
@@ -38,8 +38,18 @@
 
     <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
-      <button type="button" v-show="isEditModeTipoRes" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
-      <button type="button" v-show="!isEditModeTipoRes" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
+      
+      <button v-if="isEditModeTipoRes" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingTipoRes">
+        <i v-if="!isSavingTipoRes" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingTipoRes ? 'Actualizando...' : 'Actualizar' }}
+      </button>
+
+      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingTipoRes">
+        <i v-if="!isSavingTipoRes" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingTipoRes ? 'Guardando...' : 'Guardar' }}
+      </button>
     </div>
 
   </modal-component>
@@ -63,7 +73,8 @@
           registroActivo: false,
           usuarioRegistro: "usuarioPrueba"
         },
-        submitted: false
+        error: {},
+        valid: false
       };
     },
     computed: { ...mapGetters(["tiposResoluciones", "isModalVisibleTipoRes", "isSavingTipoRes", "isEditModeTipoRes"]) },
@@ -71,9 +82,27 @@
       ...mapActions(["storeTipoResolucion", "updateTipoResolucion"]),
       ...mapMutations(['SET_MODAL_VISIBLE_TIPO_RES']),
 
+      validate() {
+        this.valid = false;
+        this.error = {};
+
+        if(!this.tipoResolucion.descripcion)
+          this.error.descripcion = 'El campo descripción es obligatorio.';
+        else if(this.tipoResolucion.descripcion.length > 50)
+          this.error.descripcion = 'El campo descripción debe tener como máximo 50 carateres.';
+
+        if(Object.entries(this.error).length === 0)
+          this.valid = true;
+      },
+
       storeItem() {
-        this.submitted = true;
-        this.storeTipoResolucion(this.tipoResolucion);
+        this.validate();
+        if(this.valid) {
+          this.storeTipoResolucion(this.tipoResolucion);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
       },
 
       loadItem(item) {
@@ -84,8 +113,13 @@
       },
 
       updateItem() {
-        this.submitted = true;
-        this.updateTipoResolucion(this.tipoResolucion);
+        this.validate();
+        if(this.valid) {
+          this.updateTipoResolucion(this.tipoResolucion);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
       },
       
       cancel() {

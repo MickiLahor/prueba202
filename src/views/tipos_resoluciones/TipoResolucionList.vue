@@ -37,7 +37,7 @@
 									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
 								</tr>
 								<tr v-if="isLoadingTipoRes">
-									<td class="lead text-center" colspan="8">
+									<td class="lead text-center" colspan="4">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>

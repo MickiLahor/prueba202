@@ -90,6 +90,7 @@ table.datatable {
 .form-group > label {
   font-weight: 500;
 }
+
 </style>
 
 <script>

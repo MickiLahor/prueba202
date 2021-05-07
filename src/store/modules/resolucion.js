@@ -154,7 +154,7 @@ const actions = {
 		commit('SET_IS_LOADING_RESOLUCION', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}resoluciones/${id}`)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			commit('SET_RESOLUCION', res.data);
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		})
@@ -168,8 +168,10 @@ const actions = {
 		commit('SET_SAVING_RESOLUCION', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}resoluciones`, item)
 		.then(res => {
-			//commit('INSERT_RESOLUCION', res.data);
-			commit('SET_SAVING_RESOLUCION', false);
+			setTimeout(function() {
+				//commit('INSERT_RESOLUCION', res.data);
+				commit('SET_SAVING_RESOLUCION', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -181,8 +183,10 @@ const actions = {
 		commit('SET_SAVING_RESOLUCION', true);
 		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones`, item)
 		.then(res => {
-			//commit('UPDATE_RESOLUCION', res.data);
-			commit('SET_SAVING_RESOLUCION', false);
+			setTimeout(function() {
+				//commit('UPDATE_RESOLUCION', res.data);
+				commit('SET_SAVING_RESOLUCION', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);

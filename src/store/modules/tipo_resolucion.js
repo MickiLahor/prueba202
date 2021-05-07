@@ -45,7 +45,7 @@ const mutations = {
 	},
 
 	UPDATE_TIPO_RESOLUCION: (state, item) => {
-		let index = state.tiposResoluciones.findIndex(x => x.idTipoResolucion === item.id);
+		let index = state.tiposResoluciones.findIndex(x => x.idTipoResolucion === item.idTipoResolucion);
 		if(index > -1) {
 			state.tiposResoluciones[index] = item;
 		}
@@ -116,9 +116,11 @@ const actions = {
 		commit('SET_SAVING_TIPO_RES', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}tipos_resoluciones`, item)
 		.then(res => {
-			commit('INSERT_TIPO_RESOLUCION', res.data);
-			commit('SET_SAVING_TIPO_RES', false);
-			commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			setTimeout(function() {
+				commit('INSERT_TIPO_RESOLUCION', res.data);
+				commit('SET_SAVING_TIPO_RES', false);
+				commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -130,9 +132,11 @@ const actions = {
 		commit('SET_SAVING_TIPO_RES', true);
 		await axios.put(`${process.env.VUE_APP_API_URL}tipos_resoluciones`, item)
 		.then(res => {
-			commit('UPDATE_TIPO_RESOLUCION', res.data);
-			commit('SET_SAVING_TIPO_RES', false);
-			commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			setTimeout(function() {
+				commit('UPDATE_TIPO_RESOLUCION', res.data);
+				commit('SET_SAVING_TIPO_RES', false);
+				commit('SET_MODAL_VISIBLE_TIPO_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);

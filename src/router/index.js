@@ -100,7 +100,7 @@ const routes = [
     }
   },
   {
-    path: '/resoluciones/:id/edit',
+    path: '/resoluciones/edit',
     name: 'resoluciones.edit',
     component: ResolucionEdit,
     meta: {
@@ -112,7 +112,7 @@ const routes = [
     }
   },
   {
-    path: '/resoluciones/:id/detail',
+    path: '/resoluciones/detail',
     name: 'resoluciones.detail',
     component: ResolucionDetail,
     meta: {

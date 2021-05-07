@@ -12,18 +12,18 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label text-sm-right" for="descripcion">Descripción:</label>
         <div class="col-sm-9">
-          <input v-model="proceso.descripcion" type="text" id="descripcion" placeholder="Descripción Proceso" class="form-control" />
-          <em class="error-message"></em>
+          <input v-model="proceso.descripcion" type="text" id="descripcion" placeholder="Descripción Proceso" class="form-control" :class="{ 'is-invalid': error.descripcion }"/>
+          <em class="invalid-feedback">{{error.descripcion}}</em>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-sm-3 col-form-label text-sm-right" for="fidMateria">Materia:</label>
         <div class="col-sm-9">
-          <select class="form-control" id="fidMateria" v-model="proceso.fidMateria">
+          <select v-model="proceso.fidMateria" id="fidMateria" class="form-control" :class="{ 'is-invalid': error.fidMateria }">
             <option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
           </select>
-          <em class="error-message"></em>
+          <em class="invalid-feedback">{{error.fidMateria}}</em>
         </div>
       </div>
 
@@ -41,8 +41,18 @@
 
     <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
-      <button type="button" v-show="isEditModeProceso" @click="updateItem()" class="btn btn-info"><i class="cil-save"></i> Actualizar</button>
-      <button type="button" v-show="!isEditModeProceso" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
+      
+      <button v-if="isEditModeProceso" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingProceso">
+        <i v-if="!isSavingProceso" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingProceso ? 'Actualizando...' : 'Actualizar' }}
+      </button>
+
+      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingProceso">
+        <i v-if="!isSavingProceso" class="cil-save"></i>
+        <span v-else class="spinner-border spinner-border-sm"></span>
+        {{ isSavingProceso ? 'Guardando...' : 'Guardar' }}
+      </button>
     </div>
 
   </modal-component>
@@ -66,7 +76,8 @@
           registroActivo: false,
           usuarioRegistro: "usuarioPrueba"
         },
-        submitted: false
+        error: {},
+        valid: false
       };
     },
     created() {
@@ -77,10 +88,30 @@
       ...mapActions(["storeProceso", "updateProceso", "fetchMateriasDropList"]),
       ...mapMutations(['SET_MODAL_VISIBLE_PROCESO']),
 
+      validate() {
+        this.valid = false;
+        this.error = {};
+
+        if(!this.proceso.descripcion)
+          this.error.descripcion = 'El campo descripción es obligatorio.';
+        else if(this.proceso.descripcion.length > 50)
+          this.error.descripcion = 'El campo descripción debe tener como máximo 50 carateres.';
+
+        if(!this.proceso.fidMateria)
+          this.error.fidMateria = 'El campo materia es obligatorio.';
+
+        if(Object.entries(this.error).length === 0)
+          this.valid = true;
+      },
+
       storeItem() {
-        this.submitted = true;
-        //console.log(this.proceso);
-        this.storeProceso(this.proceso);
+        this.validate();
+        if(this.valid) {
+          this.storeProceso(this.proceso);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
       },
 
       loadItem(item) {
@@ -92,8 +123,13 @@
       },
 
       updateItem() {
-        this.submitted = true;
-        this.updateProceso(this.proceso);
+        this.validate();
+        if(this.valid) {
+          this.updateProceso(this.proceso);
+        }
+        else {
+          Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+        }
       },
       
       cancel() {

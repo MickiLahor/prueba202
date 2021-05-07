@@ -3,8 +3,6 @@ import { createApp } from 'vue'
 import Swal from 'sweetalert2'
 window.Swal = Swal
 
-//import moment from 'moment'
-
 import App from './App.vue'
 import axios from 'axios'
 import router from './router'
@@ -14,8 +12,8 @@ import store from './store'
 import Select2 from 'vue3-select2-component'
 import './assets/select2/css/select2-bootstrap4.css'
 
-import VueSelect from 'vue-next-select'
-import 'vue-next-select/dist/index.min.css'
+//import VueSelect from 'vue-next-select'
+//import 'vue-next-select/dist/index.min.css'
 
 //import VeeValidate from "vee-validate";
 
@@ -25,8 +23,6 @@ import './assets/coreui/css/coreui.min.css'
 import './assets/coreui/js/coreui.bundle.min.js'
 
 //import './assets/js/custom-scripts.js'
-
-//moment.locale('es');
 
 //const token = localStorage.getItem('token')
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYxOTcxMDMwNCwiZXhwIjoxNjIyMzAyMzA0fQ.PJJMmUijPUKzYjkFPg-_To18xiMOg6Ldz7eZmIrS2C0'
@@ -45,8 +41,7 @@ app.mixin({
 })
 
 app.component('Select2', Select2)
-app.component('vue-select', VueSelect)
+//app.component('vue-select', VueSelect)
 app.use(store)
 app.use(router)
-//app.use(moment)
 app.mount('#app')

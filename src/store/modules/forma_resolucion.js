@@ -45,7 +45,8 @@ const mutations = {
 	},
 
 	UPDATE_FORMA_RESOLUCION: (state, item) => {
-		let index = state.formasResoluciones.findIndex(x => x.idFormaResolucion === item.id);
+		let index = state.formasResoluciones.findIndex(x => x.idFormaResolucion === item.idFormaResolucion);
+		console.log(index);
 		if(index > -1) {
 			state.formasResoluciones[index] = item;
 		}
@@ -116,9 +117,11 @@ const actions = {
 		commit('SET_SAVING_FORMA_RES', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}formas_resoluciones`, item)
 		.then(res => {
-			commit('INSERT_FORMA_RESOLUCION', res.data);
-			commit('SET_SAVING_FORMA_RES', false);
-			commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			setTimeout(function() {
+				commit('INSERT_FORMA_RESOLUCION', res.data);
+				commit('SET_SAVING_FORMA_RES', false);
+				commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -130,9 +133,11 @@ const actions = {
 		commit('SET_SAVING_FORMA_RES', true);
 		await axios.put(`${process.env.VUE_APP_API_URL}formas_resoluciones`, item)
 		.then(res => {
-			commit('UPDATE_FORMA_RESOLUCION', res.data);
-			commit('SET_SAVING_FORMA_RES', false);
-			commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			setTimeout(function() {
+				commit('UPDATE_FORMA_RESOLUCION', res.data);
+				commit('SET_SAVING_FORMA_RES', false);
+				commit('SET_MODAL_VISIBLE_FORMA_RES', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);

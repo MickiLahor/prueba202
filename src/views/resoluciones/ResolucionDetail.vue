@@ -74,7 +74,7 @@
 									</div>
 
 									<div class="form-group col-12">
-										<label>Visible para el mundo litigante?</label>
+										<label>Visible para la población litigante?</label>
 										<div>
 											<div class="custom-control custom-radio custom-control-inline">
 												<input type="radio" class="custom-control-input" id="radioSI" :checked="resolucion.visible">
@@ -93,7 +93,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h5>Contenido de la Resolución</h5>
-								<quill-editor v-model:value="resolucion.contenidoHtml"/>
+								<quill-editor v-model:value="resolucion.contenidoHtml" :options="editorOptions"/>
 							</div>
 						</div>
 					</div>
@@ -119,7 +119,15 @@
 		data() {
 			return {
 				idResolucion: null,
-				fechaResolucionFormat: ""
+				fechaResolucionFormat: "",
+				editorOptions: {
+					placeholder: 'Pegue aquí el texto del documento...',
+					readOnly: true,
+					theme: 'snow',
+					modules: {
+						toolbar: false
+					}
+				}
 			};
 		},
 		created() {

@@ -4,11 +4,11 @@ const state = {
 	procesos: [],
 	paginationProceso: null,
 	proceso: {
-  		idProceso: null,
-  		idMateria: null,
-  		descripcion: null,
-	    registroActivo: false
-  	},
+		idProceso: null,
+		idMateria: null,
+		descripcion: null,
+		registroActivo: false
+	},
 	isLoadingProceso: false,
 	isModalVisibleProceso: false,
 	isSavingProceso: false,
@@ -50,7 +50,7 @@ const mutations = {
 	},
 
 	UPDATE_PROCESO: (state, item) => {
-		let index = state.procesos.findIndex(x => x.idProceso === item.id);
+		let index = state.procesos.findIndex(x => x.idProceso === item.idProceso);
 		if(index > -1) {
 			state.procesos[index] = item;
 		}
@@ -129,9 +129,11 @@ const actions = {
 		await axios.post(`${process.env.VUE_APP_API_URL}procesos`, item)
 		.then(res => {
 			//console.log(res.data);
-			commit('INSERT_PROCESO', res.data);
-			commit('SET_SAVING_PROCESO', false);
-			commit('SET_MODAL_VISIBLE_PROCESO', false);
+			setTimeout(function() {
+				commit('INSERT_PROCESO', res.data);
+				commit('SET_SAVING_PROCESO', false);
+				commit('SET_MODAL_VISIBLE_PROCESO', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -144,9 +146,11 @@ const actions = {
 		commit('SET_SAVING_PROCESO', true);
 		await axios.put(`${process.env.VUE_APP_API_URL}procesos`, item)
 		.then(res => {
-			commit('UPDATE_PROCESO', res.data);
-			commit('SET_SAVING_PROCESO', false);
-			commit('SET_MODAL_VISIBLE_PROCESO', false);
+			setTimeout(function() {
+				commit('UPDATE_PROCESO', res.data);
+				commit('SET_SAVING_PROCESO', false);
+				commit('SET_MODAL_VISIBLE_PROCESO', false);
+			}, 500);
 		})
 		.catch(err => {
 			console.log('error', err);

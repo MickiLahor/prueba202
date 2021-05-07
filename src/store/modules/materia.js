@@ -53,7 +53,7 @@ const mutations = {
 	},
 
 	UPDATE_MATERIA: (state, item) => {
-		let index = state.materias.findIndex(x => x.idMateria === item.id);
+		let index = state.materias.findIndex(x => x.idMateria === item.idMateria);
 		if(index > -1) {
 			state.materias[index] = item;
 		}
@@ -132,9 +132,11 @@ const actions = {
 		commit('SET_SAVING_MATERIA', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}materias`, item)
 		.then(res => {
-			commit('INSERT_MATERIA', res.data);
-			commit('SET_SAVING_MATERIA', false);
-			commit('SET_MODAL_VISIBLE_MATERIA', false);
+			setTimeout(function() {
+	            commit('INSERT_MATERIA', res.data);
+	            commit('SET_SAVING_MATERIA', false);
+				commit('SET_MODAL_VISIBLE_MATERIA', false);
+	        }, 500);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -143,13 +145,15 @@ const actions = {
 	},
 
 	async updateMateria({ commit }, item) {
-		console.log(item);
 		commit('SET_SAVING_MATERIA', true);
 		await axios.put(`${process.env.VUE_APP_API_URL}materias`, item)
 		.then(res => {
-			commit('UPDATE_MATERIA', res.data);
-			commit('SET_SAVING_MATERIA', false);
-			commit('SET_MODAL_VISIBLE_MATERIA', false);
+			setTimeout(function() {
+	            commit('UPDATE_MATERIA', res.data);
+				commit('SET_SAVING_MATERIA', false);
+				commit('SET_MODAL_VISIBLE_MATERIA', false);
+			
+	        }, 500);
 		})
 		.catch(err => {
 			console.log('error', err);

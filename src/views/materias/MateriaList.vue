@@ -36,10 +36,10 @@
 							</thead>
 							<tbody>
 								<tr v-if="!materias.length">
-									<td class="lead text-center" colspan="4">No se encontraron resultados.</td>
+									<td class="lead text-center" colspan="6">No se encontraron resultados.</td>
 								</tr>
 								<tr v-if="isLoadingMateria">
-									<td class="lead text-center" colspan="8">
+									<td class="lead text-center" colspan="6">
 										<div class="spinner-border" role="status">
 											<span class="sr-only">Cargando...</span>
 										</div>
