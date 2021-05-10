@@ -3,7 +3,14 @@
   <div class="c-wrapper c-fixed-components">
     <Header v-if="estado()"/>
     <div class="c-body">
-      <main class="c-main">
+      <main class="c-main" v-if="estado()">
+        <div class="container-fluid">
+          <div class="fade-in">
+            <router-view/>
+          </div>
+        </div>
+      </main>
+      <main v-else class="c-main row justify-content-center align-items-center">
         <div class="container-fluid">
           <div class="fade-in">
             <router-view/>
