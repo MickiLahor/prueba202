@@ -158,7 +158,13 @@ router.beforeEach((to, from, next) => {
     next('/login');
   } else {
     next();
+    // if (publicPages && loggedIn) {
+    //   next('/');
+    // } else {
+    //   next();
+    // }
   }
+  
 });
 
 // router.beforeEach((to, from, next) => {
