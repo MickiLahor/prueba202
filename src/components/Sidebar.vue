@@ -1,12 +1,7 @@
 <template>
   <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <router-link class="c-sidebar-brand d-lg-down-none" tag="a" to="/">
-      <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-        <use xlink:href="../assets/brand/coreui.svg#full"></use>
-      </svg>
-      <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
-        <use xlink:href="../assets/brand/coreui.svg#signet"></use>
-      </svg>
+        <img class="img-fluid" src="../assets/img/logo_oj.png" width="118" height="46">
     </router-link>
     <ul class="c-sidebar-nav">
       <li class="c-sidebar-nav-title">Menu Principal</li>
