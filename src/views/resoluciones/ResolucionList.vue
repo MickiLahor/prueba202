@@ -3,13 +3,47 @@
 		<div class="col-lg-12">
 			<div class="card card-accent-primary">
 				<div class="card-header d-flex justify-content-between align-items-center">
-						<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Resoluciones</h5>
-						<router-link to="/resoluciones/create">
-							<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
-						</router-link>
+					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Resoluciones</h5>
+					<router-link to="/resoluciones/create">
+						<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
+					</router-link>
 				</div>
 				<div class="card-body">
-					<div class="row">
+					<div class="card">
+						<div class="card-body">
+							<div><h5 class="font-weight-bold">Opciones de Búsqueda</h5></div>
+							<div class="row">
+
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="oficina" class="col-sm-4 col-form-label text-sm-right">Sala:</label>
+										<div class="col">
+											<select v-model="params.oficina" class="form-control" id="oficina" @keypress.enter.prevent="search">
+												<option v-for="item in oficinasDropList" v-bind:value="item.value">{{ item.text }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestion:</label>
+										<div class="col">
+											<select v-model="params.gestion" class="form-control" id="gestion" @keypress.enter.prevent="search">
+												<option v-for="item in gestionesDropList" v-bind:value="item">{{ item }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="my-1 col-lg-12 text-sm-right">
+									<button class="btn btn-success mr-1" type="button" @click="getItems"><i class="cil-search"></i> Buscar</button>
+									<button class="btn btn-secondary" type="button" @click="limpiarCampos"><i class="cil-minus"></i> Limpiar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="row">
 						<div class="col-sm-12 col-md-6 form-inline">
 							<label class="mr-2">Buscar:</label>
 							<input class="form-control" type="search" v-model="params.search" placeholder="Ingrese texto..." @input="getItems()"/>
@@ -23,7 +57,7 @@
 								<option value="100">100</option>
 							</select>
 						</div>
-					</div>
+					</div>-->
 					<div class="table-responsive">
 						<table class="table table-hover table-sm datatable">
 							<thead>
@@ -104,20 +138,34 @@
 					page: 1,
 					orderBy: "id",
 					orderType: "desc",
-					search: "",
+					//search: "",
+					oficina: '',
+					gestion: '',
 				}
 			};
 		},
 		created() {
-			this.fetchAllResoluciones(this.params);
+			this.fetchOficinasDropList().then(response => {
+				this.params.oficina = this.oficinasDropList[0].value;
+				this.fetchGestionesDropList()
+				.then(response => {
+					this.params.gestion = this.gestionesDropList[0];
+					this.fetchAllResoluciones(this.params);
+				});
+			});
 		},
-		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion"]) },
+		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList"]) },
 		methods: {
-			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion"]),
+			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion", "fetchOficinasDropList", "fetchGestionesDropList"]),
 			...mapMutations(["SET_EDIT_MODE_RESOLUCION"]),
 
 			getItems() {
-				this.fetchAllResoluciones(this.params);
+				if (this.params.oficina || this.params.gestion) {
+					this.fetchAllResoluciones(this.params);
+				}
+				else {
+					Swal.fire('Aviso', 'Debe seleccionar al menos un campo de búsqueda.', 'warning');
+				}
 			},
 			sortItems: function(column) {
 				this.params.orderBy = column;
@@ -163,7 +211,11 @@
 						this.activarResolucion(id);
 					}
 				});
-			}
+			},
+			limpiarCampos() {
+				//this.params.oficina = "";
+				//this.params.gestion = "";
+			},
 		}
 	}
 </script>
