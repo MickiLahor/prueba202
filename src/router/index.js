@@ -7,10 +7,23 @@ import TipoResolucionList from '../views/tipos_resoluciones/TipoResolucionList.v
 import FormaResolucionList from '../views/formas_resoluciones/FormaResolucionList.vue'
 import ResolucionList from '../views/resoluciones/ResolucionList.vue'
 import ResolucionAdd from '../views/resoluciones/ResolucionAdd.vue'
+import Login from '../views/auth/Login.vue'
+import store from '../store'
 import ResolucionEdit from '../views/resoluciones/ResolucionEdit.vue'
 import ResolucionDetail from '../views/resoluciones/ResolucionDetail.vue'
 
+
 const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      breadcrumb: [
+          { name: 'Login' }
+      ]
+    }
+  },
   {
     path: '/',
     name: 'home',
@@ -122,12 +135,41 @@ const routes = [
         { name: 'Ver Resolucion' }
       ]
     }
-  }
+  },
+  //404
+  // {
+  //   path: '*',
+  //   name:"NotFound",
+  //   component:NotFound
+  // },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('token');
+
+  if (authRequired && !loggedIn) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+// router.beforeEach((to, from, next) => {
+//   const rutaEsProtegida = to.matched.some(item => item.meta.rutaProtegida)
+//   if (rutaEsProtegida && store.state.token === null) {
+//     console.log('es protegida')
+//     next('/login')
+//   } else {
+//     console.log('no es protegida')
+//     next()
+//   }
+// })
 
 export default router

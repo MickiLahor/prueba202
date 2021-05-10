@@ -77,7 +77,7 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions, mapMutations } from "vuex"
+	import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
 	import MateriaModal from './MateriaModal.vue'
 
 	export default {
@@ -99,7 +99,9 @@
 		created() {
 			this.fetchAllMaterias(this.params);
 		},
-		computed: { ...mapGetters(["materias", "isLoadingMateria"]) },
+		computed: { ...mapGetters(["materias", "isLoadingMateria"]),
+			...mapState(['token'])
+		},
 		methods: {
 			...mapActions(["fetchAllMaterias", "deleteMateria"]),
 			...mapMutations(["SET_MODAL_VISIBLE_MATERIA", "SET_EDIT_MODE_MATERIA"]),
