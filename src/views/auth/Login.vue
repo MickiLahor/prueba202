@@ -40,7 +40,8 @@
         <div class="card text-white bg-light py-5 d-md-down-none" style="width:44%">
           <div class="card-body text-center">
             <div>
-              <h2 style="color:#323232; font-family: Impact, helvética;">SISTEMA DE REGISTRO DE RESOLUCIONES</h2>
+              <h1 style="color:Black; font-family: Arial Black, Impact, helvética;">KRIMA</h1>
+              <h5 style="color:#323232; font-family: Arial, Impact, helvética;">SISTEMA DE REGISTRO DE RESOLUCIONES</h5>
               <div> 
                 <img class="img-fluid" src="https://daf.organojudicial.gob.bo/Images/logo-meet.png">
               </div>

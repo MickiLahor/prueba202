@@ -109,6 +109,10 @@
 					<div class="card">
 						<div class="card-body">
 							<h5>Contenido de la Resolución</h5>
+							
+							<button class="btn btn-info mb-2" @click="openDocx"><i class="cil-folder-open"></i> Abrir Archivo Word</button>
+							<input type="file" ref="fileInput" @change="parseWordDocxFile" hidden />
+
 							<quill-editor v-model:value="resolucion.contenidoHtml" :options="editorOptions" style="min-height: 200px;" :style="error.contenidoHtml ? 'border-color: #e55353;' : '' "/>
 							<em class="invalid-feedback">{{error.contenidoHtml}}</em>
 						</div>
@@ -132,6 +136,8 @@
 	import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 	import { quillEditor, Quill } from 'vue3-quill'
+
+	import mammoth from "mammoth";
 
 	export default {
 		name: 'ResolucionAdd',
@@ -161,7 +167,7 @@
 				error: {},
 				valid: false,
 				editorOptions: {
-					placeholder: 'Pegue aquí el texto del documento...',
+					placeholder: 'Contenido de la Resolución...',
 					theme: 'snow',
 					readOnly: false,
 					modules: {
@@ -241,6 +247,27 @@
 			
 			onSelectMateria(event) {
 				this.fetchProcesosByMateriaDropList(event.target.value);
+			},
+
+			openDocx () {
+				this.$refs.fileInput.click()
+			},
+			parseWordDocxFile (event) {
+				const files = event.target.files
+
+				if (!files.length) return;
+				var file = files[0];
+				
+
+				var reader = new FileReader();
+				reader.onloadend = () => {
+					var arrayBuffer = reader.result;
+
+					mammoth.convertToHtml({arrayBuffer: arrayBuffer}).then( (resultObject) => {
+						this.resolucion.contenidoHtml = resultObject.value
+					})
+				}
+				reader.readAsArrayBuffer(file);
 			}
 		}
 	};
