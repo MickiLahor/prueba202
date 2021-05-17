@@ -15,31 +15,31 @@
 							<h5>Datos Generales</h5>
 							<div class="row">
 
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="numeroResolucion">Nro. Resolución</label>
 									<input v-model="resolucion.numeroResolucion" type="text" id="numeroResolucion" placeholder="Numero Resolución" class="form-control" :class="{ 'is-invalid': error.numeroResolucion }">
 									<em class="invalid-feedback">{{error.numeroResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="codigoResolucion">Codigo Expediente</label>
-									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }">
+									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }" @change="onChangeCodigo($event)">
 									<em class="invalid-feedback">{{error.codigoResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="fechaResolucion">Fecha de Emisión</label>
 									<input v-model="resolucion.fechaResolucion" type="date" id="fechaResolucion" placeholder="Fecha" class="form-control" :class="{ 'is-invalid': error.fechaResolucion }">
 									<em class="invalid-feedback">{{error.fechaResolucion}}</em>
 								</div>
 								
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="nombre_oficina">Sala o Juzgado:</label>
 									<input type="text" id="nombre_oficina" value="Sala Penal 1era" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }" readonly>
 									<em class="invalid-feedback">{{error.fidFuncionarioRelator}}</em>
 								</div>
 
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="idTipoResolucion">Tipo de Resolución</label>
 									<!--<Select2 id="idTipoResolucion" v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<!--<vue-select v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" label-by="text" valuel-by="value" searchable clear-on-select close-on-select search-placeholder="Escriba para buscar"></vue-select>-->
@@ -49,7 +49,7 @@
 									<em class="invalid-feedback">{{error.fidTipoResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="idFormaResolucion">Forma de Resolución</label>
 									<!--<Select2 id="idFormaResolucion" v-model="resolucion.idFormaResolucion" :options="formasResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idFormaResolucion" v-model="resolucion.fidFormaResolucion" class="form-control" :class="{ 'is-invalid': error.fidFormaResolucion }">
@@ -58,7 +58,16 @@
 									<em class="invalid-feedback">{{error.fidFormaResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+									<label for="idFuncionario">Relator</label>
+									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
+									<select id="idFuncionario" v-model="resolucion.fidFuncionario" class="form-control" :class="{ 'is-invalid': error.fidFuncionario }">
+										<option v-for="item in relatorDropList" v-bind:value="item.value">{{ item.text }}</option>
+									</select>
+									<em class="invalid-feedback">{{error.fidFuncionario}}</em>
+								</div>
+								
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="idMateria">Materia</label>
 									<!--<Select2 id="idMateria" v-model="idMateria" :options="materiasDropList" @update="onSelectMateria" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idMateria" v-model="idMateria" class="form-control" :class="{ 'is-invalid': error.idMateria }" @change="onSelectMateria($event)">
@@ -67,7 +76,7 @@
 									<em class="invalid-feedback">{{error.idMateria}}</em>
 								</div>
 
-								<div class="form-group col-xl-3 col-lg-4 col-sm-6">
+								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="idProceso">Proceso</label>
 									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idProceso" v-model="resolucion.fidProceso" class="form-control" :class="{ 'is-invalid': error.fidProceso }">
@@ -78,7 +87,7 @@
 
 								<div class="form-group col-md-6">
 									<label for="demandante">Demandante</label>
-									<textarea v-model="resolucion.demandante" type="text" id="demandante" placeholder="Demandante(s)" rows="2" class="form-control" :class="{ 'is-invalid': error.demandante }"/>
+									<textarea v-model="resolucion.demandante" type="text" id="demandante" placeholder="Demandante(s)" rows="2" class="form-control" :class="{ 'is-invalid': error.demandante }">{{resolucion.demandante}}</textarea>
 									<em class="invalid-feedback">{{error.demandante}}</em>
 								</div>
 
@@ -149,6 +158,7 @@
 					fidTipoResolucion: '',
 					fidFormaResolucion: '',
 					fidProceso: '',
+					fidRelator: '',
 					demandante: '',
 					demandado: '',
 					fidFuncionarioRelator: 1,
@@ -174,12 +184,12 @@
 			this.fetchTiposResolucionesDropList();
 			this.fetchFormasResolucionesDropList();
 			this.fetchMateriasDropList();
-			
+			this.fetchRelatorDropList(localStorage.getItem('idOficina'));
 		},
-		computed: { ...mapGetters(["isSavingResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList",  "procesosDropList"]) },
+		computed: { ...mapGetters(["isSavingResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList", "procesosDropList", "relatorDropList", "demandante", "demandado"]) },
 		methods: {
-			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList", "fetchProcesosByMateriaDropList", "storeResolucion"]),
-
+			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList","fetchProcesosByMateriaDropList", "storeResolucion", "fetchRelatorDropList", "fetchDemandante", "fetchDemandado"]),
+			
 			validate() {
 				this.valid = false;
 				this.error = {};
@@ -241,7 +251,11 @@
 			
 			onSelectMateria(event) {
 				this.fetchProcesosByMateriaDropList(event.target.value);
+			},
+			onChangeCodigo(event) {
+				this.fetchDemandante(event.target.value);
 			}
+			
 		}
 	};
 </script>

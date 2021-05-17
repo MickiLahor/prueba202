@@ -22,6 +22,9 @@ const state = {
 	procesosDropList: [],
 	oficinasDropList: [],
 	gestionesDropList: [],
+	relatorDropList: [],
+	demandante: null,
+	demandado: null
 }
 
 const mutations = {
@@ -98,6 +101,18 @@ const mutations = {
 	SET_GESTIONES_ALL (state, items) {
 		state.gestionesDropList = items;
 	},
+
+	SET_RELATOR_OF (state, items) {
+		state.relatorDropList = items;
+	},
+
+	SET_DEMANDANTE: (state, item) => {
+		state.demandante = item
+	},
+
+	SET_DEMANDADO: (state, item) => {
+		state.demandado = item
+	}
 }
 
 const actions = {
@@ -368,6 +383,43 @@ const actions = {
 			commit('SET_GESTIONES_ALL', lista);
 		}
 	},
+
+	async fetchRelatorDropList({ commit }, id_oficina) {
+		await axios.get(`${process.env.VUE_APP_API_URL}funcionario_relator/${id_oficina}`)
+		.then(res => {
+
+			const lista = [];
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idFuncionario, text: item.nombreCompleto});
+			});
+			commit('SET_RELATOR_OF', lista);
+			//commit('SET_RELATOR_OF', res.data.nombreCompleto);
+		})
+		.catch(err => {
+			console.log('error', err);
+		})
+	},
+
+	async fetchDemandante({ commit }, nurej) {
+		await axios.get(`${process.env.VUE_APP_API_URL}proceso_zeus/${nurej}`)
+		.then(res => {
+			commit('SET_DEMANDANTE', res.data.demandante);
+		})
+		.catch(err => {
+			console.log('error', err);
+		})
+	},
+
+	async fetchDemandado({ commit }, nurej) {
+		await axios.get(`${process.env.VUE_APP_API_URL}proceso_zeus/${nurej}`)
+		.then(res => {
+			commit('SET_DEMANDADO', res.data.demandado);
+		})
+		.catch(err => {
+			console.log('error', err);
+		})
+	},
+
 }
 
 const getters = {
@@ -383,6 +435,9 @@ const getters = {
 	procesosDropList: state => state.procesosDropList,
 	oficinasDropList: state => state.oficinasDropList,
 	gestionesDropList: state => state.gestionesDropList,
+	relatorDropList: state => state.relatorDropList,
+	demandante: state => state.demandante,
+	demandado: state => state.demandado
 }
 
 const resolucionModule = {
