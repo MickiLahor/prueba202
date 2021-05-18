@@ -91,6 +91,10 @@ const mutations = {
 		state.materiasDropList = items
 	},
 
+	SET_PROCESOS: (state, items) => {
+		state.procesosDropList = items
+	},
+
 	SET_PROCESOS_POR_MATERIA: (state, items) => {
 		state.procesosDropList = items
 	},
@@ -251,14 +255,6 @@ const actions = {
 
 	async fetchTiposResolucionesDropList({ commit }) {
 
-		/*let lista = [
-		{value: 1, text: "Auto"},
-		{value: 2, text: "Auto de Vista"},
-		{value: 3, text: "Sentencia"}
-		];
-
-		commit('SET_RESOLUCION_ALL', lista);*/
-
 		await axios.get(`${process.env.VUE_APP_API_URL}tipos_resoluciones`)
 		.then(res => {
 			const lista = [];
@@ -273,15 +269,6 @@ const actions = {
 	},
 
 	async fetchFormasResolucionesDropList({ commit }) {
-
-		/*let lista = [
-		{value: "1", text: "Infundado"},
-		{value: "2", text: "Fundado"},
-		{value: "3", text: "Procedente"},
-		{value: "4", text: "Improcedente"}
-		];
-
-		commit('SET_FORMAS_RESOLUCIONES_ALL', lista);*/
 
 		await axios.get(`${process.env.VUE_APP_API_URL}formas_resoluciones`)
 		.then(res => {
@@ -298,15 +285,6 @@ const actions = {
 
 	async fetchMateriasDropList({ commit }) {
 
-		/*let lista = [
-		{value: 1, text: "Penal"},
-		{value: 2, text: "Civil"},
-		{value: 3, text: "Familiar"},
-		{value: 4, text: "Laboral"}
-		];
-
-		commit('SET_MATERIAS_ALL', lista);*/
-
 		await axios.get(`${process.env.VUE_APP_API_URL}materias`)
 		.then(res => {
 			const lista = [];
@@ -320,19 +298,25 @@ const actions = {
 		});
 	},
 
+	async fetchProcesosDropList({ commit }) {
+
+		await axios.get(`${process.env.VUE_APP_API_URL}procesos`)
+		.then(res => {
+			//console.log(res);
+			const lista = [];
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idProceso, text: item.descripcion});
+			});
+			commit('SET_PROCESOS', lista);
+		})
+		.catch(err => {
+			console.log('error', err);
+		});
+	},
+
 	async fetchProcesosByMateriaDropList({ commit }, id_materia) {
 
-		/*let lista = [
-		{value: 1, text: "Proceso 1"},
-		{value: 2, text: "Proceso 2"},
-		{value: 3, text: "Proceso 3"}
-		];
-
-		commit('SET_PROCESOS_POR_MATERIA', lista);*/
-		//let url = 'http://192.168.5.128:4000/api/proceso/busca_procesos_materia/'+id_materia;
-
 		await axios.get(`${process.env.VUE_APP_API_URL}procesos/por_materia/${id_materia}`)
-		//await axios.get(url)
 		.then(res => {
 			//console.log(res);
 			const lista = [];
@@ -348,17 +332,18 @@ const actions = {
 
 	async fetchOficinasDropList({ commit }) {
 
-		let lista = [
+		/*let lista = [
 		{value: "111", text: "Sala Penal Primera"},
 		{value: "113", text: "Sala Civil Primera"},
 		{value: "130", text: "Sala Social Primera"},
 		{value: "148", text: "Sala Social Segunda"}
 		];
 
-		commit('SET_OFICINAS_ALL', lista);
+		commit('SET_OFICINAS_ALL', lista);*/
 
-		/*await axios.get(`${process.env.VUE_APP_API_URL}oficinas`)
+		await axios.get(`${process.env.VUE_APP_API_URL}oficinas`)
 		.then(res => {
+			console.log(res);
 			const lista = [];
 			res.data.forEach((item, index) => {
 				lista.push({value: item.idOficina, text: item.descripcion});
@@ -367,7 +352,7 @@ const actions = {
 		})
 		.catch(err => {
 			console.log('error', err);
-		});*/
+		});
 	},
 
 	async fetchGestionesDropList({ commit }, id_oficina) {
@@ -425,6 +410,17 @@ const actions = {
 		})
 	},
 
+	/*async fetchDepartamentosDropList({ commit }) {
+
+		let lista = [
+		{value: "1", text: "Sala Penal Primera"},
+		{value: "2", text: "Sala Civil Primera"},
+		{value: "3", text: "Sala Social Primera"},
+		{value: "4", text: "Sala Social Segunda"}
+		];
+
+		commit('SET_OFICINAS_ALL', lista);
+	},*/
 }
 
 const getters = {

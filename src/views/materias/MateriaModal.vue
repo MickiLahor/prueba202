@@ -129,6 +129,15 @@
           this.valid = true;
       },
 
+      resetForm() { 
+        this.materia.idMateria = '';
+        this.materia.descripcion = '';
+        this.materia.denominacionDemandante = '';
+        this.materia.denominacionDemandado = '';
+        this.materia.registroActivo = false;
+        this.materia.usuarioRegistro = "usuarioPrueba";
+      },
+
       storeItem() {
         this.validate();
         if(this.valid) {

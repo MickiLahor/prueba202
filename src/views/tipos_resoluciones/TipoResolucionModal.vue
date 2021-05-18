@@ -95,6 +95,13 @@
           this.valid = true;
       },
 
+      resetForm() { 
+        this.tipoResolucion.idTipoResolucion = '';
+        this.tipoResolucion.descripcion = '';
+        this.tipoResolucion.registroActivo = false;
+        this.tipoResolucion.usuarioRegistro = "usuarioPrueba";
+      },
+
       storeItem() {
         this.validate();
         if(this.valid) {

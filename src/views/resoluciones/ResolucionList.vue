@@ -16,6 +16,45 @@
 
 								<div class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
+										<label for="codigoResolucion" class="col-sm-4 col-form-label text-sm-right">Código o Nurej:</label>
+										<div class="col">
+											<input type="search" v-model="params.codigoResolucion" class="form-control" id="codigoResolucion" placeholder="Ingrese el codigo o nurej ...">
+										</div>
+									</div>
+								</div>
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="nroResolucion" class="col-sm-4 col-form-label text-sm-right">Numero de Resolución:</label>
+										<div class="col">
+											<input type="search" v-model="params.nroResolucion" class="form-control" id="nroResolucion" placeholder="Ingrese el Nro. de la Resolución ...">
+										</div>
+									</div>
+								</div>
+
+								<!--<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="departamento" class="col-sm-4 col-form-label text-sm-right">Departamento:</label>
+										<div class="col">
+											<select v-model="params.departamento" class="form-control" id="departamento" @keypress.enter.prevent="search">
+												<option v-for="item in departamentoDropList" v-bind:value="item.value">{{ item.text }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="municipio" class="col-sm-4 col-form-label text-sm-right">Municipio:</label>
+										<div class="col">
+											<select v-model="params.municipio" class="form-control" id="municipio" @keypress.enter.prevent="search">
+												<option v-for="item in municipioDropList" v-bind:value="item.value">{{ item.text }}</option>
+											</select>
+										</div>
+									</div>
+								</div>-->
+
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
 										<label for="oficina" class="col-sm-4 col-form-label text-sm-right">Sala:</label>
 										<div class="col">
 											<select v-model="params.oficina" class="form-control" id="oficina" @keypress.enter.prevent="search">
@@ -36,8 +75,71 @@
 									</div>
 								</div>
 
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="tipoResolucion" class="col-sm-4 col-form-label text-sm-right">Tipo de Resolución:</label>
+										<div class="col">
+											<select v-model="params.tipoResolucion" class="form-control" id="tipoResolucion" @keypress.enter.prevent="search">
+												<option v-bind:value="0">Todos</option>
+												<option v-for="item in tiposResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<!--<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="formaResolucion" class="col-sm-4 col-form-label text-sm-right">Forma de Resolución:</label>
+										<div class="col">
+											<select v-model="params.formaResolucion" class="form-control" id="formaResolucion" @keypress.enter.prevent="search">
+												<option v-for="item in formasResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="materia" class="col-sm-4 col-form-label text-sm-right">Materia:</label>
+										<div class="col">
+											<select v-model="params.materia" class="form-control" id="materia" @keypress.enter.prevent="search">
+												<option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
+											</select>
+										</div>
+									</div>
+								</div>-->
+
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="proceso" class="col-sm-4 col-form-label text-sm-right">Proceso:</label>
+										<div class="col">
+											<select v-model="params.proceso" class="form-control" id="proceso" @keypress.enter.prevent="search">
+												<option v-bind:value="0">Todos</option>
+												<option v-for="item in procesosDropList" v-bind:value="item.value">{{ item.text }}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<!--<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="demandante" class="col-sm-4 col-form-label text-sm-right">Demandante:</label>
+										<div class="col">
+											<input type="search" v-model="params.demandante" class="form-control" id="demandante">
+										</div>
+									</div>
+								</div>
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="demandado" class="col-sm-4 col-form-label text-sm-right">Demandado:</label>
+										<div class="col">
+											<input type="search" v-model="params.demandado" class="form-control" id="demandado">
+										</div>
+									</div>
+								</div>-->
+
 								<div class="my-1 col-lg-12 text-sm-right">
-									<button class="btn btn-success mr-1" type="button" @click="getItems"><i class="cil-search"></i> Buscar</button>
+									<button class="btn btn-info mr-1" type="button" @click="getItems"><i class="cil-search"></i> Buscar</button>
 									<button class="btn btn-secondary" type="button" @click="limpiarCampos"><i class="cil-minus"></i> Limpiar</button>
 								</div>
 							</div>
@@ -135,32 +237,45 @@
 		data() {
 			return {
 				params: {
-					page: 1,
-					orderBy: "id",
-					orderType: "desc",
-					//search: "",
-					oficina: '',
-					gestion: '',
+					//page: 1,
+					//orderBy: "id",
+					//orderType: "desc",
+					oficina: 0,
+					gestion: 0,
+					tipoResolucion: 0,
+					proceso: 0,
+					//demandante: null,
+					//demandado: null,
+					codigoResolucion: '',
+					nroResolucion: '',
 				}
 			};
 		},
-		created() {
-			this.fetchOficinasDropList().then(response => {
+		async created() {
+			await this.fetchOficinasDropList();
+			this.params.oficina = this.oficinasDropList[0].value;
+			await this.fetchGestionesDropList();
+			this.params.gestion = this.gestionesDropList[0];
+			await this.fetchTiposResolucionesDropList();
+			await this.fetchProcesosDropList();
+			this.fetchAllResoluciones(this.params);
+			/*this.fetchOficinasDropList().then(response => {
 				this.params.oficina = this.oficinasDropList[0].value;
 				this.fetchGestionesDropList()
 				.then(response => {
 					this.params.gestion = this.gestionesDropList[0];
 					this.fetchAllResoluciones(this.params);
 				});
-			});
+			});*/
+			
 		},
-		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList"]) },
+		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList", "tiposResolucionesDropList", "procesosDropList"]) },
 		methods: {
-			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion", "fetchOficinasDropList", "fetchGestionesDropList"]),
+			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion", "fetchOficinasDropList", "fetchGestionesDropList", "fetchTiposResolucionesDropList", "fetchProcesosDropList"]),
 			...mapMutations(["SET_EDIT_MODE_RESOLUCION"]),
 
 			getItems() {
-				if (this.params.oficina || this.params.gestion) {
+				if (this.params.oficina || this.params.gestion || this.params.tipoResolucion || this.params.proceso || this.params.codigoResolucion || this.params.nroResolucion) {
 					this.fetchAllResoluciones(this.params);
 				}
 				else {
