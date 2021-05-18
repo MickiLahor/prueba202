@@ -5,7 +5,7 @@
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Registrar Resolución</h5>
 					<div>
-						<button type="button" @click="storeItem()" class="btn btn-primary mr-1"><i class="cil-save"></i> Guardar</button>
+						<button type="button" @click="storeItem()" class="btn btn-primary"><i class="cil-save"></i> Guardar</button>
 						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
@@ -125,7 +125,7 @@
 						{{ isSavingResolucion ? 'Guardando...' : 'Guardar' }}
 					</button>
 
-					<button type="button" class="btn btn-danger" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 				</div>
 			</div>
 		</div>
@@ -167,7 +167,7 @@
 				error: {},
 				valid: false,
 				editorOptions: {
-					placeholder: 'Contenido de la Resolución...',
+					placeholder: 'Pegue aquí el contenido de la Resolución...',
 					theme: 'snow',
 					readOnly: false,
 					modules: {

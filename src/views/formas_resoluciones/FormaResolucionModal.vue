@@ -85,6 +85,13 @@
           this.valid = true;
       },
 
+      resetForm() { 
+        this.formaResolucion.idFormaResolucion = '';
+        this.formaResolucion.descripcion = '';
+        this.formaResolucion.registroActivo = false;
+        this.formaResolucion.usuarioRegistro = "usuarioPrueba";
+      },
+
       storeItem() {
         this.validate();
         if(this.valid) {

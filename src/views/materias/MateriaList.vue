@@ -116,6 +116,7 @@
 			addItem() {
 				this.SET_MODAL_VISIBLE_MATERIA(true);
 				this.SET_EDIT_MODE_MATERIA(false);
+				this.$refs.modal_materia.resetForm();
 			},
 			editItem(item) {
 				this.SET_MODAL_VISIBLE_MATERIA(true);

@@ -111,6 +111,7 @@
 			addItem() {
 				this.SET_MODAL_VISIBLE_PROCESO(true);
 				this.SET_EDIT_MODE_PROCESO(false);
+				this.$refs.modal_proceso.resetForm();
 			},
 			editItem(item) {
 				this.SET_MODAL_VISIBLE_PROCESO(true);

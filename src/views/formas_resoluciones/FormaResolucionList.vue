@@ -109,6 +109,7 @@
 			addItem() {
 				this.SET_MODAL_VISIBLE_FORMA_RES(true);
 				this.SET_EDIT_MODE_FORMA_RES(false);
+				this.$refs.modal_forma_resolucion.resetForm();
 			},
 			editItem(item) {
 				this.SET_MODAL_VISIBLE_FORMA_RES(true);
