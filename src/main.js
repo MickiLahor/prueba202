@@ -17,6 +17,9 @@ import './assets/select2/css/select2-bootstrap4.css'
 
 //import VeeValidate from "vee-validate";
 
+//import docx4js from "docx4js";
+//import mammoth from "mammoth";
+
 import './assets/icons/css/free.min.css'
 import './assets/icons/css/brand.min.css'
 import './assets/coreui/css/coreui.min.css'
@@ -42,6 +45,8 @@ app.mixin({
 
 app.component('Select2', Select2)
 //app.component('vue-select', VueSelect)
+//app.component('docx4js', docx4js)
+//app.component('mammoth', mammoth)
 app.use(store)
 app.use(router)
 app.mount('#app')

@@ -104,6 +104,14 @@
           this.valid = true;
       },
 
+      resetForm() { 
+        this.proceso.idProceso = '';
+        this.proceso.fidMateria = '';
+        this.proceso.descripcion = '';
+        this.proceso.registroActivo = false;
+        this.proceso.usuarioRegistro = "usuarioPrueba";
+      },
+
       storeItem() {
         this.validate();
         if(this.valid) {
