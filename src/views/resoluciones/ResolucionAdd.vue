@@ -23,7 +23,7 @@
 
 								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="codigoResolucion">Codigo Expediente</label>
-									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }" @change="onChangeCodigo($event)">
+									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }">
 									<em class="invalid-feedback">{{error.codigoResolucion}}</em>
 								</div>
 
@@ -118,11 +118,15 @@
 					<div class="card">
 						<div class="card-body">
 							<h5>Contenido de la Resolución</h5>
+
+							<simple-upload/>
+
 							<quill-editor v-model:value="resolucion.contenidoHtml" :options="editorOptions" style="min-height: 200px;" :style="error.contenidoHtml ? 'border-color: #e55353;' : '' "/>
 							<em class="invalid-feedback">{{error.contenidoHtml}}</em>
 						</div>
 					</div>
 				</div>
+
 				<div class="card-footer">
 					<button type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
@@ -139,13 +143,14 @@
 
 <script>
 	import { mapGetters, mapActions, mapMutations } from 'vuex'
-
 	import { quillEditor, Quill } from 'vue3-quill'
+	import SimpleUpload from '@/components/SimpleUpload.vue'
 
 	export default {
 		name: 'ResolucionAdd',
 		components: {
-			quillEditor
+			quillEditor,
+			SimpleUpload
 		},
 		data() {
 			return {
@@ -177,7 +182,7 @@
 					modules: {
 						toolbar: false
 					}
-				}
+				},
 			};
 		},
 		created() {
@@ -189,7 +194,7 @@
 		computed: { ...mapGetters(["isSavingResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList", "procesosDropList", "relatorDropList", "demandante", "demandado"]) },
 		methods: {
 			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList","fetchProcesosByMateriaDropList", "storeResolucion", "fetchRelatorDropList", "fetchDemandante", "fetchDemandado"]),
-			
+
 			validate() {
 				this.valid = false;
 				this.error = {};
@@ -252,9 +257,6 @@
 			onSelectMateria(event) {
 				this.fetchProcesosByMateriaDropList(event.target.value);
 			},
-			onChangeCodigo(event) {
-				this.fetchDemandante(event.target.value);
-			}
 			
 		}
 	};

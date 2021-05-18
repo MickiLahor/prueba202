@@ -24,7 +24,8 @@ const state = {
 	gestionesDropList: [],
 	relatorDropList: [],
 	demandante: null,
-	demandado: null
+	demandado: null,
+	oficina: null,
 }
 
 const mutations = {
@@ -112,7 +113,11 @@ const mutations = {
 
 	SET_DEMANDADO: (state, item) => {
 		state.demandado = item
-	}
+	},
+
+	SET_OFICINA(state, payload) {
+    state.isLogin = payload
+  }
 }
 
 const actions = {
