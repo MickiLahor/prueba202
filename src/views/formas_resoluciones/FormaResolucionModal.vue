@@ -78,7 +78,7 @@
 
         if(!this.formaResolucion.descripcion)
           this.error.descripcion = 'El campo descripción es obligatorio.';
-        else if(this.formaResolucion.descripcion.length > 50)
+        else if(this.formaResolucion.descripcion.length > 250)
           this.error.descripcion = 'El campo descripción debe tener como máximo 50 carateres.';
 
         if(Object.entries(this.error).length === 0)

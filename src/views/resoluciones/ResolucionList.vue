@@ -259,14 +259,6 @@
 			await this.fetchTiposResolucionesDropList();
 			await this.fetchProcesosDropList();
 			this.fetchAllResoluciones(this.params);
-			/*this.fetchOficinasDropList().then(response => {
-				this.params.oficina = this.oficinasDropList[0].value;
-				this.fetchGestionesDropList()
-				.then(response => {
-					this.params.gestion = this.gestionesDropList[0];
-					this.fetchAllResoluciones(this.params);
-				});
-			});*/
 			
 		},
 		computed: { ...mapGetters(["resoluciones", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList", "tiposResolucionesDropList", "procesosDropList"]) },

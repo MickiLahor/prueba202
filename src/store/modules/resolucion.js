@@ -120,7 +120,7 @@ const mutations = {
 	},
 
 	SET_OFICINA(state, payload) {
-    state.isLogin = payload
+    state.oficina = payload
   }
 }
 
@@ -158,6 +158,7 @@ const actions = {
 
 		await axios.get(url)
 		.then(res => {
+			console.log(res.data);
 			const lista = [];
 			res.data.forEach(function(item, index) {
 				lista.push({

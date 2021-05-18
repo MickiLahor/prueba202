@@ -3,11 +3,16 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex'
 	export default {
-
-		computed: {
-    ...mapState('auth',['dataUsuario'])
-  },
-	}
+		name: "Home",
+		data() {
+			return {
+                //
+            }
+        },
+        created() {
+        	
+        },
+        methods: {}
+    }
 </script>

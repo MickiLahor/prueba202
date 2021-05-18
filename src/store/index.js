@@ -7,7 +7,12 @@ import tipo_resolucion from'./modules/tipo_resolucion'
 import forma_resolucion from'./modules/forma_resolucion'
 import resolucion from'./modules/resolucion'
 
+import createPersistedState from "vuex-persistedstate"
+
 export default createStore({
+  plugins: [
+  	createPersistedState()
+  ],
   modules: {
     auth,
     materia,

@@ -1,9 +1,9 @@
 <template>
-  <Sidebar v-if="estado()"/>
+  <Sidebar v-if="isLogin"/>
   <div class="c-wrapper c-fixed-components">
-    <Header v-if="estado()"/>
+    <Header v-if="isLogin"/>
     <div class="c-body">
-      <main class="c-main" v-if="estado()">
+      <main class="c-main" v-if="isLogin">
         <div class="container-fluid">
           <div class="fade-in">
             <router-view/>
@@ -17,7 +17,7 @@
           </div>
         </div>
       </main>
-      <Footer v-if="estado()"/>
+      <Footer v-if="isLogin"/>
     </div>
   </div>
 </template>
@@ -26,37 +26,17 @@
   import Sidebar from "./components/Sidebar.vue";
   import Header from "./components/Header.vue";
   import Footer from "./components/Footer.vue";
-  import {mapState, mapActions} from 'vuex'
+  import { mapGetters } from 'vuex'
   
   export default {
-    data() {
-      return {
-      }
-    },
     components: {
       Header,
       Sidebar,
       Footer
     },
-    methods: {
-      ...mapActions('auth',['leerIsLogin']),
-    
-      estado: function (){
-        return this.isLogin 
-      }
-    },
-    created(){
-      this.leerIsLogin()
-      this.estado()
-    },
     computed: {
-      ...mapState('auth',['isLogin'])
+      ...mapGetters(['isLogin'])
     }
-    // computed: {
-    //   isLogin() {
-    //     return this.$route.name === 'Login'
-    //   }
-    // }
   };
 
 </script>

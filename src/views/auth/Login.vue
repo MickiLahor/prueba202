@@ -6,7 +6,7 @@
           <div class="card-body">
             <h2 style="color:#323232; font-family: Arial, Impact;">Iniciar Sesión</h2>
             <p class="text-muted">Ingrese sus datos de Acceso</p>
-            <form @submit.prevent='login(usuario)' method="post" autocomplete="off">
+            <form @submit.prevent='onSubmit' method="post" autocomplete="off">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 
   export default {
     data() {
@@ -66,11 +66,11 @@ import {mapActions} from 'vuex'
       }
     },
     methods: {
-      ...mapActions('auth',['login'])
+      ...mapActions(['login']),
       
-      // async login(e) {
-      //   await this.$store.dispatch("login", { username: this.username, password: this.password});
-      // },
+      async onSubmit() {
+        this.login(this.usuario);
+      },
     }
   }
 </script>

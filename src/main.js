@@ -25,16 +25,13 @@ import './assets/icons/css/brand.min.css'
 import './assets/coreui/css/coreui.min.css'
 import './assets/coreui/js/coreui.bundle.min.js'
 
-//import './assets/js/custom-scripts.js'
-
-const token = localStorage.getItem('token')
-// const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYxOTcxMDMwNCwiZXhwIjoxNjIyMzAyMzA0fQ.PJJMmUijPUKzYjkFPg-_To18xiMOg6Ldz7eZmIrS2C0'
+//const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYxOTcxMDMwNCwiZXhwIjoxNjIyMzAyMzA0fQ.PJJMmUijPUKzYjkFPg-_To18xiMOg6Ldz7eZmIrS2C0'
+const token = store.getters.token
 if (token) {
 	axios.defaults.headers.common['Authorization'] = token
 }
 
 const app = createApp(App)
-
 app.mixin({
 	methods: {
 		dateFormatES: function (dateString) {
@@ -42,11 +39,8 @@ app.mixin({
 		}
 	},
 })
-
 app.component('Select2', Select2)
 //app.component('vue-select', VueSelect)
-//app.component('docx4js', docx4js)
-//app.component('mammoth', mammoth)
 app.use(store)
 app.use(router)
 app.mount('#app')

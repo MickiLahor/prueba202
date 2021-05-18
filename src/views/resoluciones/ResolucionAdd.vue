@@ -184,9 +184,9 @@
 					placeholder: 'Pegue aquí el contenido de la Resolución...',
 					theme: 'snow',
 					readOnly: false,
-					modules: {
+					/*modules: {
 						toolbar: false
-					}
+					}*/
 				},
 			};
 		},

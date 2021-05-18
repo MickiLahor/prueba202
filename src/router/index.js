@@ -14,142 +14,152 @@ import ResolucionDetail from '../views/resoluciones/ResolucionDetail.vue'
 
 
 const routes = [
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      breadcrumb: [
-          { name: 'Login' }
-      ]
-    }
-  },
-  {
-    path: '/',
-    name: 'home',
-    component: Home,
-    meta: {
-      breadcrumb: [
-          { name: 'Inicio' }
-      ]
-    }
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: About,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Acerca De' }
-      ]
-    }
-  },
-  {
-    path: '/materias',
-    name: 'materias',
-    component: MateriaList,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Materias' }
-      ]
-    }
-  },
-  {
-    path: '/procesos',
-    name: 'procesos',
-    component: ProcesoList,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Procesos' }
-      ]
-    }
-  },
-  {
-    path: '/tipos_resoluciones',
-    name: 'tipos_resoluciones',
-    component: TipoResolucionList,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Tipo de Resoluciones' }
-      ]
-    }
-  },
-  {
-    path: '/formas_resoluciones',
-    name: 'formas_resoluciones',
-    component: FormaResolucionList,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Formas de Resoluciones' }
-      ]
-    }
-  },
-  {
-    path: '/resoluciones',
-    name: 'resoluciones',
-    component: ResolucionList,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Resoluciones' }
-      ]
-    }
-  },
-  {
-    path: '/resoluciones/create',
-    name: 'resoluciones.create',
-    component: ResolucionAdd,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Resoluciones', link: '/resoluciones' },
-        { name: 'Registrar' }
-      ]
-    }
-  },
-  {
-    path: '/resoluciones/edit',
-    name: 'resoluciones.edit',
-    component: ResolucionEdit,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Resoluciones', link: '/resoluciones' },
-        { name: 'Editar Resolucion' }
-      ]
-    }
-  },
-  {
-    path: '/resoluciones/detail',
-    name: 'resoluciones.detail',
-    component: ResolucionDetail,
-    meta: {
-      breadcrumb: [
-        { name: 'Inicio', link: '/' },
-        { name: 'Resoluciones', link: '/resoluciones' },
-        { name: 'Ver Resolucion' }
-      ]
-    }
-  },
+{
+  path: '/login',
+  name: 'login',
+  component: Login,
+  meta: {
+    hideForAuth: true,
+    breadcrumb: [
+    { name: 'Login' }
+    ]
+  }
+},
+{
+  path: '/',
+  name: 'home',
+  component: Home,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio' }
+    ]
+  }
+},
+{
+  path: '/about',
+  name: 'about',
+  component: About,
+  meta: {
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Acerca De' }
+    ]
+  }
+},
+{
+  path: '/materias',
+  name: 'materias',
+  component: MateriaList,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Materias' }
+    ]
+  }
+},
+{
+  path: '/procesos',
+  name: 'procesos',
+  component: ProcesoList,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Procesos' }
+    ]
+  }
+},
+{
+  path: '/tipos_resoluciones',
+  name: 'tipos_resoluciones',
+  component: TipoResolucionList,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Tipo de Resoluciones' }
+    ]
+  }
+},
+{
+  path: '/formas_resoluciones',
+  name: 'formas_resoluciones',
+  component: FormaResolucionList,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Formas de Resoluciones' }
+    ]
+  }
+},
+{
+  path: '/resoluciones',
+  name: 'resoluciones',
+  component: ResolucionList,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Resoluciones' }
+    ]
+  }
+},
+{
+  path: '/resoluciones/create',
+  name: 'resoluciones.create',
+  component: ResolucionAdd,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Resoluciones', link: '/resoluciones' },
+    { name: 'Registrar' }
+    ]
+  }
+},
+{
+  path: '/resoluciones/edit',
+  name: 'resoluciones.edit',
+  component: ResolucionEdit,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Resoluciones', link: '/resoluciones' },
+    { name: 'Editar Resolucion' }
+    ]
+  }
+},
+{
+  path: '/resoluciones/detail',
+  name: 'resoluciones.detail',
+  component: ResolucionDetail,
+  meta: {
+    requiresAuth: true,
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Resoluciones', link: '/resoluciones' },
+    { name: 'Ver Resolucion' }
+    ]
+  }
+},
   //404
   // {
   //   path: '*',
   //   name:"NotFound",
   //   component:NotFound
   // },
-]
+  ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  const router = createRouter({
+    history: createWebHistory(process.env.BASE_URL),
+    routes
+  })
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('token');
@@ -165,17 +175,33 @@ router.beforeEach((to, from, next) => {
     // }
   }
   
-});
+});*/
 
-// router.beforeEach((to, from, next) => {
-//   const rutaEsProtegida = to.matched.some(item => item.meta.rutaProtegida)
-//   if (rutaEsProtegida && store.state.token === null) {
-//     console.log('es protegida')
-//     next('/login')
-//   } else {
-//     console.log('no es protegida')
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLogin) {
+      next('/login')
+    }
+    else {
+      if (to.name == "login") {
+        next('/')
+      }
+      else {
+        next()
+      }
+    }
+  }
+  else if (to.matched.some(record => record.meta.hideForAuth)){
+    if (store.getters.isLogin) {
+      next('/');
+    }
+    else {
+      next()
+    }
+  }
+  else {
+    next()
+  }
+});
 
 export default router

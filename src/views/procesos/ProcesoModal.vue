@@ -94,7 +94,7 @@
 
         if(!this.proceso.descripcion)
           this.error.descripcion = 'El campo descripción es obligatorio.';
-        else if(this.proceso.descripcion.length > 50)
+        else if(this.proceso.descripcion.length > 250)
           this.error.descripcion = 'El campo descripción debe tener como máximo 50 carateres.';
 
         if(!this.proceso.fidMateria)
