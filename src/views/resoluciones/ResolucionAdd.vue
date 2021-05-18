@@ -23,7 +23,7 @@
 
 								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="codigoResolucion">Codigo Expediente</label>
-									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }">
+									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }" @blur="getDatosNurej">
 									<em class="invalid-feedback">{{error.codigoResolucion}}</em>
 								</div>
 
@@ -35,7 +35,7 @@
 								
 								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
 									<label for="nombre_oficina">Sala o Juzgado:</label>
-									<input type="text" id="nombre_oficina" value="Sala Penal 1era" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }" readonly>
+									<input type="text" id="nombre_oficina" v-model="nombreOficina" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }" readonly>
 									<em class="invalid-feedback">{{error.fidFuncionarioRelator}}</em>
 								</div>
 
@@ -178,6 +178,7 @@
 					usuarioRegistro: "usuarioPrueba"
 				},
 				idMateria: '',
+				nombreOficina: '',
 				error: {},
 				valid: false,
 				editorOptions: {
@@ -194,11 +195,14 @@
 			this.fetchTiposResolucionesDropList();
 			this.fetchFormasResolucionesDropList();
 			this.fetchMateriasDropList();
-			this.fetchRelatorDropList(localStorage.getItem('idOficina'));
+			this.resolucion.fidOficina = this.userLogged.idOficina;
+			this.nombreOficina = this.userLogged.oficina;
+			//console.log(this.resolucion.fidOficina);
+			this.fetchRelatorDropList(this.resolucion.fidOficina);
 		},
-		computed: { ...mapGetters(["isSavingResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList", "procesosDropList", "relatorDropList", "demandante", "demandado"]) },
+		computed: { ...mapGetters(["isSavingResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList", "procesosDropList", "relatorDropList", "datosNurej", "userLogged"]) },
 		methods: {
-			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList","fetchProcesosByMateriaDropList", "storeResolucion", "fetchRelatorDropList", "fetchDemandante", "fetchDemandado"]),
+			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList","fetchProcesosByMateriaDropList", "storeResolucion", "fetchRelatorDropList", "fetchDatosNurej"]),
 
 			validate() {
 				this.valid = false;
@@ -261,6 +265,13 @@
 			
 			onSelectMateria(event) {
 				this.fetchProcesosByMateriaDropList(event.target.value);
+			},
+
+			getDatosNurej(event) {
+				this.fetchDatosNurej(event.target.value);
+				this.resolucion.demandante = this.datosNurej.demandante;
+				this.resolucion.demandado = this.datosNurej.demandado;
+				this.idMateria = this.datosNurej.idMateria;
 			},
 
 			openDocx () {

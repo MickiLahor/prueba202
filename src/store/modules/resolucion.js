@@ -23,8 +23,9 @@ const state = {
 	oficinasDropList: [],
 	gestionesDropList: [],
 	relatorDropList: [],
-	demandante: null,
-	demandado: null,
+	datosNurej: null,
+	//demandante: null,
+	//demandado: null,
 	oficina: null,
 }
 
@@ -111,12 +112,8 @@ const mutations = {
 		state.relatorDropList = items;
 	},
 
-	SET_DEMANDANTE: (state, item) => {
-		state.demandante = item
-	},
-
-	SET_DEMANDADO: (state, item) => {
-		state.demandado = item
+	SET_DATOS_NUREJ: (state, item) => {
+		state.datosNurej = item
 	},
 
 	SET_OFICINA(state, payload) {
@@ -158,7 +155,7 @@ const actions = {
 
 		await axios.get(url)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			const lista = [];
 			res.data.forEach(function(item, index) {
 				lista.push({
@@ -319,7 +316,7 @@ const actions = {
 
 		await axios.get(`${process.env.VUE_APP_API_URL}procesos/por_materia/${id_materia}`)
 		.then(res => {
-			//console.log(res);
+			//console.log(res.data);
 			const lista = [];
 			res.data.forEach((item, index) => {
 				lista.push({value: item.idProceso, text: item.descripcion});
@@ -344,7 +341,7 @@ const actions = {
 
 		await axios.get(`${process.env.VUE_APP_API_URL}oficinas`)
 		.then(res => {
-			console.log(res);
+			console.log(res.data);
 			const lista = [];
 			res.data.forEach((item, index) => {
 				lista.push({value: item.idOficina, text: item.descripcion});
@@ -391,20 +388,11 @@ const actions = {
 		})
 	},
 
-	async fetchDemandante({ commit }, nurej) {
+	async fetchDatosNurej({ commit }, nurej) {
 		await axios.get(`${process.env.VUE_APP_API_URL}proceso_zeus/${nurej}`)
 		.then(res => {
-			commit('SET_DEMANDANTE', res.data.demandante);
-		})
-		.catch(err => {
-			console.log('error', err);
-		})
-	},
-
-	async fetchDemandado({ commit }, nurej) {
-		await axios.get(`${process.env.VUE_APP_API_URL}proceso_zeus/${nurej}`)
-		.then(res => {
-			commit('SET_DEMANDADO', res.data.demandado);
+			//console.log(res.data);
+			commit('SET_DATOS_NUREJ', res.data);
 		})
 		.catch(err => {
 			console.log('error', err);
@@ -438,8 +426,7 @@ const getters = {
 	oficinasDropList: state => state.oficinasDropList,
 	gestionesDropList: state => state.gestionesDropList,
 	relatorDropList: state => state.relatorDropList,
-	demandante: state => state.demandante,
-	demandado: state => state.demandado
+	datosNurej: state => state.datosNurej,
 }
 
 const resolucionModule = {

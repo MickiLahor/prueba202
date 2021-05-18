@@ -21,7 +21,7 @@ const actions = {
   async login({commit}, credentials) {
     axios.post(`${process.env.VUE_APP_API_URL}login`, credentials)
     .then(response => {
-      //console.log(response.data)
+      console.log(response.data)
       commit('SET_USER_LOGGED', response.data.data)
       commit('SET_TOKEN', response.data.token)
       router.replace('/');
