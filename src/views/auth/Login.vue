@@ -4,7 +4,7 @@
       <div class="card-group">
         <div class="card p-4">
           <div class="card-body">
-            <h2 style="color:#323232; font-family: Impact, helvética;">Iniciar Sesión</h2>
+            <h2 style="color:#323232; font-family: Arial, Impact;">Iniciar Sesión</h2>
             <p class="text-muted">Ingrese sus datos de Acceso</p>
             <form @submit.prevent='login(usuario)' method="post" autocomplete="off">
               <div class="input-group mb-3">

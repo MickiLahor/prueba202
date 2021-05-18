@@ -7,6 +7,7 @@ const state = {
   paterno: null,
   materno: null,
   foto: null,
+  idOficina: null,
   isLogin: false,
 }
 
@@ -29,6 +30,9 @@ const mutations = {
   setFoto(state, payload) {
     state.foto = payload
   },
+  setIdOficina(state, payload) {
+    state.idOficina = payload
+  },
   setIsLogin(state, payload) {
     state.isLogin = payload
   }
@@ -48,7 +52,7 @@ const actions = {
       const resDB = await res.json()
       
       //console.log(resDB.token)
-      //console.log(resDB.data)
+      console.log(resDB.data)
       
       commit('setToken', resDB.token)
       commit('setDataUsuario', resDB.data)
@@ -56,6 +60,7 @@ const actions = {
       commit('setPaterno', resDB.data.paterno)
       commit('setMaterno', resDB.data.materno)
       commit('setFoto', resDB.data.fotografia)
+      commit('setIdOficina', resDB.data.idOficina)
       commit('setIsLogin', true)
       
       //console.log(state.isLogin)
@@ -67,6 +72,7 @@ const actions = {
       localStorage.setItem('paterno', resDB.data.paterno)
       localStorage.setItem('materno', resDB.data.materno)
       localStorage.setItem('foto', resDB.data.fotografia)
+      localStorage.setItem('idOficina', resDB.data.idOficina)
       localStorage.setItem('isLogin', state.isLogin)
 
       await router.push('/')
@@ -111,6 +117,13 @@ const actions = {
     }
   },
   leerFoto({commit}) {
+    if(localStorage.getItem('idOficina')) {
+      commit('setIdOficina', localStorage.getItem('idOficina'))
+    } else {
+      commit('setIdOficina', null)
+    }
+  },
+  leerIdOficina({commit}) {
     if(localStorage.getItem('foto')) {
       commit('setFoto', localStorage.getItem('foto'))
     } else {
@@ -131,6 +144,7 @@ const actions = {
     localStorage.removeItem('paterno')
     localStorage.removeItem('materno')
     localStorage.removeItem('foto')
+    localStorage.removeItem('idOficina')
     localStorage.removeItem('isLogin')
     commit('setToken', null)
     // commit('setDataUsuario', [])
@@ -138,6 +152,7 @@ const actions = {
     commit('setPaterno', null)
     commit('setMaterno', null)
     commit('setFoto', null)
+    commit('setIdOficina', null)
     commit('setIsLogin', false)
     //console.log(state.isLogin)
   },
