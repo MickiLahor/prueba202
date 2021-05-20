@@ -110,6 +110,8 @@
         this.proceso.descripcion = '';
         this.proceso.registroActivo = false;
         this.proceso.usuarioRegistro = "usuarioPrueba";
+        this.error = {};
+        this.valid = false;
       },
 
       storeItem() {

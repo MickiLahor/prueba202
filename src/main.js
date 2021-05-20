@@ -25,7 +25,7 @@ import './assets/icons/css/brand.min.css'
 import './assets/coreui/css/coreui.min.css'
 import './assets/coreui/js/coreui.bundle.min.js'
 
-//const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYxOTcxMDMwNCwiZXhwIjoxNjIyMzAyMzA0fQ.PJJMmUijPUKzYjkFPg-_To18xiMOg6Ldz7eZmIrS2C0'
+//const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYyMTQzMjgyMCwiZXhwIjoxNjUyOTkwNDIwfQ.2wwRXD2HdNIOXaoluHu58MK0ucR3C00EaQasAfGsVJc'
 const token = store.getters.token
 if (token) {
 	axios.defaults.headers.common['Authorization'] = token

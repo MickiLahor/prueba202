@@ -47,7 +47,7 @@
 								<tr v-for="(item, index) in procesos" :key="index">
 									<td class="text-center">{{item.idProceso}}</td>
 									<td>{{item.descripcion}}</td>
-									<td>{{item.Materium.descripcion}}</td>
+									<td>{{item.Materium ? item.Materium.descripcion : ''}}</td>
 									<td>
 										<span v-if="item.registroActivo" class="badge badge-success">Activo</span>
 										<span v-else class="badge badge-danger">Inactivo</span>
@@ -116,6 +116,7 @@
 			editItem(item) {
 				this.SET_MODAL_VISIBLE_PROCESO(true);
 				this.SET_EDIT_MODE_PROCESO(true);
+				this.$refs.modal_proceso.resetForm();
 				this.$refs.modal_proceso.loadItem(item);
 			},
 			deleteItem(id) {

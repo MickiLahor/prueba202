@@ -25,6 +25,7 @@ const actions = {
       commit('SET_USER_LOGGED', response.data.data)
       commit('SET_TOKEN', response.data.token)
       router.replace('/');
+      //window.location.href="/";
     })
     .catch(error => {
       console.log(error)

@@ -11,6 +11,8 @@ import Login from '../views/auth/Login.vue'
 import store from '../store'
 import ResolucionEdit from '../views/resoluciones/ResolucionEdit.vue'
 import ResolucionDetail from '../views/resoluciones/ResolucionDetail.vue'
+import BuscadorResoluciones from '../views/resoluciones/BuscadorResoluciones.vue'
+import ResolucionDetailPublic from '../views/resoluciones/ResolucionDetailPublic.vue'
 
 
 const routes = [
@@ -142,6 +144,29 @@ const routes = [
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Resoluciones', link: '/resoluciones' },
+    { name: 'Ver Resolucion' }
+    ]
+  }
+},
+{
+  path: '/buscador_resoluciones',
+  name: 'buscador_resoluciones',
+  component: BuscadorResoluciones,
+  meta: {
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Buscador de Resoluciones' }
+    ]
+  }
+},
+{
+  path: '/buscador_resoluciones/detalle',
+  name: 'buscador_resoluciones.detalle',
+  component: ResolucionDetailPublic,
+  meta: {
+    breadcrumb: [
+    { name: 'Inicio', link: '/' },
+    { name: 'Buscador de Resoluciones', link: '/buscador_resoluciones' },
     { name: 'Ver Resolucion' }
     ]
   }
