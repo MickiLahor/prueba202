@@ -2,8 +2,8 @@
   <modal-component :show="isModalVisibleFormaRes" @close="cancel">
 
     <div class="modal-header">
-      <h5 v-show="!isEditModeFormaRes" class="modal-title">Crear Forma de Resolución</h5>
-      <h5 v-show="isEditModeFormaRes" class="modal-title">Editar Forma de Resolución</h5>
+      <h5 v-show="!isEditModeFormaRes" class="modal-title"><i class="cil-plus"></i> Crear Forma de Resolución</h5>
+      <h5 v-show="isEditModeFormaRes" class="modal-title"><i class="cil-pencil"></i> Editar Forma de Resolución</h5>
       <button type="button" @click="cancel" class="close" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
     </div>
     
@@ -30,13 +30,13 @@
     <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
       
-      <button v-if="isEditModeFormaRes" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingFormaRes">
+      <button v-if="isEditModeFormaRes" type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingFormaRes">
         <i v-if="!isSavingFormaRes" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingFormaRes ? 'Actualizando...' : 'Actualizar' }}
       </button>
 
-      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingFormaRes">
+      <button v-else type="button" @click="storeItem()" class="btn btn-info" :disabled="isSavingFormaRes">
         <i v-if="!isSavingFormaRes" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingFormaRes ? 'Guardando...' : 'Guardar' }}

@@ -433,7 +433,37 @@ const actions = {
 					tipoResolucion: item.TipoResolucion.descripcion,
 					formaResolucion: item.FormaResolucion.descripcion,
 					materia: item.Proceso.Materium.descripcion,
-					proceso: item.Proceso.descripcion
+					proceso: item.Proceso.descripcion,
+					pdf: item.rutaArchivoPdf
+				});
+			});
+			commit('SET_RESULT_SEARCH', lista);
+			commit('SET_IS_LOADING_RESOLUCION', false);
+		})
+		.catch(err => {
+			console.log('error', err);
+			commit('SET_IS_LOADING_RESOLUCION', false);
+		});
+	},
+	async buscarResolucionesGestion({ commit }, params) {
+		commit('SET_IS_LOADING_RESOLUCION', true);
+		await axios.get(`${process.env.VUE_APP_API_URL}resoluciones/${params.fidOficina}/${params.gestion}`)
+		.then(res => {
+			//console.log(res.data);
+			const lista = [];
+			res.data.forEach(function(item, index) {
+				lista.push({
+					idResolucion: item.idResolucion,
+					codigoResolucion: item.codigoResolucion,
+					numeroResolucion: item.numeroResolucion,
+					fechaResolucion: item.fechaResolucion.split("-").reverse().join("-"),
+					//departamento: '',
+					//oficina: item.Oficina.descripcion,
+					tipoResolucion: item.TipoResolucion.descripcion,
+					formaResolucion: item.FormaResolucion.descripcion,
+					materia: item.Proceso.Materium.descripcion,
+					proceso: item.Proceso.descripcion,
+					pdf: item.rutaArchivoPdf
 				});
 			});
 			commit('SET_RESULT_SEARCH', lista);
@@ -448,7 +478,7 @@ const actions = {
 		commit('SET_IS_LOADING_RESOLUCION', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}busqueda/avanzado`, params)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			const lista = [];
 			res.data.forEach(function(item, index) {
 				lista.push({
@@ -461,7 +491,8 @@ const actions = {
 					tipoResolucion: item.TipoResolucion.descripcion,
 					formaResolucion: item.FormaResolucion.descripcion,
 					materia: item.Proceso.Materium.descripcion,
-					proceso: item.Proceso.descripcion
+					proceso: item.Proceso.descripcion,
+					pdf: item.rutaArchivoPdf
 				});
 			});
 			commit('SET_RESULT_SEARCH', lista);
@@ -484,6 +515,22 @@ const actions = {
 		.catch(err => {
 			console.log('error', err);
 			commit('SET_IS_LOADING_RESOLUCION', false);
+		});
+	},
+	async fetchPdfResolucion({ commit }, id) {
+		axios({
+			url: `${process.env.VUE_APP_API_URL}resoluciones/descarga/${id}`,
+			method: 'GET',
+			responseType: 'blob',
+		}).then((response) => {
+			var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+			var fileLink = document.createElement('a');
+			fileLink.href = fileURL;
+			fileLink.setAttribute('download', 'file.pdf');
+			document.body.appendChild(fileLink);
+			fileLink.click();
+		}).catch(error => {
+			console.log(error);
 		});
 	},
 }

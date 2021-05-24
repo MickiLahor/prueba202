@@ -1,11 +1,11 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-primary">
+			<div class="card card-accent-info">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Registrar Resolución</h5>
 					<div>
-						<button type="button" @click="storeItem()" class="btn btn-primary"><i class="cil-save"></i> Guardar</button>
+						<button type="button" @click="storeItem()" class="btn btn-info"><i class="cil-save"></i> Guardar</button>
 						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
@@ -118,14 +118,16 @@
 					<div class="card">
 						<div class="card-body">
 							<h5>Contenido de la Resolución</h5>
+							<div class="form-group">
+								<button class="btn btn-info mb-2" @click="openDocx"><i class="cil-folder-open"></i> Cargar Archivo Word</button>
+								<input type="file" ref="fileInputDocx" @change="parseWordDocxFile" hidden />
 
-							<!--<simple-upload/>-->
+								<button class="btn btn-danger mb-2 ml-1" @click="openPdf"><i class="cib-adobe-acrobat-reader"></i> Cargar Archivo PDF</button>
+								<input type="file" ref="fileInputPdf" @change="onPdfChange" hidden />
+
+								<label id="nombre_pdf" class="ml-2"></label>
+							</div>
 							
-							<button class="btn btn-info mb-2" @click="openDocx"><i class="cil-folder-open"></i> Cargar Archivo Word</button>
-							<input type="file" ref="fileInputDocx" @change="parseWordDocxFile" hidden />
-
-							<button class="btn btn-danger mb-2 ml-1" @click="openPdf"><i class="fas fa-upload"></i> Cargar Archivo PDF</button>
-							<input type="file" ref="fileInputPdf" @change="onPdfChange" hidden />
 							<!--<div class="custom-file">
 								<input type="file" class="custom-file-input" id="inputPdf" @change="onPdfChange">
 								<label class="custom-file-label" for="inputPdf" id="labelPdf"><i class="fas fa-upload"></i> Cargar Archivo PDF</label>
@@ -138,7 +140,7 @@
 				</div>
 
 				<div class="card-footer">
-					<button type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingResolucion">
+					<button type="button" @click="storeItem()" class="btn btn-info" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
 						{{ isSavingResolucion ? 'Guardando...' : 'Guardar' }}
@@ -204,6 +206,7 @@
 				},
 				idMateria: 4,
 				nombreOficina: '',
+				nombre_pdf: '',
 				error: {},
 				valid: false,
 				editorOptions: {
@@ -340,6 +343,7 @@
 				const reader = new FileReader();
 				reader.onloadend = (e) => {
 					this.resolucion.file = e.target.result;
+					document.getElementById('nombre_pdf').innerHTML = '<i class="cil-file"></i> ' + event.target.files[0].name;
 					//document.getElementById('labelPdf').textContent;
 					//console.log(this.resolucion.file)
 				}

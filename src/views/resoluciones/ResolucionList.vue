@@ -1,11 +1,11 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-primary">
-				<div class="card-header d-flex justify-content-between align-items-center">
+			<div class="card">
+				<div class="card-header bg-info d-flex justify-content-between align-items-center py-2">
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Resoluciones</h5>
 					<router-link to="/resoluciones/create">
-						<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
+						<button class="btn btn-outline-light font-weight-bold ml-auto" @click="addItem"><i class="cil-plus"></i> Nueva Resolución</button>
 					</router-link>
 				</div>
 				<div class="card-body">
@@ -206,7 +206,7 @@
 												<router-link class="btn btn-success btn-sm" :to="{ name: 'resoluciones.detail', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-zoom-in"></i>
 												</router-link>
-												<router-link class="btn btn-primary btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
+												<router-link class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-pencil"></i>
 												</router-link>
 												<button v-if="item.registroActivo" title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idResolucion)">

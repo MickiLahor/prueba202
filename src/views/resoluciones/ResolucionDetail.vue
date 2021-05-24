@@ -1,11 +1,11 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-primary">
+			<div class="card card-accent-info">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Datos de Resolución</h5>
 					<div>
-						<router-link :to="{ name: 'resoluciones.edit', params: { id: idResolucion } }" class="btn btn-primary">
+						<router-link :to="{ name: 'resoluciones.edit', params: { id: idResolucion } }" class="btn btn-info">
 							<i class="cil-pencil"></i> Editar
 						</router-link>
 						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>

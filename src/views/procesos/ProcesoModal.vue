@@ -2,8 +2,8 @@
   <modal-component :show="isModalVisibleProceso" @close="cancel">
 
     <div class="modal-header">
-      <h5 v-show="!isEditModeProceso" class="modal-title">Crear Proceso</h5>
-      <h5 v-show="isEditModeProceso" class="modal-title">Editar Proceso</h5>
+      <h5 v-show="!isEditModeProceso" class="modal-title"><i class="cil-plus"></i> Crear Proceso</h5>
+      <h5 v-show="isEditModeProceso" class="modal-title"><i class="cil-pencil"></i> Editar Proceso</h5>
       <button type="button" @click="cancel" class="close" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
     </div>
     
@@ -42,13 +42,13 @@
     <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
       
-      <button v-if="isEditModeProceso" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingProceso">
+      <button v-if="isEditModeProceso" type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingProceso">
         <i v-if="!isSavingProceso" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingProceso ? 'Actualizando...' : 'Actualizar' }}
       </button>
 
-      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingProceso">
+      <button v-else type="button" @click="storeItem()" class="btn btn-info" :disabled="isSavingProceso">
         <i v-if="!isSavingProceso" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingProceso ? 'Guardando...' : 'Guardar' }}

@@ -1,11 +1,11 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-primary">
+			<div class="card card-accent-info">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-pencil"></i> Editar Resolución</h5>
 					<div>
-						<button type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingResolucion">
+						<button type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
 							{{ isSavingResolucion ? 'Actualizando...' : 'Actualizar' }}
@@ -121,7 +121,7 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<button type="button" @click="updateItem()" class="btn btn-primary mr-1" :disabled="isSavingResolucion">
+					<button type="button" @click="updateItem()" class="btn btn-info mr-1" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
 						{{ isSavingResolucion ? 'Actualizando...' : 'Actualizar' }}

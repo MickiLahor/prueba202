@@ -2,8 +2,8 @@
   <modal-component :show="isModalVisibleMateria" @close="cancel">
 
     <div class="modal-header">
-      <h5 v-show="!isEditModeMateria" class="modal-title">Crear Materia</h5>
-      <h5 v-show="isEditModeMateria" class="modal-title">Editar Materia</h5>
+      <h5 v-show="!isEditModeMateria" class="modal-title"><i class="cil-plus"></i> Crear Materia</h5>
+      <h5 v-show="isEditModeMateria" class="modal-title"><i class="cil-pencil"></i> Editar Materia</h5>
       <button type="button" @click="cancel" class="close" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
     </div>
     
@@ -40,13 +40,13 @@
     <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
       
-      <button v-if="isEditModeMateria" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingMateria">
+      <button v-if="isEditModeMateria" type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingMateria">
         <i v-if="!isSavingMateria" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingMateria ? 'Actualizando...' : 'Actualizar' }}
       </button>
 
-      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingMateria">
+      <button v-else type="button" @click="storeItem()" class="btn btn-info" :disabled="isSavingMateria">
         <i v-if="!isSavingMateria" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingMateria ? 'Guardando...' : 'Guardar' }}

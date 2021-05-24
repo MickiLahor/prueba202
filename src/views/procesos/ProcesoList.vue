@@ -1,10 +1,10 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-primary">
-				<div class="card-header d-flex align-items-center">
+			<div class="card">
+				<div class="card-header bg-info d-flex align-items-center py-2">
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Procesos</h5>
-					<button class="btn btn-success btn-sm ml-auto" @click="addItem"><i class="cil-plus"></i> Nuevo Proceso</button>
+					<button class="btn btn-outline-light font-weight-bold ml-auto" @click="addItem"><i class="cil-plus"></i> Nuevo Proceso</button>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -53,7 +53,7 @@
 										<span v-else class="badge badge-danger">Inactivo</span>
 									</td>
 									<td class="fit">
-										<button title="Editar" class="btn btn-primary btn-sm" @click="editItem(item)">
+										<button title="Editar" class="btn btn-info btn-sm" @click="editItem(item)">
 											<i class="c-icon cil-pencil"></i>
 										</button>
 										<button title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idProceso)">

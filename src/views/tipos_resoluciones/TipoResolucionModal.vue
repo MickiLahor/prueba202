@@ -2,8 +2,8 @@
   <modal-component :show="isModalVisibleTipoRes" @close="cancel">
 
     <div class="modal-header">
-      <h5 v-show="!isEditModeTipoRes" class="modal-title">Crear Tipo de Resolución</h5>
-      <h5 v-show="isEditModeTipoRes" class="modal-title">Editar Tipo de Resolución</h5>
+      <h5 v-show="!isEditModeTipoRes" class="modal-title"><i class="cil-plus"></i> Crear Tipo de Resolución</h5>
+      <h5 v-show="isEditModeTipoRes" class="modal-title"><i class="cil-pencil"></i> Editar Tipo de Resolución</h5>
       <button type="button" @click="cancel" class="close" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
     </div>
     
@@ -39,13 +39,13 @@
     <div class="modal-footer justify-content-between py-2">
       <button type="button" @click="cancel" class="btn btn-danger"><i class="cil-ban"></i> Cancelar</button>
       
-      <button v-if="isEditModeTipoRes" type="button" @click="updateItem()" class="btn btn-primary" :disabled="isSavingTipoRes">
+      <button v-if="isEditModeTipoRes" type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingTipoRes">
         <i v-if="!isSavingTipoRes" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingTipoRes ? 'Actualizando...' : 'Actualizar' }}
       </button>
 
-      <button v-else type="button" @click="storeItem()" class="btn btn-primary" :disabled="isSavingTipoRes">
+      <button v-else type="button" @click="storeItem()" class="btn btn-info" :disabled="isSavingTipoRes">
         <i v-if="!isSavingTipoRes" class="cil-save"></i>
         <span v-else class="spinner-border spinner-border-sm"></span>
         {{ isSavingTipoRes ? 'Guardando...' : 'Guardar' }}

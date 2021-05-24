@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-primary">
+			<div class="card card-accent-info">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Datos de Resolución</h5>
 					<div>

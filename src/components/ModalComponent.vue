@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-backdrop" v-show="show" @click="close" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-primary" role="document">
+      <div class="modal-dialog modal-info" role="document">
         <div class="modal-content" @click.stop>
           <slot></slot>
         </div>
