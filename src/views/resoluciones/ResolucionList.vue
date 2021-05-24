@@ -199,14 +199,16 @@
 											<td>{{item.fechaResolucion}}</td>
 											<td>{{item.codigoResolucion}}</td>
 											<td>
-												<span v-if="item.registroActivo" class="badge badge-success">Activo</span>
-												<span v-else class="badge badge-danger">Inactivo</span>
+												<span v-if="item.fidEstado=1" class="badge badge-info">Pendiente</span>
+												<span v-else-if="item.fidEstado=2" class="badge badge-warning">Enviado</span>
+												<span v-else-if="item.fidEstado=3" class="badge badge-danger">Rechazado</span>
+												<span v-else class="badge badge-success">Validado</span>
 											</td>
 											<td class="fit">
 												<router-link class="btn btn-success btn-sm" :to="{ name: 'resoluciones.detail', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-zoom-in"></i>
 												</router-link>
-												<router-link class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
+												<router-link v-if="item.fidEstado=1" class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-pencil"></i>
 												</router-link>
 												<button v-if="item.registroActivo" title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idResolucion)">

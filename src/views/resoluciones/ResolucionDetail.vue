@@ -8,6 +8,13 @@
 						<router-link :to="{ name: 'resoluciones.edit', params: { id: idResolucion } }" class="btn btn-info">
 							<i class="cil-pencil"></i> Editar
 						</router-link>
+
+						<!--<button v-if="resolucion.fidEstado=1" type="button" @click="sendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-save"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Enviando...' : 'Enviar' }}
+						</button>-->
+
 						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>

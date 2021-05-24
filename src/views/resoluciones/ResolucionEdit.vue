@@ -10,6 +10,13 @@
 							<span v-else class="spinner-border spinner-border-sm"></span>
 							{{ isSavingResolucion ? 'Actualizando...' : 'Actualizar' }}
 						</button>
+
+						<button v-if="resolucion.fidEstado=1" type="button" @click="sendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-save"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Enviando...' : 'Enviar' }}
+						</button>
+
 						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
@@ -121,13 +128,19 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<button type="button" @click="updateItem()" class="btn btn-info mr-1" :disabled="isSavingResolucion">
+					<button type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
 						{{ isSavingResolucion ? 'Actualizando...' : 'Actualizar' }}
 					</button>
 
-					<button type="button" class="btn btn-danger" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					<button v-if="resolucion.fidEstado=1" type="button" @click="sendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+						<i v-if="!isSavingResolucion" class="cil-save"></i>
+						<span v-else class="spinner-border spinner-border-sm"></span>
+						{{ isSavingResolucion ? 'Enviando...' : 'Enviar' }}
+					</button>
+
+					<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 				</div>
 			</div>
 		</div>
