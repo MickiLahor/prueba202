@@ -1,32 +1,44 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-info">
+			<div v-if="isLoadingResolucion" class="text-center">
+				<div class="spinner-border" role="status"></div>
+				<br />
+				<strong>Cargando Datos...</strong>
+			</div>
+			<div v-else class="card card-accent-info">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-pencil"></i> Editar Resolución</h5>
 					<div>
 						<button type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Actualizando...' : 'Actualizar' }}
+							{{ isSavingResolucion ? 'Procesando...' : 'Actualizar' }}
 						</button>
 
-						<button v-if="resolucion.fidEstado=1" type="button" @click="sendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+						<button v-if="userLogged.rol=='Juzgado' && resolucion.fidEstado==1" type="button" @click="updateAndSendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Enviando...' : 'Enviar' }}
+							{{ isSavingResolucion ? 'Procesando...' : 'Actualizar y Enviar' }}
 						</button>
 
-						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+						<button v-if="userLogged.rol.includes('Secretario') && resolucion.fidEstado==2" type="button" @click="validarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-check"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Validando...' : 'Validar' }}
+						</button>
+
+						<button v-if="userLogged.rol.includes('Secretario') && resolucion.fidEstado==2" type="button" @click="rechazarItem()" class="btn btn-danger ml-1" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-x"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Rechazando...' : 'Rechazar' }}
+						</button>
+
+						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
 				<div class="card-body">
-					<div v-if="isLoadingResolucion" class="text-center">
-						<div class="spinner-border" role="status"></div>
-						<br />
-						<strong>Cargando Datos...</strong>
-					</div>
-					<div v-else>
+					<div>
 						<div class="card">
 							<div class="card-body pb-0">
 								<h5>Datos Generales</h5>
@@ -131,16 +143,28 @@
 					<button type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
-						{{ isSavingResolucion ? 'Actualizando...' : 'Actualizar' }}
+						{{ isSavingResolucion ? 'Procesando...' : 'Actualizar' }}
 					</button>
 
-					<button v-if="resolucion.fidEstado=1" type="button" @click="sendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+					<button v-if="userLogged.rol=='Juzgado' && resolucion.fidEstado==1" type="button" @click="updateAndSendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
-						{{ isSavingResolucion ? 'Enviando...' : 'Enviar' }}
+						{{ isSavingResolucion ? 'Procesando...' : 'Actualizar y Enviar' }}
 					</button>
 
-					<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					<button v-if="userLogged.rol.includes('Secretario') && resolucion.fidEstado==2" type="button" @click="validarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+						<i v-if="!isSavingResolucion" class="cil-check"></i>
+						<span v-else class="spinner-border spinner-border-sm"></span>
+						{{ isSavingResolucion ? 'Validando...' : 'Validar' }}
+					</button>
+
+					<button v-if="userLogged.rol.includes('Secretario') && resolucion.fidEstado==2" type="button" @click="rechazarItem()" class="btn btn-danger ml-1" :disabled="isSavingResolucion">
+						<i v-if="!isSavingResolucion" class="cil-x"></i>
+						<span v-else class="spinner-border spinner-border-sm"></span>
+						{{ isSavingResolucion ? 'Rechazando...' : 'Rechazar' }}
+					</button>
+
+					<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 				</div>
 			</div>
 		</div>
@@ -177,10 +201,11 @@
 			this.fetchFormasResolucionesDropList();
 			this.fetchMateriasDropList();
 			this.fetchDetailResolucion(this.$route.params.id);
+			//console.log(this.$route.params.id);
 		},
-		computed: { ...mapGetters([, "resolucion", "isLoadingResolucion", "isSavingResolucion", "isEditModeResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList",  "procesosDropList"]) },
+		computed: { ...mapGetters([, "resolucion", "isLoadingResolucion", "isSavingResolucion", "isEditModeResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList",  "procesosDropList", "userLogged"]) },
 		methods: {
-			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList", "fetchProcesosByMateriaDropList", "storeResolucion", "updateResolucion", "fetchDetailResolucion"]),
+			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList", "fetchProcesosByMateriaDropList", "storeResolucion", "updateResolucion", "fetchDetailResolucion", "validarResolucion", "rechazarResolucion"]),
 
 			validate() {
 				this.valid = false;
@@ -240,6 +265,25 @@
 					Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
 				}
 			},
+			async updateAndSendItem() {
+				this.validate();
+				if(this.valid) {
+					this.resolucion.fidEstado = 2;
+					await this.updateResolucion(this.resolucion);
+					this.$router.push({ name: "resoluciones" });
+				}
+				else {
+					Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
+				}
+			},
+			async validarItem() {
+				await this.validarResolucion(this.resolucion);
+				this.$router.push({ name: "resoluciones" });
+			},
+			async rechazarItem() {
+				await this.rechzarResolucion(this.resolucion);
+				this.$router.push({ name: "resoluciones" });
+			},
 			onSelectMateria(event) {
 				this.fetchProcesosByMateriaDropList(event.target.value);
 			}
@@ -248,7 +292,6 @@
 			resolucion: function () {
 				this.idMateria = this.resolucion.Proceso.Materium.idMateria
 				this.fetchProcesosByMateriaDropList(this.idMateria)
-				
 			}
 		}
 	};

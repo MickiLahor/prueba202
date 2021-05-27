@@ -123,7 +123,7 @@ const routes = [
   }
 },
 {
-  path: '/resoluciones/edit',
+  path: '/resoluciones/:id/edit',
   name: 'resoluciones.edit',
   component: ResolucionEdit,
   meta: {
@@ -136,7 +136,7 @@ const routes = [
   }
 },
 {
-  path: '/resoluciones/detail',
+  path: '/resoluciones/:id',
   name: 'resoluciones.detail',
   component: ResolucionDetail,
   meta: {

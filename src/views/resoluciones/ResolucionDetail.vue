@@ -1,30 +1,45 @@
 <template>
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="card card-accent-info">
+			<div v-if="isLoadingResolucion" class="text-center">
+				<div class="spinner-border" role="status"></div>
+				<br />
+				<strong>Cargando Datos...</strong>
+			</div>
+			<div v-else class="card card-accent-info">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Datos de Resolución</h5>
-					<div>
-						<router-link :to="{ name: 'resoluciones.edit', params: { id: idResolucion } }" class="btn btn-info">
+					<div v-if="userLogged.rol.includes('Secretario') && resolucion.fidEstado==2">
+						<button type="button" @click="validarItem()" class="btn btn-success" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-check"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Procesando...' : 'Validar' }}
+						</button>
+
+						<button type="button" @click="rechazarItem()" class="btn btn-danger ml-1" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-x"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Procesando...' : 'Rechazar' }}
+						</button>
+
+						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					</div>
+					<div v-else>
+						<router-link v-if="resolucion.fidEstado==1" :to="{ name: 'resoluciones.edit', params: { id: idResolucion } }" class="btn btn-info">
 							<i class="cil-pencil"></i> Editar
 						</router-link>
 
-						<!--<button v-if="resolucion.fidEstado=1" type="button" @click="sendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+						<button v-if="userLogged.rol=='Juzgado' && resolucion.fidEstado==1" type="button" @click="enviarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Enviando...' : 'Enviar' }}
-						</button>-->
+							{{ isSavingResolucion ? 'Procesando...' : 'Enviar' }}
+						</button>
 
-						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
 				<div class="card-body">
-					<div v-if="isLoadingResolucion" class="text-center">
-						<div class="spinner-border" role="status"></div>
-						<br />
-						<strong>Cargando Datos...</strong>
-					</div>
-					<div v-else>
+					<div>
 						<div class="card">
 							<div class="card-body pb-0">
 								<h5>Datos Generales</h5>
@@ -106,7 +121,7 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<button type="button" class="btn btn-danger" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					<button type="button" class="btn btn-dark" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 				</div>
 			</div>
 		</div>
@@ -141,13 +156,25 @@
 			this.fetchDetailResolucion(this.$route.params.id);
 		},
 		computed: {
-			...mapGetters(["isLoadingResolucion", "resolucion"]),
+			...mapGetters(["resolucion", "isLoadingResolucion", "isSavingResolucion", "userLogged"]),
 			//fechaResolucionFormat: moment(String(value)).format('MM/DD/YYYY hh:mm')
 			//fechaResolucionFormat: this.dateFormatES(this.resolucion.fechaResolucion)
 			//fechaResolucionFormat: this.resolucion.fechaResolucion.split("-").reverse().join("-")
 		},
 		methods: {
-			...mapActions(["fetchDetailResolucion"])
+			...mapActions(["fetchDetailResolucion", "enviarResolucion", "validarResolucion", "rechazarResolucion"]),
+			async enviarItem() {
+				await this.enviarResolucion(this.resolucion.idResolucion);
+				this.$router.push({ name: "resoluciones" });
+			},
+			async validarItem() {
+				await this.validarResolucion(this.resolucion.idResolucion);
+				this.$router.push({ name: "resoluciones" });
+			},
+			async rechazarItem() {
+				await this.rechazarResolucion(this.resolucion.idResolucion);
+				this.$router.push({ name: "resoluciones" });
+			},
 		},
 		watch: {
 			resolucion: function () {

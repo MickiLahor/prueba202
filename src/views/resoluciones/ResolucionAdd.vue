@@ -8,14 +8,14 @@
 						<button type="button" @click="storeItem()" class="btn btn-info" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Guardando...' : 'Guardar' }}
+							{{ isSavingResolucion ? 'Procesando...' : 'Guardar' }}
 						</button>
 						<button type="button" @click="storeAndSendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Guardando y Enviando...' : 'Guardar y Enviar' }}
+							{{ isSavingResolucion ? 'Procesando...' : 'Guardar y Enviar' }}
 						</button>
-						<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
 				<div class="card-body">
@@ -152,16 +152,16 @@
 					<button type="button" @click="storeItem()" class="btn btn-info" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
-						{{ isSavingResolucion ? 'Guardando...' : 'Guardar' }}
+						{{ isSavingResolucion ? 'Procesando...' : 'Guardar' }}
 					</button>
 
 					<button type="button" @click="storeAndSendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
-						{{ isSavingResolucion ? 'Guardando y Enviando...' : 'Guardar y Enviar' }}
+						{{ isSavingResolucion ? 'Procesando...' : 'Guardar y Enviar' }}
 					</button>
 
-					<button type="button" class="btn btn-danger ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 				</div>
 			</div>
 		</div>
@@ -183,7 +183,7 @@
 		},
 		data() {
 			return {
-				/*resolucion: {
+				resolucion: {
 					idResolucion: '',
 					numeroResolucion: '',
 					codigoResolucion: '',
@@ -201,8 +201,8 @@
 					registroActivo: true,
 					fidEstado: null,
 					usuarioRegistro: "usuarioPrueba"
-				},*/
-				resolucion: {
+				},
+				/*resolucion: {
 					idResolucion: '',
 					numeroResolucion: '0001/2020',
 					codigoResolucion: "1042602-1",
@@ -220,7 +220,7 @@
 					visible: true,
 					registroActivo: true,
 					usuarioRegistro: "usuarioPrueba"
-				},
+				},*/
 				idMateria: 4,
 				nombreOficina: '',
 				nombre_pdf: '',
@@ -243,7 +243,6 @@
 			this.fetchProcesosByMateriaDropList(this.idMateria);
 			this.resolucion.fidOficina = this.userLogged.idOficina;
 			this.nombreOficina = this.userLogged.oficina;
-			//console.log(this.resolucion.fidOficina);
 			this.fetchRelatoresDropList(this.resolucion.fidOficina);
 		},
 		computed: { ...mapGetters(["isSavingResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList", "procesosDropList", "relatoresDropList", "datosNurej", "userLogged"]) },

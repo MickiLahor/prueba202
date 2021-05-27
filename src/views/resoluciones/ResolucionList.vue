@@ -199,24 +199,24 @@
 											<td>{{item.fechaResolucion}}</td>
 											<td>{{item.codigoResolucion}}</td>
 											<td>
-												<span v-if="item.fidEstado=1" class="badge badge-info">Pendiente</span>
-												<span v-else-if="item.fidEstado=2" class="badge badge-warning">Enviado</span>
-												<span v-else-if="item.fidEstado=3" class="badge badge-danger">Rechazado</span>
+												<span v-if="item.idEstado==1" class="badge badge-info">Pendiente</span>
+												<span v-else-if="item.idEstado==2" class="badge badge-warning">Enviado</span>
+												<span v-else-if="item.idEstado==3" class="badge badge-danger">Rechazado</span>
 												<span v-else class="badge badge-success">Validado</span>
 											</td>
 											<td class="fit">
 												<router-link class="btn btn-success btn-sm" :to="{ name: 'resoluciones.detail', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-zoom-in"></i>
 												</router-link>
-												<router-link v-if="item.fidEstado=1" class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
+												<router-link v-if="item.idEstado==1" class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-pencil"></i>
 												</router-link>
-												<button v-if="item.registroActivo" title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idResolucion)">
+												<button v-if="item.registroActivo && userLogged.rol.includes('Administrador')" title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idResolucion)">
 													<i class="c-icon cil-x"></i>
 												</button>
-												<button v-else title="Activar" class="btn btn-warning btn-sm ml-1" @click="restoreItem(item.idResolucion)">
+												<!--<button v-else title="Activar" class="btn btn-warning btn-sm ml-1" @click="restoreItem(item.idResolucion)">
 													<i class="c-icon cil-reload"></i>
-												</button>
+												</button>-->
 											</td>
 										</tr>
 									</tbody>
@@ -336,13 +336,6 @@
 				//this.params.oficina = "";
 				//this.params.gestion = "";
 			},
-		},
-		/*watch: {
-			userLogged(user) {
-				console.log(user)
-				if(!user.rol.include("Administrador"))
-					this.params.oficina = user.idOficina;
-			}
-		}*/
+		}
 	}
 </script>

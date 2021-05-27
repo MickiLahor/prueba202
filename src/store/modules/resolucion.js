@@ -147,16 +147,7 @@ const actions = {
 			url = `${url}/${oficina}/${gestion}`;
 		}
 
-		console.log(url);
-
-		/*let listaRes = [
-		{id: 1, id_oficina: "Of 1", id_tipores: "Fa 1", id_proceso: "Pro 1", id_titulo: "Tit 1", id_formares: "TipRe 1", num_res: "Fall 1", fecha: "28/04/2021", id_funcionario: "Fun 1", codigo: "Cod 1", cont_html: "html 1", contenido: "Con 1", demandante: "Demte 1", visible: true, demandado: "Demdo 1", activo: true},
-		{id: 2, id_oficina: "Of 2", id_tipores: "Fa 2", id_proceso: "Pro 2", id_titulo: "Tit 2", id_formares: "TipRe 2", num_res: "Fall 2", fecha: "27/04/2021", id_funcionario: "Fun 2", codigo: "Cod 2", cont_html: "html 2", contenido: "Con 2", demandante: "Demte 2", visible: true, demandado: "Demdo 2", activo: true},
-		{id: 3, id_oficina: "Of 3", id_tipores: "Fa 3", id_proceso: "Pro 3", id_titulo: "Tit 3", id_formares: "TipRe 3", num_res: "Fall 3", fecha: "25/04/2021", id_funcionario: "Fun 3", codigo: "Cod 3", cont_html: "html 3", contenido: "Con 3", demandante: "Demte 3", visible: true, demandado: "Demdo 3", activo: true},
-		];
-
-		commit('SET_RESOLUCIONES', listaRes);
-		commit('SET_IS_LOADING_RESOLUCION', false);*/
+		//console.log(url);
 
 		await axios.get(url)
 		.then(res => {
@@ -172,7 +163,8 @@ const actions = {
 					materia: item.Proceso.Materium.descripcion,
 					fechaResolucion: item.fechaResolucion.split("-").reverse().join("-"),
 					codigoResolucion: item.codigoResolucion,
-					registroActivo: item.registroActivo
+					registroActivo: item.registroActivo,
+					idEstado: item.Estado.idEstado
 				});
 			});
 			commit('SET_RESOLUCIONES', lista);
@@ -227,6 +219,48 @@ const actions = {
 		.then(res => {
 			setTimeout(function() {
 				//commit('UPDATE_RESOLUCION', res.data);
+				commit('SET_SAVING_RESOLUCION', false);
+			}, 500);
+		})
+		.catch(err => {
+			console.log('error', err);
+			commit('SET_SAVING_RESOLUCION', false);
+		});
+	},
+
+	async enviarResolucion({ commit }, id) {
+		commit('SET_SAVING_RESOLUCION', true);
+		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/enviar/${id}`)
+		.then(res => {
+			setTimeout(function() {
+				commit('SET_SAVING_RESOLUCION', false);
+			}, 500);
+		})
+		.catch(err => {
+			console.log('error', err);
+			commit('SET_SAVING_RESOLUCION', false);
+		});
+	},
+
+	async validarResolucion({ commit }, id) {
+		commit('SET_SAVING_RESOLUCION', true);
+		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/validar/${id}`)
+		.then(res => {
+			setTimeout(function() {
+				commit('SET_SAVING_RESOLUCION', false);
+			}, 500);
+		})
+		.catch(err => {
+			console.log('error', err);
+			commit('SET_SAVING_RESOLUCION', false);
+		});
+	},
+
+	async rechazarResolucion({ commit }, id) {
+		commit('SET_SAVING_RESOLUCION', true);
+		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/rechazar/${id}`)
+		.then(res => {
+			setTimeout(function() {
 				commit('SET_SAVING_RESOLUCION', false);
 			}, 500);
 		})
