@@ -31,6 +31,24 @@ const actions = {
       console.log(error)
     })
   },
+
+  async autologin({commit}, zeus) {
+    await axios({
+      url: `${process.env.VUE_APP_API_URL}verificar_token`,
+      headers: {
+        Authorization: zeus
+      }
+    })
+    .then(response => {
+        console.log(response.data)
+        commit('SET_USER_LOGGED', response.data.data)
+        commit('SET_TOKEN', response.data.token)
+        router.replace('/');
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  },
   
   async logout({commit}) {
     /*axios.post('/api/logout')

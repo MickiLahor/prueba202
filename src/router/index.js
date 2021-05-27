@@ -13,6 +13,7 @@ import ResolucionEdit from '../views/resoluciones/ResolucionEdit.vue'
 import ResolucionDetail from '../views/resoluciones/ResolucionDetail.vue'
 import BuscadorResoluciones from '../views/resoluciones/BuscadorResoluciones.vue'
 import ResolucionDetailPublic from '../views/resoluciones/ResolucionDetailPublic.vue'
+import AutoLogin from '../views/auth/AutoLogin.vue'
 
 
 const routes = [
@@ -168,6 +169,17 @@ const routes = [
     { name: 'Inicio', link: '/' },
     { name: 'Buscador de Resoluciones', link: '/buscador_resoluciones' },
     { name: 'Ver Resolucion' }
+    ]
+  }
+},
+{
+  path: '/autologin',
+  name: 'autologin',
+  component: AutoLogin,
+  meta: {
+    hideForAuth: true,
+    breadcrumb: [
+    { name: 'AutoLogin' }
     ]
   }
 },
