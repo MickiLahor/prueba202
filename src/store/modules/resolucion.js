@@ -147,7 +147,7 @@ const actions = {
 			url = `${url}/${oficina}/${gestion}`;
 		}
 
-		//console.log(url);
+		console.log(url);
 
 		await axios.get(url)
 		.then(res => {
@@ -509,6 +509,7 @@ const actions = {
 		});
 	},
 	async buscarResolucionesAvanzado({ commit }, params) {
+		console.log(params);
 		commit('SET_IS_LOADING_RESOLUCION', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}busqueda/avanzado`, params)
 		.then(res => {

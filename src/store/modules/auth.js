@@ -5,6 +5,7 @@ const state = {
   token: null,
   userLogged: null,
   isLogin: false,
+  layout: "login-layout",
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
     state.userLogged = user;
     state.isLogin = Boolean(user);
   },
+  SET_LAYOUT(state, newLayout) {
+    state.layout = newLayout;
+  }
 }
 
 const actions = {
@@ -24,6 +28,7 @@ const actions = {
       console.log(response.data)
       commit('SET_USER_LOGGED', response.data.data)
       commit('SET_TOKEN', response.data.token)
+      commit('SET_LAYOUT', "main-layout")
       router.replace('/');
       //window.location.href="/";
     })
@@ -37,13 +42,15 @@ const actions = {
     .then(res => {
       commit("SET_USER_LOGGED", null);
       commit('SET_TOKEN', null)
+      commit('SET_LAYOUT', "login-layout");
       router.replace('/login');
     })
     .catch(error => {
       console.log(error);
     });*/
     commit("SET_USER_LOGGED", null);
-    commit('SET_TOKEN', null)
+    commit('SET_TOKEN', null);
+    commit('SET_LAYOUT', "login-layout");
     router.replace('/login');
   },
 }
@@ -52,6 +59,7 @@ const getters = {
   token: state => state.token,
   userLogged: state => state.userLogged,
   isLogin: state => state.isLogin,
+  layout: state => state.layout,
 }
 
 const authModule = {

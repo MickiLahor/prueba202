@@ -289,12 +289,13 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from "vuex";
+  import { mapGetters, mapActions, mapMutations } from "vuex";
 
   export default {
     name: 'buscadorResoluciones',
     data() {
       return {
+        typeSearch: null,
         contenidoTextoPlano: '',
         paramsGestion: {
           //departamento: '',
@@ -314,9 +315,14 @@
           fidProceso: 0,
           demandante: '',
           demandado: '',
-          typeSearch: null,
         }
       }
+    },
+    mounted() {
+      this.SET_LAYOUT('search-layout');
+    },
+    unmounted() {
+      this.SET_LAYOUT('login-layout');
     },
     created() {
       //this.fetchDepartamentosDropList();
@@ -332,6 +338,7 @@
     computed: { ...mapGetters(["resultSearch", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList", "relatoresDropList", "tiposResolucionesDropList", "formasResolucionesDropList", "procesosDropList"]) },
     methods: {
       ...mapActions(["buscarResolucionesSimple", "buscarResolucionesGestion", "buscarResolucionesAvanzado", "fetchOficinasDropList", "fetchGestionesDropList", "fetchRelatoresDropList", "fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchProcesosDropList", "getDetailResolucion", "fetchPdfResolucion"]),
+      ...mapMutations(['SET_LAYOUT']),
       onSelectMateria(event) {
         this.fetchProcesosByMateriaDropList(event.target.value);
       },

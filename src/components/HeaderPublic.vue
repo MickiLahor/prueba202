@@ -1,8 +1,9 @@
 <template>
-  <header class="c-header c-header-fixed c-header-with-subheader">
-    <router-link class="c-header-brand mfs-3" to="/">
-      Buscador de Resoluciones Tribunales Departamentales de Justicia
-      <!--<img src="/img/logo_tsj_escudo_negativo.png" height="46" alt="Logo Buscadores T.S.J.">-->
+  <header class="c-header c-header-dark c-header-fixed c-header-with-subheader">
+    <router-link class="c-header-brand mfs-3 font-weight-bold" to="/">
+      KRIMA
+      <!--<img class="navbar-brand-full" src="img/logo_negativo.png" height="45"
+        alt="Logo Organo Judicial">-->
     </router-link>
     <button class="c-header-toggler c-class-toggler d-lg-none ml-auto" type="button" data-target="#navbarMenu" data-class="c-sidebar-show">
       <i class="fa fa-bars c-sidebar-nav-icon"></i>
@@ -12,33 +13,17 @@
   </header>
 </template>
 
-<style>
-.c-header {
-  background-color: #2f353a!important;
-}
+<style scope>
 
-.c-header .c-subheader {
-    margin-top: 0;
-    border-top: 4px solid #f9b115;
-}
-
-.c-header .c-header-nav .c-header-nav-link {
-  color: #fff !important;
-}
-
-.c-header .c-header-nav .c-header-nav-link:hover {
-  color: #ffc107 !important;
-}
-
-.font-weight-500 {
-  font-weight: 500;
+.c-header-dark {
+  /*background-color: #2f353a!important;*/
+  border-bottom: 1px solid #d8dbe0 !important;
 }
 
 </style>
 
 <script>
 import Breadcrumbs from "./Breadcrumbs";
-import {mapActions, mapGetters} from 'vuex'
 
 export default {
   components: {

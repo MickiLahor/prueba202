@@ -153,6 +153,7 @@ const routes = [
   name: 'buscador_resoluciones',
   component: BuscadorResoluciones,
   meta: {
+    //requiresGuest: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Buscador de Resoluciones' }
@@ -164,6 +165,7 @@ const routes = [
   name: 'buscador_resoluciones.detalle',
   component: ResolucionDetailPublic,
   meta: {
+    //requiresGuest: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Buscador de Resoluciones', link: '/buscador_resoluciones' },
@@ -171,18 +173,18 @@ const routes = [
     ]
   }
 },
-  //404
-  // {
-  //   path: '*',
-  //   name:"NotFound",
-  //   component:NotFound
-  // },
-  ]
+//404
+// {
+//   path: '*',
+//   name:"NotFound",
+//   component:NotFound
+// },
+]
 
-  const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
-  })
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
 
 /*router.beforeEach((to, from, next) => {
   const publicPages = ['/login'];

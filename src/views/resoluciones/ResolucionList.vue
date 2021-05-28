@@ -121,6 +121,21 @@
 									</div>
 								</div>
 
+								<div class="my-1 col-lg-6">
+									<div class="form-group row mb-0">
+										<label for="estado" class="col-sm-4 col-form-label text-sm-right">Estado:</label>
+										<div class="col">
+											<select v-model="params.estado" class="form-control" id="estado" @keypress.enter.prevent="search">
+												<option v-bind:value="0">Todos</option>
+												<option v-bind:value="1">Pendiente</option>
+												<option v-bind:value="2">Enviado</option>
+												<option v-bind:value="3">Rechazado</option>
+												<option v-bind:value="4">Validado</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
 								<!--<div class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
 										<label for="demandante" class="col-sm-4 col-form-label text-sm-right">Demandante:</label>
@@ -250,6 +265,7 @@
 					gestion: 0,
 					tipoResolucion: 0,
 					proceso: 0,
+					estado: 0,
 					//demandante: null,
 					//demandado: null,
 					codigoResolucion: '',

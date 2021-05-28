@@ -90,7 +90,7 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
+	import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 	import { quillEditor, Quill } from 'vue3-quill'
 
@@ -113,6 +113,12 @@
 				}
 			};
 		},
+		mounted() {
+			this.SET_LAYOUT('search-layout');
+		},
+		unmounted() {
+			this.SET_LAYOUT('login-layout');
+		},
 		created() {
 			this.fetchDetailPublicResolucion(this.$route.params.id);
 		},
@@ -120,7 +126,8 @@
 			...mapGetters(["isLoadingResolucion", "resolucion"]),
 		},
 		methods: {
-			...mapActions(["fetchDetailPublicResolucion"])
+			...mapActions(["fetchDetailPublicResolucion"]),
+			...mapMutations(['SET_LAYOUT']),
 		},
 		watch: {
 			resolucion: function () {

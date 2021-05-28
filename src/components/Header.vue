@@ -28,11 +28,9 @@
             <i class="cil-user c-sidebar-nav-icon"></i> Mi Perfil
           </a>
           <div class="dropdown-divider"></div>
-          <router-link to="/login">
-          <a @click="logout"  class="dropdown-item" href="#">
-            <i class="cil-account-logout c-sidebar-nav-icon"></i> Cerrar Sesión
+          <a href="#" class="dropdown-item" @click.prevent="logout">
+            <i class="cil-account-logout c-sidebar-nav-icon mr-2"></i> Cerrar Sesión
           </a>
-          </router-link>
         </div>
       </li>
     </ul>

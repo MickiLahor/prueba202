@@ -1,16 +1,16 @@
 <template>
-  <Sidebar></Sidebar>
+  <Sidebar/>
   <div class="c-wrapper c-fixed-components">
-    <Header></Header>
+    <Header/>
     <div class="c-body">
       <main class="c-main">
         <div class="container-fluid">
           <div class="fade-in">
-            <router-view></router-view>
+            <router-view/>
           </div>
         </div>
       </main>
-      <Footer></Footer>
+      <Footer/>
     </div>
   </div>
 </template>

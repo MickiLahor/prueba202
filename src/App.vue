@@ -1,46 +1,20 @@
 <template>
-  <Sidebar v-if="isLogin"/>
-  <div class="c-wrapper c-fixed-components">
-    <Header v-if="isLogin"/>
-    <div class="c-body">
-      <main class="c-main" v-if="isLogin">
-        <div class="container-fluid">
-          <div class="fade-in">
-            <router-view/>
-          </div>
-        </div>
-      </main>
-      <main v-else class="c-main row justify-content-center align-items-center">
-        <div class="container-fluid">
-          <div class="fade-in">
-            <router-view/>
-          </div>
-        </div>
-      </main>
-      <Footer v-if="isLogin"/>
-    </div>
-  </div>
+  <component :is="$store.getters.layout"></component>
 </template>
 
 <script>
-  import Sidebar from "./components/Sidebar.vue";
-  import Header from "./components/Header.vue";
-  import Footer from "./components/Footer.vue";
-  import { mapGetters } from 'vuex'
-  
+  import LoginLayout from "./views/layouts/Login";
+  import MainLayout from "./views/layouts/Main";
+  import SearchLayout from "./views/layouts/Search";
+
   export default {
     components: {
-      Header,
-      Sidebar,
-      Footer
-    },
-    computed: {
-      ...mapGetters(['isLogin'])
+      'login-layout': LoginLayout,
+      'main-layout': MainLayout,
+      'search-layout': SearchLayout
     }
   };
-
 </script>
-
 
 <style>
 table.datatable {
