@@ -40,10 +40,11 @@
         <div class="card text-white bg-light py-5 d-md-down-none" style="width:44%">
           <div class="card-body text-center">
             <div>
-              <h1 style="color:Black; font-family: Arial Black, Impact, helvética;">KRIMA</h1>
-              <h5 style="color:#323232; font-family: Arial, Impact, helvética;">SISTEMA DE REGISTRO DE RESOLUCIONES</h5>
+              <img class="img-fluid" src="../../assets/img/Logo_KrimaOJ_negro.png" width="270" height="206" style="margin-bottom:15px">
+              
+              <h6 style="color:#323232; font-family: Arial, Impact, helvética; font-weight: bold">REGISTRO DE RESOLUCIONES DE LOS TRIBUNALES DEPARTAMENTALES DE JUSTICIA</h6>
               <div> 
-                <img class="img-fluid" src="https://daf.organojudicial.gob.bo/Images/logo-meet.png">
+                
               </div>
             </div>
           </div>
@@ -60,8 +61,8 @@ import { mapActions } from 'vuex'
     data() {
       return {
         usuario: {
-          usuario:'wwin',
-          contraseña:'1234'
+          usuario:'',
+          contraseña:''
         }
       }
     },

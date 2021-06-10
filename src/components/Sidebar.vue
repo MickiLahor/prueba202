@@ -1,16 +1,17 @@
 <template>
   <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-    <router-link class="c-sidebar-brand d-lg-down-none" tag="a" to="/">
-      <img class="img-fluid" src="../assets/img/logo_oj.png" width="118" height="46">
+    <router-link class="c-sidebar-brand d-md-down-none" tag="a" to="/">
+      <img class="c-sidebar-brand-full" src="../assets/img/Logo_KrimaOJ_blanco.png" width="157" height="41">
+      <img class="c-sidebar-brand-minimized" src="../assets/img/Logo_KrimaOJ.png" width="" height="41">
     </router-link>
-    <ul class="c-sidebar-nav">
+    <ul class="c-sidebar-nav" id="ul">
       <li class="c-sidebar-nav-title">Menu Principal</li>
       <!--<router-link class="c-sidebar-nav-item" tag="li" to="/">
         <a class="c-sidebar-nav-link">
           <i class="cil-speedometer c-sidebar-nav-icon"></i> Inicio
         </a>
       </router-link>-->
-      <router-link class="c-sidebar-nav-item" tag="li" to="/resoluciones">
+      <router-link class="c-sidebar-nav-item" class-active="active" tag="li" to="/resoluciones">
         <a class="c-sidebar-nav-link">
           <i class="cil-color-border c-sidebar-nav-icon"></i> Resoluciones
         </a>
@@ -44,3 +45,11 @@
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
   </div>
 </template>
+
+
+<style>
+#ul a.router-link-active {
+  color: #42b983;
+  background: rgb(38, 39, 51);
+}
+</style>
