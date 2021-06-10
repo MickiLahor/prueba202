@@ -4,7 +4,7 @@
       <div class="card-group">
         <div class="card p-4">
           <div class="card-body">
-            <h2 style="color:#323232; font-family: Arial, Impact;">Iniciar Sesión</h2>
+            <h2 style="color:black; font-family: Arial, Impact;">Iniciar Sesión</h2>
             <p class="text-muted">Ingrese sus datos de Acceso</p>
             <form @submit.prevent='onSubmit' method="post" autocomplete="off">
               <div class="input-group mb-3">
@@ -37,12 +37,12 @@
             </form>
           </div>
         </div>
-        <div class="card text-white bg-light py-5 d-md-down-none" style="width:44%">
+        <div class="card text-white bg-light d-md-down-none" style="width:44%">
           <div class="card-body text-center">
             <div>
-              <img class="img-fluid" src="../../assets/img/Logo_KrimaOJ_negro.png" width="270" height="206" style="margin-bottom:15px">
+              <img class="img-fluid" src="../../assets/img/Logo_KrimaOJ_login.png" width="260" height="206" style="margin-bottom:5px; margin-top:5px">
               
-              <h6 style="color:#323232; font-family: Arial, Impact, helvética; font-weight: bold">REGISTRO DE RESOLUCIONES DE LOS TRIBUNALES DEPARTAMENTALES DE JUSTICIA</h6>
+              <h6 style="color:black; font-family: Arial, Impact, helvética; font-weight: bold">REGISTRO DE RESOLUCIONES DE LOS TRIBUNALES DEPARTAMENTALES DE JUSTICIA</h6>
               <div> 
                 
               </div>

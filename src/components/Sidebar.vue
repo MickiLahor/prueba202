@@ -18,7 +18,7 @@
       </router-link>
       <router-link class="c-sidebar-nav-item" tag="li" to="/materias">
         <a class="c-sidebar-nav-link">
-          <i class="cil-menu c-sidebar-nav-icon"></i> Materias
+          <i class="c-sidebar-nav-icon cil-menu"></i> Materias
         </a>
       </router-link>
       <router-link class="c-sidebar-nav-item" tag="li" to="/procesos">
@@ -47,9 +47,11 @@
 </template>
 
 
-<style>
+<style scoped>
 #ul a.router-link-active {
-  color: #42b983;
-  background: rgb(38, 39, 51);
+  background: #0179b1
+}
+.c-sidebar-nav-link {
+  color: white;
 }
 </style>
