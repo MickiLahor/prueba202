@@ -1,7 +1,8 @@
 <template>
   <header class="c-header c-header-dark c-header-fixed c-header-with-subheader">
     <router-link class="c-header-brand mfs-3 font-weight-bold" to="/">
-      KRIMA
+      <img class="c-sidebar-brand-full" src="../assets/img/Logo_KrimaOJ_blanco.png" width="157" height="41">
+      <!-- KRIMA -->
       <!--<img class="navbar-brand-full" src="img/logo_negativo.png" height="45"
         alt="Logo Organo Judicial">-->
     </router-link>

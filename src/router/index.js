@@ -22,6 +22,17 @@ const routes = [
   name: 'login',
   component: Login,
   meta: {
+    title: 'Krima - Iniciar Sesión',
+    // metaTags: [
+      //   {
+      //     name: '',
+      //     content: ''
+      //   },
+      //   {
+      //     property: '',
+      //     content: ''
+      //   }
+      // ],  
     hideForAuth: true,
     breadcrumb: [
     { name: 'Login' }
@@ -33,6 +44,7 @@ const routes = [
   name: 'home',
   component: Home,
   meta: {
+    title: 'Krima - Inicio',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio' }
@@ -44,6 +56,7 @@ const routes = [
   name: 'about',
   component: About,
   meta: {
+    title: 'Krima - Acerca de',
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Acerca De' }
@@ -55,6 +68,7 @@ const routes = [
   name: 'materias',
   component: MateriaList,
   meta: {
+    title: 'Krima - Materias',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
@@ -67,6 +81,7 @@ const routes = [
   name: 'procesos',
   component: ProcesoList,
   meta: {
+    title: 'Krima - Procesos',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
@@ -79,6 +94,7 @@ const routes = [
   name: 'tipos_resoluciones',
   component: TipoResolucionList,
   meta: {
+    title: 'Krima - Tipo de Resoluciones',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
@@ -91,6 +107,7 @@ const routes = [
   name: 'formas_resoluciones',
   component: FormaResolucionList,
   meta: {
+    title: 'Krima - Formas de Resoluciones',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
@@ -103,6 +120,7 @@ const routes = [
   name: 'resoluciones',
   component: ResolucionList,
   meta: {
+    title: 'Krima - Resoluciones',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
@@ -115,11 +133,12 @@ const routes = [
   name: 'resoluciones.create',
   component: ResolucionAdd,
   meta: {
+    title: 'Krima - Registrar Resolución',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Resoluciones', link: '/resoluciones' },
-    { name: 'Registrar' }
+    { name: 'Registrar Resolución' }
     ]
   }
 },
@@ -128,11 +147,12 @@ const routes = [
   name: 'resoluciones.edit',
   component: ResolucionEdit,
   meta: {
+    title: 'Krima - Editar Resolución',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Resoluciones', link: '/resoluciones' },
-    { name: 'Editar Resolucion' }
+    { name: 'Editar Resolución' }
     ]
   }
 },
@@ -141,11 +161,12 @@ const routes = [
   name: 'resoluciones.detail',
   component: ResolucionDetail,
   meta: {
+    title: 'Krima - Visualizar Resolución',
     requiresAuth: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Resoluciones', link: '/resoluciones' },
-    { name: 'Ver Resolucion' }
+    { name: 'Ver Resolución' }
     ]
   }
 },
@@ -153,7 +174,8 @@ const routes = [
   path: '/buscador_resoluciones',
   name: 'buscador_resoluciones',
   component: BuscadorResoluciones,
-  meta: {
+  meta: {  
+    title: 'Krima - Búsqueda de Resoluciones',
     //requiresGuest: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
@@ -166,11 +188,12 @@ const routes = [
   name: 'buscador_resoluciones.detalle',
   component: ResolucionDetailPublic,
   meta: {
+    title: 'Krima - Búsqueda de Resoluciones - Visualizar',
     //requiresGuest: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
     { name: 'Buscador de Resoluciones', link: '/buscador_resoluciones' },
-    { name: 'Ver Resolucion' }
+    { name: 'Ver Resolución' }
     ]
   }
 },
@@ -179,6 +202,7 @@ const routes = [
   name: 'autologin',
   component: AutoLogin,
   meta: {
+    title: 'Krima',
     hideForAuth: true,
     breadcrumb: [
     { name: 'AutoLogin' }
@@ -240,6 +264,12 @@ router.beforeEach((to, from, next) => {
   }
   else {
     next()
+  }
+  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+  if(nearestWithTitle) {
+    document.title = nearestWithTitle.meta.title;
+  } else if(previousNearestWithMeta) {
+    document.title = previousNearestWithMeta.meta.title;
   }
 });
 
