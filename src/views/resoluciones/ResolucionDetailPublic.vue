@@ -6,6 +6,9 @@
 					<h5 class="card-title mb-0"><i class="c-icon cil-list"></i> Datos de Resolución</h5>
 					<div>
 						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+						<button v-if="filePDF" title="Descargar PDF" class="btn btn-danger ml-1" @click="getPDF(idResolucion)">
+							<i class="cib-adobe-acrobat-reader"></i> PDF
+						</button>
 					</div>
 				</div>
 				<div class="card-body">
@@ -103,6 +106,7 @@
 			return {
 				idResolucion: null,
 				fechaResolucionFormat: "",
+				filePDF: "",
 				editorOptions: {
 					placeholder: 'Pegue aquí el texto del documento...',
 					readOnly: true,
@@ -126,13 +130,17 @@
 			...mapGetters(["isLoadingResolucion", "resolucion"]),
 		},
 		methods: {
-			...mapActions(["fetchDetailPublicResolucion"]),
+			...mapActions(["fetchDetailPublicResolucion", "fetchDownloadPdfResolucion"]),
 			...mapMutations(['SET_LAYOUT']),
+			getPDF(id) {
+				this.fetchDownloadPdfResolucion(id);
+			},
 		},
 		watch: {
 			resolucion: function () {
 				this.idResolucion = this.resolucion.idResolucion;
 				this.resolucion.fechaResolucion = this.dateFormatES(this.resolucion.fechaResolucion);
+				this.filePDF = this.resolucion.rutaArchivoPdf;
 			}
 		}
 	};

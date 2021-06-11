@@ -31,33 +31,33 @@
 									</div>
 								</div>
 
-								<!--<div class="my-1 col-lg-6">
+								<div v-if="userLogged.rol.includes('Administrador')" class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
 										<label for="departamento" class="col-sm-4 col-form-label text-sm-right">Departamento:</label>
 										<div class="col">
-											<select v-model="params.departamento" class="form-control" id="departamento" @keypress.enter.prevent="search">
-												<option v-for="item in departamentoDropList" v-bind:value="item.value">{{ item.text }}</option>
+											<select v-model="params.idDepartamento" class="form-control" id="departamento" @keypress.enter.prevent="search" @change="onSelectDepartamento($event)">
+												<option v-for="item in departamentosDropList" v-bind:value="item.value">{{ item.text }}</option>
 											</select>
 										</div>
 									</div>
 								</div>
 
-								<div class="my-1 col-lg-6">
+								<div v-if="userLogged.rol.includes('Administrador')" class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
 										<label for="municipio" class="col-sm-4 col-form-label text-sm-right">Municipio:</label>
 										<div class="col">
-											<select v-model="params.municipio" class="form-control" id="municipio" @keypress.enter.prevent="search">
-												<option v-for="item in municipioDropList" v-bind:value="item.value">{{ item.text }}</option>
+											<select v-model="params.idMunicipio" class="form-control" id="municipio" @keypress.enter.prevent="search" @change="onSelectMunicipio($event)">
+												<option v-for="item in municipiosDropList" v-bind:value="item.value">{{ item.text }}</option>
 											</select>
 										</div>
 									</div>
-								</div>-->
+								</div>
 
 								<div v-if="userLogged.rol.includes('Administrador')" class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
 										<label for="oficina" class="col-sm-4 col-form-label text-sm-right">Sala:</label>
 										<div class="col">
-											<select v-model="params.oficina" class="form-control" id="oficina" @keypress.enter.prevent="search">
+											<select v-model="params.idOficina" class="form-control" id="oficina" @keypress.enter.prevent="search">
 												<option v-for="item in oficinasDropList" v-bind:value="item.value">{{ item.text }}</option>
 											</select>
 										</div>
@@ -79,7 +79,7 @@
 									<div class="form-group row mb-0">
 										<label for="tipoResolucion" class="col-sm-4 col-form-label text-sm-right">Tipo de Resolución:</label>
 										<div class="col">
-											<select v-model="params.tipoResolucion" class="form-control" id="tipoResolucion" @keypress.enter.prevent="search">
+											<select v-model="params.idTipoResolucion" class="form-control" id="tipoResolucion" @keypress.enter.prevent="search">
 												<option v-bind:value="0">Todos</option>
 												<option v-for="item in tiposResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
 											</select>
@@ -87,33 +87,11 @@
 									</div>
 								</div>
 
-								<!--<div class="my-1 col-lg-6">
-									<div class="form-group row mb-0">
-										<label for="formaResolucion" class="col-sm-4 col-form-label text-sm-right">Forma de Resolución:</label>
-										<div class="col">
-											<select v-model="params.formaResolucion" class="form-control" id="formaResolucion" @keypress.enter.prevent="search">
-												<option v-for="item in formasResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
-											</select>
-										</div>
-									</div>
-								</div>
-
-								<div class="my-1 col-lg-6">
-									<div class="form-group row mb-0">
-										<label for="materia" class="col-sm-4 col-form-label text-sm-right">Materia:</label>
-										<div class="col">
-											<select v-model="params.materia" class="form-control" id="materia" @keypress.enter.prevent="search">
-												<option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
-											</select>
-										</div>
-									</div>
-								</div>-->
-
 								<div class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
 										<label for="proceso" class="col-sm-4 col-form-label text-sm-right">Proceso:</label>
 										<div class="col">
-											<select v-model="params.proceso" class="form-control" id="proceso" @keypress.enter.prevent="search">
+											<select v-model="params.idProceso" class="form-control" id="proceso" @keypress.enter.prevent="search">
 												<option v-bind:value="0">Todos</option>
 												<option v-for="item in procesosDropList" v-bind:value="item.value">{{ item.text }}</option>
 											</select>
@@ -125,7 +103,7 @@
 									<div class="form-group row mb-0">
 										<label for="estado" class="col-sm-4 col-form-label text-sm-right">Estado:</label>
 										<div class="col">
-											<select v-model="params.estado" class="form-control" id="estado" @keypress.enter.prevent="search">
+											<select v-model="params.idEstado" class="form-control" id="estado" @keypress.enter.prevent="search">
 												<option v-bind:value="0">Todos</option>
 												<option v-bind:value="1">Pendiente</option>
 												<option v-bind:value="2">Enviado</option>
@@ -181,7 +159,7 @@
 								<table class="table table-hover table-sm datatable">
 									<thead>
 										<tr>
-											<th @click="sort('id')" style="width: 5%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sort('id')" style="width: 5%" class="pr-4">N° <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sort('num_res')" class="pr-4">Nro. Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'num_res' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sort('tipoResolucion')" class="pr-4">Tipo Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'tipoResolucion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sort('formaResolucion')" class="pr-4">Forma Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'formaResolucion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
@@ -205,7 +183,7 @@
 											</td>
 										</tr>
 										<tr v-for="(item, index) in resoluciones" :key="index">
-											<td class="text-left">{{item.idResolucion}}</td>
+											<td class="text-left">{{index + 1}}</td>
 											<td>{{item.numeroResolucion}}</td>
 											<td>{{item.tipoResolucion}}</td>
 											<td>{{item.formaResolucion}}</td>
@@ -258,16 +236,15 @@
 		data() {
 			return {
 				params: {
-					//page: 1,
 					//orderBy: "id",
 					//orderType: "desc",
-					oficina: 0,
+					idDepartamento: 0,
+					idMunicipio: 0,
+					idOficina: 0,
 					gestion: 0,
-					tipoResolucion: 0,
-					proceso: 0,
-					estado: 0,
-					//demandante: null,
-					//demandado: null,
+					idTipoResolucion: 0,
+					idProceso: 0,
+					idEstado: 0,
 					codigoResolucion: '',
 					nroResolucion: '',
 				}
@@ -276,11 +253,17 @@
 		async created() {
 			//console.log(this.userLogged);
 			if(this.userLogged.rol.includes('Administrador')) {
-				await this.fetchOficinasDropList();
-				this.params.oficina = this.oficinasDropList[0].value;
+				await this.fetchDepartamentosDropList();
+				this.params.idDepartamento = this.departamentosDropList[0].value;
+				await this.fetchMunicipiosDropList(this.params.idDepartamento);
+				this.params.idMunicipio = this.municipiosDropList[0].value;
+				await this.fetchOficinasDropList(this.params.idMunicipio);
+				this.params.idOficina = this.oficinasDropList[0].value;
 			}
 			else {
-				this.params.oficina = this.userLogged.idOficina;
+				//this.params.idDepartamento = this.userLogged.idDepartamento;
+				//this.params.idMunicipio = this.userLogged.idMunicipio;
+				this.params.idOficina = this.userLogged.idOficina;
 			}
 			await this.fetchGestionesDropList();
 			this.params.gestion = this.gestionesDropList[0];
@@ -289,13 +272,13 @@
 			this.fetchAllResoluciones(this.params);
 			
 		},
-		computed: { ...mapGetters(["userLogged","resoluciones", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList", "tiposResolucionesDropList", "procesosDropList"]) },
+		computed: { ...mapGetters(["userLogged","resoluciones", "isLoadingResolucion", "departamentosDropList", "municipiosDropList", "oficinasDropList",  "gestionesDropList", "tiposResolucionesDropList", "procesosDropList"]) },
 		methods: {
-			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion", "fetchOficinasDropList", "fetchGestionesDropList", "fetchTiposResolucionesDropList", "fetchProcesosDropList"]),
+			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion", "fetchDepartamentosDropList", "fetchMunicipiosDropList", "fetchOficinasDropList", "fetchGestionesDropList", "fetchTiposResolucionesDropList", "fetchProcesosDropList"]),
 			...mapMutations(["SET_EDIT_MODE_RESOLUCION"]),
 
 			getItems() {
-				if (this.params.oficina || this.params.gestion || this.params.tipoResolucion || this.params.proceso || this.params.codigoResolucion || this.params.nroResolucion) {
+				if (this.params.idOficina || this.params.gestion || this.params.idTipoResolucion || this.params.idProceso || this.params.idEstado || this.params.codigoResolucion || this.params.nroResolucion) {
 					console.log(this.params);
 					this.fetchAllResoluciones(this.params);
 				}
@@ -348,10 +331,23 @@
 					}
 				});
 			},
-			limpiarCampos() {
-				//this.params.oficina = "";
-				//this.params.gestion = "";
+			async onSelectDepartamento(event) {
+				await this.fetchMunicipiosDropList(event.target.value);
+				this.params.idMunicipio = this.municipiosDropList[0].value;
+				await this.fetchOficinasDropList(this.params.idMunicipio);
+				this.params.idOficina = this.oficinasDropList[0].value;
 			},
+			async onSelectMunicipio(event) {
+				await this.fetchOficinasDropList(event.target.value);
+				this.params.idOficina = this.oficinasDropList[0].value;
+			},
+			limpiarCampos() {
+				this.params.codigoResolucion = "";
+				this.params.nroResolucion = "";
+		        this.params.idTipoResolucion = 0;
+		        this.params.idProceso = 0;
+		        this.params.idEstado = 0;
+			    },
+			}
 		}
-	}
-</script>
+	</script>

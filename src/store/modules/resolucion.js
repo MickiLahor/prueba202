@@ -16,12 +16,14 @@ const state = {
 	isLoadingResolucion: false,
 	isSavingResolucion: false,
 	isEditModeResolucion: false,
+	departamentosDropList: [],
+	municipiosDropList: [],
+	oficinasDropList: [],
+	gestionesDropList: [],
 	tiposResolucionesDropList: [],
 	formasResolucionesDropList: [],
 	materiasDropList: [],
 	procesosDropList: [],
-	oficinasDropList: [],
-	gestionesDropList: [],
 	relatoresDropList: [],
 	datosNurej: null,
 	//demandante: null,
@@ -55,18 +57,6 @@ const mutations = {
 		state.isEditModeResolucion = value;
 	},
 
-	/*INSERT_RESOLUCION: (state, item) => {
-		//state.resoluciones.unshift(item);
-		state.resoluciones.push(item);
-	},
-
-	UPDATE_RESOLUCION: (state, item) => {
-		let index = state.resoluciones.findIndex(x => x.id === item.id);
-		if(index > -1) {
-			state.resoluciones[index] = item;
-		}
-	},*/
-
 	DELETE_RESOLUCION: (state, id) => {
 		let index = state.resoluciones.findIndex(x => x.idResolucion === id);
 		if(index > -1) {
@@ -79,6 +69,14 @@ const mutations = {
 		if(index > -1) {
 			state.resoluciones[index].registroActivo = true;
 		}
+	},
+
+	SET_DEPARTAMENTOS_ALL (state, items) {
+		state.departamentosDropList = items;
+	},
+
+	SET_MUNICIPIOS_ALL (state, items) {
+		state.municipiosDropList = items;
 	},
 
 	SET_OFICINAS_ALL (state, items) {
@@ -128,28 +126,8 @@ const mutations = {
 
 const actions = {
 	async fetchAllResoluciones({ commit }, params = null) {
-		//let page = '';
-		//let search = '';
-		let oficina = '';
-		let gestion = '';
-		if(params !== null){
-			//page = params.page;
-			//search = params.search;
-			oficina = params.oficina;
-			gestion = params.gestion.toString();
-		}
 		commit('SET_IS_LOADING_RESOLUCION', true);
-		let url = `${process.env.VUE_APP_API_URL}resoluciones`;
-		if (oficina == "") {
-			url = `${url}/${gestion}`;
-		}
-		else {
-			url = `${url}/${oficina}/${gestion}`;
-		}
-
-		console.log(url);
-
-		await axios.get(url)
+		await axios.post(`${process.env.VUE_APP_API_URL}resoluciones/interno`, params)
 		.then(res => {
 			//console.log(res.data);
 			const lista = [];
@@ -164,7 +142,7 @@ const actions = {
 					fechaResolucion: item.fechaResolucion.split("-").reverse().join("-"),
 					codigoResolucion: item.codigoResolucion,
 					registroActivo: item.registroActivo,
-					idEstado: item.Estado.idEstado
+					idEstado: item.HistorialEstados[0].fidEstado
 				});
 			});
 			commit('SET_RESOLUCIONES', lista);
@@ -189,7 +167,11 @@ const actions = {
 		await axios.get(`${process.env.VUE_APP_API_URL}resoluciones/${id}`)
 		.then(res => {
 			//console.log(res.data);
-			commit('SET_RESOLUCION', res.data);
+			let item = res.data.data;
+			item.oficina = res.data.datosZeus.oficina;
+			item.relator = res.data.datosZeus.relator;
+			commit('SET_RESOLUCION', item);
+			//commit('SET_RESOLUCION', res.data);
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		})
 		.catch(err => {
@@ -214,6 +196,7 @@ const actions = {
 	},
 
 	async updateResolucion({ commit }, item) {
+		console.log(item);
 		commit('SET_SAVING_RESOLUCION', true);
 		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones`, item)
 		.then(res => {
@@ -230,7 +213,7 @@ const actions = {
 
 	async enviarResolucion({ commit }, id) {
 		commit('SET_SAVING_RESOLUCION', true);
-		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/enviar/${id}`)
+		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/enviar/${object.idResolucion}`, object)
 		.then(res => {
 			setTimeout(function() {
 				commit('SET_SAVING_RESOLUCION', false);
@@ -242,9 +225,9 @@ const actions = {
 		});
 	},
 
-	async validarResolucion({ commit }, id) {
+	async validarResolucion({ commit }, object) {
 		commit('SET_SAVING_RESOLUCION', true);
-		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/validar/${id}`)
+		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/validar/${object.idResolucion}`, object)
 		.then(res => {
 			setTimeout(function() {
 				commit('SET_SAVING_RESOLUCION', false);
@@ -256,9 +239,10 @@ const actions = {
 		});
 	},
 
-	async rechazarResolucion({ commit }, id) {
+	async rechazarResolucion({ commit }, object) {
+		console.log(object);
 		commit('SET_SAVING_RESOLUCION', true);
-		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/rechazar/${id}`)
+		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/rechazar/${object.idResolucion}`, object)
 		.then(res => {
 			setTimeout(function() {
 				commit('SET_SAVING_RESOLUCION', false);
@@ -290,18 +274,41 @@ const actions = {
 		});
 	},
 
-	async fetchOficinasDropList({ commit }) {
+	async fetchDepartamentosDropList({ commit }) {
 
-		/*let lista = [
-		{value: "111", text: "Sala Penal Primera"},
-		{value: "113", text: "Sala Civil Primera"},
-		{value: "130", text: "Sala Social Primera"},
-		{value: "148", text: "Sala Social Segunda"}
-		];
+		await axios.get(`${process.env.VUE_APP_API_URL}departamentos`)
+		.then(res => {
+			//console.log(res.data);
+			const lista = [];
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idDepartamento, text: item.descripcion});
+			});
+			commit('SET_DEPARTAMENTOS_ALL', lista);
+		})
+		.catch(err => {
+			console.log('error', err);
+		});
+	},
 
-		commit('SET_OFICINAS_ALL', lista);*/
+	async fetchMunicipiosDropList({ commit }, id_departamento) {
 
-		await axios.get(`${process.env.VUE_APP_API_URL}oficinas`)
+		await axios.get(`${process.env.VUE_APP_API_URL}municipios/${id_departamento}`)
+		.then(res => {
+			//console.log(res.data);
+			const lista = [];
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idMunicipio, text: item.descripcion});
+			});
+			commit('SET_MUNICIPIOS_ALL', lista);
+		})
+		.catch(err => {
+			console.log('error', err);
+		});
+	},
+
+	async fetchOficinasDropList({ commit }, id_municipio) {
+
+		await axios.get(`${process.env.VUE_APP_API_URL}oficinas/por_municipio/${id_municipio}`)
 		.then(res => {
 			//console.log(res.data);
 			const lista = [];
@@ -438,18 +445,6 @@ const actions = {
 		})
 	},
 
-	/*async fetchDepartamentosDropList({ commit }) {
-
-		let lista = [
-		{value: "1", text: "Sala Penal Primera"},
-		{value: "2", text: "Sala Civil Primera"},
-		{value: "3", text: "Sala Social Primera"},
-		{value: "4", text: "Sala Social Segunda"}
-		];
-
-		commit('SET_OFICINAS_ALL', lista);
-	},*/
-
 	async buscarResolucionesSimple({ commit }, textSearch) {
 		commit('SET_IS_LOADING_RESOLUCION', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}busqueda/general/${textSearch}`)
@@ -552,7 +547,8 @@ const actions = {
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		});
 	},
-	async fetchPdfResolucion({ commit }, id) {
+
+	async fetchDownloadPdfResolucion({ commit }, id) {
 		axios({
 			url: `${process.env.VUE_APP_API_URL}resoluciones/descarga/${id}`,
 			method: 'GET',
@@ -568,6 +564,25 @@ const actions = {
 			console.log(error);
 		});
 	},
+
+	async fetchViewPdfResolucion({ commit }, id) {
+		axios({
+			url: `${process.env.VUE_APP_API_URL}resoluciones/descarga/${id}`,
+			method: 'GET',
+			responseType: 'blob',
+		})
+		.then(response => {
+			// Crear un blob a partir de la secuencia de PDF
+			const blob = new Blob([response.data], {type: 'application/pdf'});
+			// Cree una URL a partir del archivo
+			const fileURL = URL.createObjectURL(blob);
+			// Abrir la URL en una ventana nueva
+			window.open(fileURL);
+		})
+		.catch(error => {
+			console.log(error);
+		});
+	},
 }
 
 const getters = {
@@ -577,12 +592,14 @@ const getters = {
 	isLoadingResolucion: state => state.isLoadingResolucion,
 	isSavingResolucion: state => state.isSavingResolucion,
 	isEditModeResolucion: state => state.isEditModeResolucion,
+	departamentosDropList: state => state.departamentosDropList,
+	municipiosDropList: state => state.municipiosDropList,
+	oficinasDropList: state => state.oficinasDropList,
+	gestionesDropList: state => state.gestionesDropList,
 	tiposResolucionesDropList: state => state.tiposResolucionesDropList,
 	formasResolucionesDropList: state => state.formasResolucionesDropList,
 	materiasDropList: state => state.materiasDropList,
 	procesosDropList: state => state.procesosDropList,
-	oficinasDropList: state => state.oficinasDropList,
-	gestionesDropList: state => state.gestionesDropList,
 	relatoresDropList: state => state.relatoresDropList,
 	datosNurej: state => state.datosNurej,
 	resultSearch: state => state.resultSearch,

@@ -10,11 +10,6 @@
 							<span v-else class="spinner-border spinner-border-sm"></span>
 							{{ isSavingResolucion ? 'Procesando...' : 'Guardar' }}
 						</button>
-						<button type="button" @click="storeAndSendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
-							<i v-if="!isSavingResolucion" class="cil-save"></i>
-							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Procesando...' : 'Guardar y Enviar' }}
-						</button>
 						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
@@ -24,31 +19,31 @@
 							<h5>Datos Generales</h5>
 							<div class="row">
 
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="numeroResolucion">Nro. Resolución</label>
 									<input v-model="resolucion.numeroResolucion" type="text" id="numeroResolucion" placeholder="Numero Resolución" class="form-control" :class="{ 'is-invalid': error.numeroResolucion }">
 									<em class="invalid-feedback">{{error.numeroResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="codigoResolucion">Codigo Expediente</label>
 									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }" @blur="getDatosNurej">
 									<em class="invalid-feedback">{{error.codigoResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="fechaResolucion">Fecha de Emisión</label>
 									<input v-model="resolucion.fechaResolucion" type="date" id="fechaResolucion" placeholder="Fecha" class="form-control" :class="{ 'is-invalid': error.fechaResolucion }">
 									<em class="invalid-feedback">{{error.fechaResolucion}}</em>
 								</div>
 								
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="nombre_oficina">Sala o Juzgado:</label>
 									<input type="text" id="nombre_oficina" v-model="nombreOficina" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }" readonly>
 									<em class="invalid-feedback">{{error.fidFuncionarioRelator}}</em>
 								</div>
 
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="idTipoResolucion">Tipo de Resolución</label>
 									<!--<Select2 id="idTipoResolucion" v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<!--<vue-select v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" label-by="text" valuel-by="value" searchable clear-on-select close-on-select search-placeholder="Escriba para buscar"></vue-select>-->
@@ -58,7 +53,7 @@
 									<em class="invalid-feedback">{{error.fidTipoResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="idFormaResolucion">Forma de Resolución</label>
 									<!--<Select2 id="idFormaResolucion" v-model="resolucion.idFormaResolucion" :options="formasResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idFormaResolucion" v-model="resolucion.fidFormaResolucion" class="form-control" :class="{ 'is-invalid': error.fidFormaResolucion }">
@@ -67,7 +62,7 @@
 									<em class="invalid-feedback">{{error.fidFormaResolucion}}</em>
 								</div>
 
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="idFuncionario">Relator</label>
 									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idFuncionario" v-model="resolucion.fidFuncionarioRelator" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }">
@@ -76,7 +71,7 @@
 									<em class="invalid-feedback">{{error.fidFuncionarioRelator}}</em>
 								</div>
 								
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="idMateria">Materia</label>
 									<!--<Select2 id="idMateria" v-model="idMateria" :options="materiasDropList" @update="onSelectMateria" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idMateria" v-model="idMateria" class="form-control" :class="{ 'is-invalid': error.idMateria }" @change="onSelectMateria($event)">
@@ -85,7 +80,7 @@
 									<em class="invalid-feedback">{{error.idMateria}}</em>
 								</div>
 
-								<div class="form-group col-xl-4 col-lg-4 col-sm-6">
+								<div class="form-group col-lg-4 col-sm-6">
 									<label for="idProceso">Proceso</label>
 									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idProceso" v-model="resolucion.fidProceso" class="form-control" :class="{ 'is-invalid': error.fidProceso }">
@@ -134,13 +129,9 @@
 								<button class="btn btn-danger mb-2 ml-1" @click="openPdf"><i class="cib-adobe-acrobat-reader"></i> Cargar Archivo PDF</button>
 								<input type="file" ref="fileInputPdf" @change="onPdfChange" hidden />
 
-								<label id="nombre_pdf" class="ml-2"></label>
+								<!--<label v-html="nombre_pdf" id="nombre_pdf" class="ml-2"></label>-->
+								<a href="#" id="view_pdf" v-html="nombre_pdf" class="ml-2" target="_blank"></a>
 							</div>
-							
-							<!--<div class="custom-file">
-								<input type="file" class="custom-file-input" id="inputPdf" @change="onPdfChange">
-								<label class="custom-file-label" for="inputPdf" id="labelPdf"><i class="fas fa-upload"></i> Cargar Archivo PDF</label>
-							</div>-->
 
 							<quill-editor v-model:value="resolucion.contenidoHtml" :options="editorOptions" style="min-height: 200px;" :style="error.contenidoHtml ? 'border-color: #e55353;' : '' "/>
 							<em class="invalid-feedback">{{error.contenidoHtml}}</em>
@@ -153,12 +144,6 @@
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
 						{{ isSavingResolucion ? 'Procesando...' : 'Guardar' }}
-					</button>
-
-					<button type="button" @click="storeAndSendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
-						<i v-if="!isSavingResolucion" class="cil-save"></i>
-						<span v-else class="spinner-border spinner-border-sm"></span>
-						{{ isSavingResolucion ? 'Procesando...' : 'Guardar y Enviar' }}
 					</button>
 
 					<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
@@ -188,25 +173,29 @@
 					numeroResolucion: '',
 					codigoResolucion: '',
 					fechaResolucion: '',
-					fidOficina: 1,
+					fidDepartamento: null,
+					fidMunicipio: null,
+					fidOficina: null,
 					fidTipoResolucion: '',
 					fidFormaResolucion: '',
 					fidProceso: '',
 					demandante: '',
 					demandado: '',
-					fidFuncionarioRelator: 1,
+					fidFuncionarioRelator: null,
 					contenidoHtml: '',
 					file: null,
 					visible: false,
 					registroActivo: true,
 					fidEstado: null,
-					usuarioRegistro: "usuarioPrueba"
+					usuarioRegistro: ''
 				},
 				/*resolucion: {
 					idResolucion: '',
 					numeroResolucion: '0001/2020',
 					codigoResolucion: "1042602-1",
 					fechaResolucion: "2020-01-06",
+					fidDepartamento: null,
+					fidMunicipio: null,
 					fidOficina: 30,
 					fidTipoResolucion: 1,
 					fidFormaResolucion: 6,
@@ -221,7 +210,7 @@
 					registroActivo: true,
 					usuarioRegistro: "usuarioPrueba"
 				},*/
-				idMateria: 4,
+				idMateria: null,
 				nombreOficina: '',
 				nombre_pdf: '',
 				error: {},
@@ -241,9 +230,13 @@
 			this.fetchFormasResolucionesDropList();
 			this.fetchMateriasDropList();
 			this.fetchProcesosByMateriaDropList(this.idMateria);
+			this.resolucion.fidDepartamento = this.userLogged.idDepartamento;
+			this.resolucion.fidMunicipio = this.userLogged.idMunicipio;
 			this.resolucion.fidOficina = this.userLogged.idOficina;
+			this.resolucion.usuarioRegistro = this.userLogged.cuenta;
 			this.nombreOficina = this.userLogged.oficina;
 			this.fetchRelatoresDropList(this.resolucion.fidOficina);
+			//console.log(this.userLogged);
 		},
 		computed: { ...mapGetters(["isSavingResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList", "procesosDropList", "relatoresDropList", "datosNurej", "userLogged"]) },
 		methods: {
@@ -307,22 +300,9 @@
 					Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
 				}
 			},
-
-			async storeAndSendItem() {
-				this.validate();
-				if(this.valid) {
-					this.resolucion.fidEstado = 2;
-					await this.storeResolucion(this.resolucion);
-					this.$router.push({ name: "resoluciones" });
-				}
-				else {
-					Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
-				}
-			},
 			
 			onSelectMateria(event) {
 				this.fetchProcesosByMateriaDropList(event.target.value);
-				console.log(event.target.value);
 			},
 
 			/*onSelectProceso(event) {
@@ -337,7 +317,7 @@
 				await this.fetchDatosNurej(event.target.value);
 				this.resolucion.demandante = this.datosNurej.demandante;
 				this.resolucion.demandado = this.datosNurej.demandado;
-				this.idMateria = this.datosNurej.idMateria;
+				//this.idMateria = this.datosNurej.idMateria;
 			},
 
 			openDocx () {
@@ -365,14 +345,13 @@
 				this.$refs.fileInputPdf.click()
 			},
 			onPdfChange (event) {
-				//this.resolucion.archivoPdf = event.target.files;
 				let fileObject = event.target.files[0];
+				//console.log(fileObject)
 				const reader = new FileReader();
 				reader.onloadend = (e) => {
 					this.resolucion.file = e.target.result;
-					document.getElementById('nombre_pdf').innerHTML = '<i class="cil-file"></i> ' + event.target.files[0].name;
-					//document.getElementById('labelPdf').textContent;
-					//console.log(this.resolucion.file)
+					this.nombre_pdf = '<i class="cil-file"></i> ' + event.target.files[0].name;
+					document.getElementById('view_pdf').src = e.target.result;
 				}
 				reader.readAsDataURL(fileObject);
 			}

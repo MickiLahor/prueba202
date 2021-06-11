@@ -13,6 +13,7 @@
       <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Dashboard</a></li>
       <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li>
     </ul>-->
+    <h6 class="c-header-nav d-md-down-none">TRIBUNAL DEPARTAMENTAL DE {{userLogged.departamento}}, {{userLogged.municipio}}, {{userLogged.oficina}}</h6>
     <ul class="c-header-nav ml-auto mr-4">
       <li class="c-header-nav-item dropdown row justify-content-center align-items-center">    
         <h6 >{{userLogged.nombres}} {{userLogged.paterno}} {{userLogged.materno}}</h6>

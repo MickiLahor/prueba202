@@ -337,7 +337,7 @@
     },
     computed: { ...mapGetters(["resultSearch", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList", "relatoresDropList", "tiposResolucionesDropList", "formasResolucionesDropList", "procesosDropList"]) },
     methods: {
-      ...mapActions(["buscarResolucionesSimple", "buscarResolucionesGestion", "buscarResolucionesAvanzado", "fetchOficinasDropList", "fetchGestionesDropList", "fetchRelatoresDropList", "fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchProcesosDropList", "getDetailResolucion", "fetchPdfResolucion"]),
+      ...mapActions(["buscarResolucionesSimple", "buscarResolucionesGestion", "buscarResolucionesAvanzado", "fetchOficinasDropList", "fetchGestionesDropList", "fetchRelatoresDropList", "fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchProcesosDropList", "getDetailResolucion", "fetchDownloadPdfResolucion"]),
       ...mapMutations(['SET_LAYOUT']),
       onSelectMateria(event) {
         this.fetchProcesosByMateriaDropList(event.target.value);
@@ -374,7 +374,7 @@
         this.getDetailResolucion(id);
       },
       getPDF(id) {
-        this.fetchPdfResolucion(id);
+        this.fetchDownloadPdfResolucion(id);
       },
       limpiarCamposGestion() {
         //this.paramsGestion.departamento = "";
