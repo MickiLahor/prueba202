@@ -4,7 +4,7 @@
       <i class="cil-menu c-sidebar-nav-icon"></i>
     </button>
     <a class="c-header-brand d-lg-none" href="#">  
-        <img class="img-fluid" src="../assets/img/logo_oj_2.png" width="118" height="46">
+        <img class="img-fluid" src="../assets/img/Logo_KrimaOJ_negro.png" width="157" height="41">
     </a>
     <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
       <i class="cil-menu c-icon c-icon-lg"></i>
