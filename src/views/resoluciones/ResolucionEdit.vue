@@ -46,7 +46,7 @@
 
 									<div class="form-group col-lg-4 col-sm-6">
 										<label for="numeroResolucion">Nro. Resolución</label>
-										<input v-model="resolucion.numeroResolucion" type="text" id="numeroResolucion" placeholder="Numero Resolución" class="form-control" :class="{ 'is-invalid': error.numeroResolucion }">
+										<input v-maska="'####/####'" v-model="resolucion.numeroResolucion" type="text" id="numeroResolucion" placeholder="Numero Resolución" class="form-control" :class="{ 'is-invalid': error.numeroResolucion }">
 										<em class="invalid-feedback">{{error.numeroResolucion}}</em>
 									</div>
 
@@ -119,7 +119,20 @@
 										<em class="invalid-feedback">{{error.demandado}}</em>
 									</div>
 
-									<div class="form-group col-12">
+									<div class="form-group col-lg-4 col-sm-6">
+										<label for="estado">Estado</label>
+										<input v-model="resolucion.ultimoEstado" type="text" id="estado" class="form-control" readonly>
+									</div>
+									
+									<div class="form-group col-lg-4 col-sm-6">
+										<label for="fechaCambioEstado" v-if="resolucion.HistorialEstados[0].fidEstado==1">Fecha y Hora de Registro</label>
+										<label for="fechaCambioEstado" v-else-if="resolucion.HistorialEstados[0].fidEstado==2">Fecha y Hora de Envío</label>
+										<label for="fechaCambioEstado" v-else-if="resolucion.HistorialEstados[0].fidEstado==3">Fecha y Hora de Rechazo</label>
+										<label for="fechaCambioEstado" v-else>Fecha y Hora de Validación</label>
+										<input v-model="resolucion.HistorialEstados[0].fechaRegistro" type="text" id="fechaCambioEstado" class="form-control" readonly>
+									</div>
+
+									<div class="form-group col-lg-4 col-sm-6">
 										<label>Visible para la población litigante?</label>
 										<div>
 											<div class="custom-control custom-radio custom-control-inline">
@@ -140,7 +153,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h5>Contenido de la Resolución</h5>
-								<div v-if="userLogged.rol=='Juzgado' && resolucion.HistorialEstados[0].fidEstado==1" class="form-group">
+								<div v-if="userLogged.rol=='Juzgado' && (resolucion.HistorialEstados[0].fidEstado==1 || resolucion.HistorialEstados[0].fidEstado==3)" class="form-group">
 									<button class="btn btn-info mb-2" @click="openDocx"><i class="cil-folder-open"></i> Cargar Archivo Word</button>
 									<input type="file" ref="fileInputDocx" @change="parseWordDocxFile" hidden />
 
@@ -191,8 +204,27 @@
 
 <script>
 	import { mapGetters, mapActions, mapMutations } from 'vuex'
-
 	import { quillEditor, Quill } from 'vue3-quill'
+	import moment from 'moment'
+
+	var toolbarOptions = [
+		['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+		['blockquote', 'code-block'],
+
+		[{ 'header': 1 }, { 'header': 2 }],               // custom button values
+		[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+		[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+		[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+		[{ 'direction': 'rtl' }],                         // text direction
+
+		[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+		[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+		[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+		[{ 'font': [] }],
+		[{ 'align': [] }],
+		['clean']                                         // remove formatting button
+	];
 
 	export default {
 		name: 'ResolucionAdd',
@@ -210,6 +242,9 @@
 					placeholder: 'Pegue aquí el texto del documento...',
 					readOnly: true,
 					theme: 'snow',
+					modules: {
+						toolbar: toolbarOptions
+					},
 					readOnly: true,
 				}
 			};
@@ -373,15 +408,31 @@
 		},
 		watch: {
 			resolucion: function () {
+				console.log(this.resolucion);
 				this.idMateria = this.resolucion.Proceso.Materium.idMateria
 				if(this.resolucion.rutaArchivoPdf) {
 					let array_ruta_pdf = this.resolucion.rutaArchivoPdf.split('\\');
 					this.nombre_pdf = this.resolucion.rutaArchivoPdf ? '<i class="cil-file"></i> ' + array_ruta_pdf[array_ruta_pdf.length-1] : ''
 				}
 				this.fetchProcesosByMateriaDropList(this.idMateria)
-				console.log(this.resolucion);
 				this.fetchRelatoresDropList(this.resolucion.fidOficina);
-				this.editorOptions.readOnly = (this.userLogged.rol=='Juzgado' && this.resolucion.HistorialEstados[0].fidEstado==1) ? false : true
+				this.editorOptions.readOnly = (this.userLogged.rol=='Juzgado' && (this.resolucion.HistorialEstados[0].fidEstado==1 || this.resolucion.HistorialEstados[0].fidEstado==3)) ? false : true;
+
+				this.resolucion.HistorialEstados[0].fechaRegistro = moment(this.resolucion.HistorialEstados[0].fechaRegistro).format('DD-MM-YYYY hh:mm:ss');
+				switch (this.resolucion.HistorialEstados[0].fidEstado) {
+				  case 1:
+				    this.resolucion.ultimoEstado = "Pendiente";
+				    break;
+				  case 2:
+				    this.resolucion.ultimoEstado = "Enviado";
+				    break;
+				  case 3:
+				    this.resolucion.ultimoEstado = "Rechazado";
+				    break;
+				  default:
+				    this.resolucion.ultimoEstado = "Validado";
+				    break;
+				}
 			}
 		}
 	};

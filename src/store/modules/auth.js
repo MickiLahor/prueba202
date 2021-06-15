@@ -66,10 +66,10 @@ const actions = {
     .catch(error => {
       console.log(error);
     });*/
+    router.replace('/login');
     commit("SET_USER_LOGGED", null);
     commit('SET_TOKEN', null);
     commit('SET_LAYOUT', "login-layout");
-    router.replace('/login');
   },
 }
 

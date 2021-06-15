@@ -21,7 +21,7 @@
 
 								<div class="form-group col-lg-4 col-sm-6">
 									<label for="numeroResolucion">Nro. Resolución</label>
-									<input v-model="resolucion.numeroResolucion" type="text" id="numeroResolucion" placeholder="Numero Resolución" class="form-control" :class="{ 'is-invalid': error.numeroResolucion }">
+									<input v-maska="'####/####'" v-model="resolucion.numeroResolucion" type="text" id="numeroResolucion" placeholder="Numero Resolución" class="form-control" :class="{ 'is-invalid': error.numeroResolucion }">
 									<em class="invalid-feedback">{{error.numeroResolucion}}</em>
 								</div>
 

@@ -29,7 +29,7 @@
 							<i class="cil-pencil"></i> Editar
 						</router-link>
 
-						<button v-if="userLogged.rol=='Juzgado' && resolucion.HistorialEstados[0].fidEstado==1" type="button" @click="enviarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+						<button v-if="userLogged.rol=='Juzgado' && (resolucion.HistorialEstados[0].fidEstado==1 || resolucion.HistorialEstados[0].fidEstado==3)" type="button" @click="enviarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
 							{{ isSavingResolucion ? 'Procesando...' : 'Enviar' }}
@@ -43,47 +43,6 @@
 						<div class="card">
 							<div class="card-body bd-example bd-example-row">
 								<h5>Datos Generales</h5>
-
-								<!--<table class="table table-bordered table-striped table-sm">
-									<tbody>
-										<tr>
-											<th width="25%">Nro. Resolución</th>
-											<th width="25%">Codigo Expediente</th>
-											<th width="25%">Fecha de Emisión</th>
-											<th width="25%">Sala o Juzgado</th>
-										</tr>
-										<tr>
-											<td>{{resolucion.numeroResolucion}}</td>
-											<td>{{resolucion.codigoResolucion}}</td>
-											<td>{{resolucion.fechaResolucion}}</td>
-											<td>{{resolucion.fechaResolucion}}</td>
-										</tr>
-										<tr>
-											<th>Tipo de Resolución</th>
-											<th>Forma de Resoluciónd</th>
-											<th>Materia</th>
-											<th>Proceso</th>
-										</tr>
-										<tr>
-											<td>{{resolucion.TipoResolucion.descripcion}}</td>
-											<td>{{resolucion.FormaResolucion.descripcion}}</td>
-											<td>{{resolucion.Proceso.Materium.descripcion}}</td>
-											<td>{{resolucion.Proceso.descripcion}}</td>
-										</tr>
-										<tr>
-											<th>Juez o Vocal Relator</th>
-											<th>Demandante</th>
-											<th>Demandado</th>
-											<th>Estado</th>
-										</tr>
-										<tr>
-											<td>Juan Perez</td>
-											<td>{{resolucion.demandante}}</td>
-											<td>{{resolucion.demandado}}</td>
-											<td>{{resolucion.Estado.descripcion}}</td>
-										</tr>
-									</tbody>
-								</table>-->
 
 								<div class="row">
 
@@ -146,6 +105,22 @@
 										<strong>Visible para la población litigante?</strong>
 										<div v-if="resolucion.visible">SI</div>
 										<div v-else>NO</div>
+									</div>
+
+									<div class="col-xl-3 col-lg-4 col-sm-6">
+										<strong>Estado</strong>
+										<div v-if="resolucion.HistorialEstados[0].fidEstado==1">Pendiente</div>
+										<div v-else-if="resolucion.HistorialEstados[0].fidEstado==2">Enviado</div>
+										<div v-else-if="resolucion.HistorialEstados[0].fidEstado==3">Rechazado</div>
+										<div v-else>Validado</div>
+									</div>
+
+									<div class="col-xl-3 col-lg-4 col-sm-6">
+										<strong v-if="resolucion.HistorialEstados[0].fidEstado==1">Fecha y Hora de Registro</strong>
+										<strong v-else-if="resolucion.HistorialEstados[0].fidEstado==2">Fecha y Hora de Envío</strong>
+										<strong v-else-if="resolucion.HistorialEstados[0].fidEstado==3">Fecha y Hora de Rechazo</strong>
+										<strong v-else>Fecha y Hora de Validación</strong>
+										<div>{{resolucion.HistorialEstados[0].fechaRegistro}}</div>
 									</div>
 
 								</div>
@@ -265,8 +240,8 @@
 
 <script>
 	import { mapGetters, mapActions } from 'vuex'
-
 	import { quillEditor, Quill } from 'vue3-quill'
+	import moment from 'moment'
 
 	export default {
 		name: 'ResolucionDetail',
@@ -276,9 +251,8 @@
 		data() {
 			return {
 				idResolucion: null,
-				fechaResolucionFormat: "",
 				editorOptions: {
-					placeholder: 'Pegue aquí el texto del documento...',
+					placeholder: 'Contenido del documento...',
 					readOnly: true,
 					theme: 'snow',
 					modules: {
@@ -292,23 +266,20 @@
 		},
 		computed: {
 			...mapGetters(["resolucion", "isLoadingResolucion", "isSavingResolucion", "userLogged"]),
-			//fechaResolucionFormat: moment(String(value)).format('MM/DD/YYYY hh:mm')
-			//fechaResolucionFormat: this.dateFormatES(this.resolucion.fechaResolucion)
-			//fechaResolucionFormat: this.resolucion.fechaResolucion.split("-").reverse().join("-")
 		},
 		methods: {
 			...mapActions(["fetchDetailResolucion", "enviarResolucion", "validarResolucion", "rechazarResolucion", "fetchViewPdfResolucion"]),
 			async enviarItem() {
 				await this.enviarResolucion({idResolucion: this.resolucion.idResolucion, usuarioRegistro: this.userLogged.cuenta})
 				.then((result) => {
-					Swal.fire('Rechazado!', 'La resolución ha sido enviada correctamente.', 'success');
+					Swal.fire('Enviado!', 'La resolución ha sido enviada correctamente.', 'success');
 					this.$router.push({ name: "resoluciones" });
 				});
 			},
 			async validarItem() {
 				await this.validarResolucion({idResolucion: this.resolucion.idResolucion, usuarioRegistro: this.userLogged.cuenta})
 				.then((result) => {
-					Swal.fire('Rechazado!', 'La resolución ha sido validada correctamente.', 'success');
+					Swal.fire('Validado!', 'La resolución ha sido validada correctamente.', 'success');
 					this.$router.push({ name: "resoluciones" });
 				});
 			},
@@ -340,9 +311,11 @@
 		},
 		watch: {
 			resolucion: function () {
+				//console.log(this.resolucion);
 				this.idResolucion = this.resolucion.idResolucion;
-				this.resolucion.fechaResolucion = this.dateFormatES(this.resolucion.fechaResolucion);
-				//this.resolucion.fechaResolucion = moment(this.resolucion.fechaResolucion).format('DD/MM/YYYY');
+				this.resolucion.fechaResolucion = moment(this.resolucion.fechaResolucion).format('DD-MM-YYYY');
+				this.resolucion.HistorialEstados[0].fechaRegistro = moment(this.resolucion.HistorialEstados[0].fechaRegistro).format('DD-MM-YYYY hh:mm:ss');
+				
 			}
 		}
 	};

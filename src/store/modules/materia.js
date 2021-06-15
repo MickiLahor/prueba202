@@ -78,34 +78,18 @@ const actions = {
 
 		commit('SET_IS_LOADING_MATERIA', true);
 		let url = `${process.env.VUE_APP_API_URL}materias`;
-		if (search == "") {
+		/*if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
 			url = `${url}?page=${page}&search=${search}`;
-		}
-
-		/*let listaMat = [
-			{id: 1, descriMat: "Penal", denDemandante: "a1", denDemandado: "a2", activo: true},
-			{id: 2, descriMat: "Civil", denDemandante: "b1", denDemandado: "b2", activo: true},
-			{id: 3, descriMat: "Otro", denDemandante: "c1", denDemandado: "c2", activo: true}
-		];
-
-		commit('SET_MATERIAS', listaMat);
-		commit('SET_IS_LOADING_MATERIA', false);*/
+		}*/
 
 		await axios.get(url)
 		.then(res => {
 			//console.log(res.data);
 			const lista = res.data;
 			commit('SET_MATERIAS', lista);
-			/*const pagination = {
-				total: res.data.data.total,
-				per_page: res.data.data.per_page,
-				current_page: res.data.data.current_page,
-				total_pages: res.data.data.last_page
-			}
-			commit('SET_PAGINATE_MATERIAS', pagination);*/
 			commit('SET_IS_LOADING_MATERIA', false);
 		})
 		.catch(err => {

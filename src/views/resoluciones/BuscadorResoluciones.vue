@@ -30,23 +30,34 @@
         <div class="card-body">
           <div class="row">
 
-            <!--<div class="my-1 col-lg-6">
+            <div class="my-1 col-lg-6">
               <div class="form-group row mb-0">
                 <label for="departamento" class="col-sm-4 col-form-label text-sm-right">Departamento:</label>
                 <div class="col">
-                  <select v-model="params.departamento" class="form-control" id="departamento" @keypress.enter.prevent="search">
-                    <option v-for="item in departamentoDropList" v-bind:value="item.value">{{ item.text }}</option>
+                  <select v-model="paramsGestion.fidDepartamento" class="form-control" id="departamento" @keypress.enter.prevent="search" @change="onSelectDepartamentoGestion($event)">
+                    <option v-for="item in departamentosOptions2" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
-            </div>-->
+            </div>
+
+            <div class="my-1 col-lg-6">
+              <div class="form-group row mb-0">
+                <label for="municipio" class="col-sm-4 col-form-label text-sm-right">Municipio:</label>
+                <div class="col">
+                  <select v-model="paramsGestion.fidMunicipio" class="form-control" id="municipio" @keypress.enter.prevent="search" @change="onSelectMunicipioGestion($event)">
+                    <option v-for="item in municipiosOptions2" v-bind:value="item.value">{{ item.text }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
             <div class="my-1 col-lg-6">
               <div class="form-group row mb-0">
                 <label for="fidOficina" class="col-sm-4 col-form-label text-sm-right">Sala o Juzgado:</label>
                 <div class="col">
-                  <select v-model="paramsGestion.fidOficina" class="form-control" id="fidOficina" @keypress.enter.prevent="search" @change="onSelectOficina($event)">
-                    <option v-for="item in oficinasDropList" v-bind:value="item.value">{{ item.text }}</option>
+                  <select v-model="paramsGestion.fidOficina" class="form-control" id="fidOficina" @keypress.enter.prevent="search" @change="onSelectOficinaGestion($event)">
+                    <option v-for="item in oficinasOptions2" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
@@ -57,7 +68,7 @@
                 <label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestion:</label>
                 <div class="col">
                   <select v-model="paramsGestion.gestion" class="form-control" id="gestion" @keypress.enter.prevent="search">
-                    <option v-for="item in gestionesDropList" v-bind:value="item">{{ item }}</option>
+                    <option v-for="item in gestionesOptions2" v-bind:value="item">{{ item }}</option>
                   </select>
                 </div>
               </div>
@@ -106,24 +117,35 @@
               </div>
             </div>
 
-            <!--<div class="my-1 col-lg-6">
+            <div class="my-1 col-lg-6">
               <div class="form-group row mb-0">
                 <label for="departamento" class="col-sm-4 col-form-label text-sm-right">Departamento:</label>
                 <div class="col">
-                  <select v-model="paramsAvanzado.departamento" class="form-control" id="departamento" @keypress.enter.prevent="search">
-                    <option v-for="item in departamentoDropList" v-bind:value="item.value">{{ item.text }}</option>
+                  <select v-model="paramsAvanzado.fidDepartamento" class="form-control" id="departamento" @keypress.enter.prevent="search" @change="onSelectDepartamentoAvanzado($event)">
+                    <option v-for="item in departamentosOptions" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
-            </div>-->
+            </div>
+
+            <div class="my-1 col-lg-6">
+              <div class="form-group row mb-0">
+                <label for="municipio" class="col-sm-4 col-form-label text-sm-right">Municipio:</label>
+                <div class="col">
+                  <select v-model="paramsAvanzado.fidMunicipio" class="form-control" id="municipio" @keypress.enter.prevent="search" @change="onSelectMunicipioAvanzado($event)">
+                    <option v-for="item in municipiosOptions" v-bind:value="item.value">{{ item.text }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
             <div class="my-1 col-lg-6">
               <div class="form-group row mb-0">
                 <label for="fidOficina" class="col-sm-4 col-form-label text-sm-right">Sala o Juzgado:</label>
                 <div class="col">
-                  <select v-model="paramsAvanzado.fidOficina" class="form-control" id="fidOficina" @keypress.enter.prevent="search" @change="onSelectOficina($event)">
+                  <select v-model="paramsAvanzado.fidOficina" class="form-control" id="fidOficina" @keypress.enter.prevent="search" @change="onSelectOficinaAvanzado($event)">
                     <option v-bind:value="0">Todos</option>
-                    <option v-for="item in oficinasDropList" v-bind:value="item.value">{{ item.text }}</option>
+                    <option v-for="item in oficinasOptions" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
@@ -135,7 +157,7 @@
                 <div class="col">
                   <select v-model="paramsAvanzado.gestion" class="form-control" id="gestion" @keypress.enter.prevent="search">
                     <option v-bind:value="0">Todos</option>
-                    <option v-for="item in gestionesDropList" v-bind:value="item">{{ item }}</option>
+                    <option v-for="item in gestionesOptions" v-bind:value="item">{{ item }}</option>
                   </select>
                 </div>
               </div>
@@ -147,7 +169,7 @@
                 <div class="col">
                   <select v-model="paramsAvanzado.fidFuncionarioRelator" class="form-control" id="fidFuncionarioRelator" @keypress.enter.prevent="search">
                     <option v-bind:value="0">Todos</option>
-                    <option v-for="item in relatoresDropList" v-bind:value="item.value">{{ item.text }}</option>
+                    <option v-for="item in relatoresOptions" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
@@ -159,7 +181,7 @@
                 <div class="col">
                   <select v-model="paramsAvanzado.fidTipoResolucion" class="form-control" id="fidTipoResolucion" @keypress.enter.prevent="search">
                     <option v-bind:value="0">Todos</option>
-                    <option v-for="item in tiposResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
+                    <option v-for="item in tiposResolucionesOptions" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
@@ -171,7 +193,7 @@
                 <div class="col">
                   <select v-model="paramsAvanzado.fidFormaResolucion" class="form-control" id="fidFormaResolucion" @keypress.enter.prevent="search">
                     <option v-bind:value="0">Todos</option>
-                    <option v-for="item in formasResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
+                    <option v-for="item in formasResolucionesOptions" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
@@ -194,7 +216,7 @@
                 <div class="col">
                   <select v-model="paramsAvanzado.fidProceso" class="form-control" id="fidProceso" @keypress.enter.prevent="search">
                     <option v-bind:value="0">Todos</option>
-                    <option v-for="item in procesosDropList" v-bind:value="item.value">{{ item.text }}</option>
+                    <option v-for="item in procesosOptions" v-bind:value="item.value">{{ item.text }}</option>
                   </select>
                 </div>
               </div>
@@ -220,7 +242,7 @@
 
             <div class="my-1 col-lg-12 text-sm-right">
               <button class="btn btn-info mr-1" type="button" @click="searchAvanzado"><i class="cil-search"></i> Buscar</button>
-              <button class="btn btn-secondary" type="button" @click="limpiarCampos"><i class="cil-minus"></i> Limpiar</button>
+              <button class="btn btn-secondary" type="button" @click="limpiarCamposAvanzado"><i class="cil-minus"></i> Limpiar</button>
             </div>
 
           </div>
@@ -252,7 +274,7 @@
             <tr v-if="!resultSearch.length">
               <td class="lead text-center" colspan="7">No se encontraron resultados.</td>
             </tr>
-            <tr v-if="isLoadingResolucion">
+            <tr v-if="isLoadingSearch">
               <td class="lead text-center" colspan="7">
                 <div class="spinner-border" role="status">
                   <span class="sr-only">Cargando...</span>
@@ -265,10 +287,10 @@
               <td class="d-none d-sm-table-cell">{{item.fechaResolucion}}</td>
             <!--<td class="d-none d-sm-table-cell">{{item.departamento}}</td>
               <td>{{item.sala}}</td>-->
-              <td>{{item.tipoResolucion}}</td>
-              <td>{{item.formaResolucion}}</td>
-              <td class="d-none d-sm-table-cell">{{item.materia}}</td>
-              <td class="d-none d-sm-table-cell">{{item.proceso}}</td>
+              <td>{{item.TipoResolucion.descripcion}}</td>
+              <td>{{item.FormaResolucion.descripcion}}</td>
+              <td class="d-none d-sm-table-cell">{{item.Proceso.Materium.descripcion}}</td>
+              <td class="d-none d-sm-table-cell">{{item.Proceso.descripcion}}</td>
               <td class="fit text-center">
               <!--<button title="Ver Resolución" class="btn btn-info btn-sm" @click="getDetail(item.id)">
                 <i class="c-icon cil-zoom-in"></i>
@@ -298,14 +320,16 @@
         typeSearch: null,
         contenidoTextoPlano: '',
         paramsGestion: {
-          //departamento: '',
+          fidDepartamento: '',
+          fidMunicipio: '',
           fidOficina: 0,
           gestion: 0,
         },
         paramsAvanzado: {
           codigoResolucion: '',
           nroResolucion: '',
-          //departamento: '',
+          fidDepartamento: '',
+          fidMunicipio: '',
           fidOficina: 0,
           gestion: 0,
           fidFuncionarioRelator: 0,
@@ -324,27 +348,45 @@
     unmounted() {
       this.SET_LAYOUT('login-layout');
     },
-    created() {
-      //this.fetchDepartamentosDropList();
-      this.fetchOficinasDropList();
-      //this.paramsGestion.fidOficina = this.oficinasDropList[0].value;
-      this.fetchGestionesDropList();
-      //this.paramsGestion.gestion = this.gestionesDropList[0];
-      this.fetchTiposResolucionesDropList();
-      this.fetchFormasResolucionesDropList();
-      //this.fetchMateriasDropList();
-      this.fetchProcesosDropList();
+    async created() {
+      await this.fetchDepartamentosOptions2();
+      await this.fetchMunicipiosOptions2(this.paramsGestion.fidDepartamento);
+      await this.fetchOficinasOptions2(this.paramsGestion.fidMunicipio);
+      this.fetchGestionesOptions2();
+
+      await this.fetchDepartamentosOptions();
+      await this.fetchMunicipiosOptions(this.paramsGestion.fidDepartamento);
+      await this.fetchOficinasOptions(this.paramsGestion.fidMunicipio);
+      this.fetchGestionesOptions();
+      this.fetchTiposResolucionesOptions();
+      this.fetchFormasResolucionesOptions();
+      this.fetchProcesosOptions();
     },
-    computed: { ...mapGetters(["resultSearch", "isLoadingResolucion", "oficinasDropList",  "gestionesDropList", "relatoresDropList", "tiposResolucionesDropList", "formasResolucionesDropList", "procesosDropList"]) },
+    computed: { ...mapGetters(["resultSearch", "isLoadingSearch", "departamentosOptions", "municipiosOptions", "oficinasOptions",  "gestionesOptions", "relatoresOptions", "tiposResolucionesOptions", "formasResolucionesOptions", "procesosOptions", "departamentosOptions2", "municipiosOptions2", "oficinasOptions2",  "gestionesOptions2"]) },
     methods: {
-      ...mapActions(["buscarResolucionesSimple", "buscarResolucionesGestion", "buscarResolucionesAvanzado", "fetchOficinasDropList", "fetchGestionesDropList", "fetchRelatoresDropList", "fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchProcesosDropList", "getDetailResolucion", "fetchDownloadPdfResolucion"]),
+      ...mapActions(["buscarResolucionesSimple", "buscarResolucionesGestion", "buscarResolucionesAvanzado", "fetchDetailPublicResolucion", "fetchDepartamentosOptions", "fetchMunicipiosOptions", "fetchOficinasOptions", "fetchGestionesOptions", "fetchDepartamentosOptions2", "fetchMunicipiosOptions2", "fetchOficinasOptions2", "fetchGestionesOptions2", "fetchRelatoresOptions", "fetchTiposResolucionesOptions", "fetchFormasResolucionesOptions", "fetchProcesosOptions", "fetchDownloadPdfResolucion"]),
       ...mapMutations(['SET_LAYOUT']),
-      onSelectMateria(event) {
-        this.fetchProcesosByMateriaDropList(event.target.value);
+      async onSelectDepartamentoGestion(event) {
+        await this.fetchMunicipiosOptions2(event.target.value);
+        await this.fetchOficinasOptions2(this.paramsGestion.fidMunicipio);
       },
-      onSelectOficina(event) {
-        this.fetchRelatoresDropList(event.target.value);
+      async onSelectMunicipioGestion(event) {
+        await this.fetchOficinasOptions2(event.target.value);
       },
+      onSelectOficinaGestion(event) {
+        this.fetchRelatoresOptions(event.target.value);
+      },
+      async onSelectDepartamentoAvanzado(event) {
+        await this.fetchMunicipiosOptions(event.target.value);
+        await this.fetchOficinasOptions(this.paramsAvanzado.fidMunicipio);
+      },
+      async onSelectMunicipioAvanzado(event) {
+        await this.fetchOficinasOptions(event.target.value);
+      },
+      onSelectOficinaAvanzado(event) {
+        this.fetchRelatoresOptions(event.target.value);
+      },
+
       searchSimple() {
         if (this.contenidoTextoPlano.length > 0) {
           this.buscarResolucionesSimple(this.contenidoTextoPlano);
@@ -353,6 +395,7 @@
           Swal.fire('Aviso', 'Debe introducir un criterio de búsqueda', 'warning');
         }
       },
+
       searchPorGestion() {
         if (this.paramsGestion.fidOficina && this.paramsGestion.gestion) {
           this.buscarResolucionesGestion(this.paramsGestion);
@@ -361,6 +404,7 @@
           Swal.fire('Aviso', 'Debe seleccionar los campos para la búsqueda.', 'warning');
         }
       },
+
       searchAvanzado() {
         if (this.paramsAvanzado.codigoResolucion || this.paramsAvanzado.nroResolucion.length > 0 || this.paramsAvanzado.fidOficina || this.paramsAvanzado.gestion || this.paramsAvanzado.fidFuncionarioRelator || this.paramsAvanzado.fidTipoResolucion || this.paramsAvanzado.fidFormaResolucion || this.paramsAvanzado.fidProceso || this.paramsAvanzado.demandante.length > 0 || this.paramsAvanzado.demandado.length > 0) {
           //console.log(this.paramsAvanzado);
@@ -370,21 +414,22 @@
           Swal.fire('Aviso', 'Debe llenar o seleccionar al menos un campo para la búsqueda.', 'warning');
         }
       },
-      getDetail(id) {
-        this.getDetailResolucion(id);
-      },
+      /*getDetailResolucion(id) {
+        this.fetchDetailPublicResolucion(id);
+      },*/
       getPDF(id) {
         this.fetchDownloadPdfResolucion(id);
       },
       limpiarCamposGestion() {
-        //this.paramsGestion.departamento = "";
+        //this.paramsGestion.fidDepartamento = "";
         this.paramsGestion.fidOficina = 0;
         this.paramsGestion.gestion = 0;
       },
-      limpiarCampos() {
+      limpiarCamposAvanzado() {
         this.paramsAvanzado.codigoResolucion = "";
         this.paramsAvanzado.nroResolucion = "";
-        //this.paramsAvanzado.departamento = "";
+        //this.paramsAvanzado.fidDepartamento = 0
+        //this.paramsAvanzado.fidMunicipio = 0;
         this.paramsAvanzado.fidOficina = 0;
         this.paramsAvanzado.gestion = 0;
         this.paramsAvanzado.fidFuncionarioRelator = 0;
@@ -397,11 +442,30 @@
       },
     },
     watch: {
-      oficinasDropList: function () {
-        this.paramsGestion.fidOficina = this.oficinasDropList[0].value;
+      departamentosOptions: function () {
+        this.paramsAvanzado.fidDepartamento = this.departamentosOptions[0].value;
       },
-      gestionesDropList: function () {
-        this.paramsGestion.gestion = this.gestionesDropList[0];
+      municipiosOptions: function () {
+        this.paramsAvanzado.fidMunicipio = this.municipiosOptions[0].value;
+      },
+      oficinasOptions: function () {
+        this.paramsAvanzado.fidOficina = this.oficinasOptions[0].value;
+      },
+      gestionesOptions: function () {
+        this.paramsAvanzado.gestion = this.gestionesOptions[0];
+      },
+
+      departamentosOptions2: function () {
+        this.paramsGestion.fidDepartamento = this.departamentosOptions2[0].value;
+      },
+      municipiosOptions2: function () {
+        this.paramsGestion.fidMunicipio = this.municipiosOptions2[0].value;
+      },
+      oficinasOptions2: function () {
+        this.paramsGestion.fidOficina = this.oficinasOptions2[0].value;
+      },
+      gestionesOptions2: function () {
+        this.paramsGestion.gestion = this.gestionesOptions2[0];
       }
     }
   }

@@ -6,6 +6,7 @@ import proceso from'./modules/proceso'
 import tipo_resolucion from'./modules/tipo_resolucion'
 import forma_resolucion from'./modules/forma_resolucion'
 import resolucion from'./modules/resolucion'
+import buscador_publico from'./modules/resoluciones/buscador_publico'
 
 import createPersistedState from "vuex-persistedstate"
 
@@ -22,6 +23,7 @@ export default createStore({
     proceso,
     tipo_resolucion,
     forma_resolucion,
-    resolucion
+    resolucion,
+    buscador_publico
   }
 })

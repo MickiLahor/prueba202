@@ -75,34 +75,18 @@ const actions = {
 
 		commit('SET_IS_LOADING_PROCESO', true);
 		let url = `${process.env.VUE_APP_API_URL}procesos`;
-		if (search == "") {
+		/*if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
 			url = `${url}?page=${page}&search=${search}`;
-		}
-
-		/*let listaPro = [
-		{id: 1, descriPro: "Proceso 1", descriMat: "Penal", activo: true},
-		{id: 2, descriPro: "Proceso 2", descriMat: "Civil", activo: true},
-		{id: 3, descriPro: "Proceso 3", descriMat: "Penal", activo: true}
-		];
-
-		commit('SET_PROCESOS', listaPro);
-		commit('SET_IS_LOADING_PROCESO', false);*/
+		}*/
 
 		await axios.get(url)
 		.then(res => {
 			//console.log(res.data);
 			const lista = res.data;
 			commit('SET_PROCESOS', lista);
-			/*const pagination = {
-				total: res.data.data.total,
-				per_page: res.data.data.per_page,
-				current_page: res.data.data.current_page,
-				total_pages: res.data.data.last_page
-			}
-			commit('SET_PAGINATE_PROCESOS', pagination);*/
 			commit('SET_IS_LOADING_PROCESO', false);
 		})
 		.catch(err => {

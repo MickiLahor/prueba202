@@ -201,7 +201,7 @@
 												<router-link class="btn btn-success btn-sm" :to="{ name: 'resoluciones.detail', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-zoom-in"></i>
 												</router-link>
-												<router-link v-if="item.idEstado==1" class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
+												<router-link v-if="item.idEstado==1 || item.idEstado==3" class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-pencil"></i>
 												</router-link>
 												<button v-if="item.registroActivo && userLogged.rol.includes('Administrador')" title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idResolucion)">

@@ -71,21 +71,12 @@ const actions = {
 
 		commit('SET_IS_LOADING_FORMA_RES', true);
 		let url = `${process.env.VUE_APP_API_URL}formas_resoluciones`;
-		if (search == "") {
+		/*if (search == "") {
 			url = `${url}?page=${page}`;
 		}
 		else {
 			url = `${url}?page=${page}&search=${search}`;
-		}
-
-		/*let lista = [
-			{idTipoResolucion: 1, descripcion: "Fundado", activo: true},
-			{idTipoResolucion: 2, descripcion: "Infundado", activo: true},
-			{idTipoResolucion: 3, descripcion: "Improcedente", activo: true}
-		];
-
-		commit('SET_FORMAS_RESOLUCIONES', lista);
-		commit('SET_IS_LOADING_FORMA_RES', false);*/
+		}*/
 
 		await axios.get(url)
 		.then(res => {

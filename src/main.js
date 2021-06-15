@@ -7,6 +7,8 @@ import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 import store from './store'
+import moment from 'moment'
+import Maska from 'maska'
 
 //import Multiselect from '@vueform/multiselect'
 import Select2 from 'vue3-select2-component'
@@ -36,11 +38,17 @@ app.mixin({
 	methods: {
 		dateFormatES: function (dateString) {
 			return dateString.split("-").reverse().join("-");
+		},
+		dateTimeFormatES: function (datetimeString) {
+			return moment(datetimeString).format('DD-MM-YYYY hh:mm:ss');
 		}
 	},
 })
+//app.config.globalProperties.$moment=moment
 app.component('Select2', Select2)
 //app.component('vue-select', VueSelect)
 app.use(store)
 app.use(router)
+app.use(Maska)
+//app.use(moment)
 app.mount('#app')

@@ -129,7 +129,7 @@ const actions = {
 		commit('SET_IS_LOADING_RESOLUCION', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}resoluciones/interno`, params)
 		.then(res => {
-			//console.log(res.data);
+			console.log(res.data);
 			const lista = [];
 			res.data.forEach(function(item, index) {
 				lista.push({
@@ -139,12 +139,13 @@ const actions = {
 					formaResolucion: item.FormaResolucion.descripcion,
 					proceso: item.Proceso.descripcion,
 					materia: item.Proceso.Materium.descripcion,
-					fechaResolucion: item.fechaResolucion.split("-").reverse().join("-"),
+					fechaResolucion: item.fechaResolucion,
 					codigoResolucion: item.codigoResolucion,
 					registroActivo: item.registroActivo,
 					idEstado: item.HistorialEstados[0].fidEstado
 				});
 			});
+			//console.log(lista);
 			commit('SET_RESOLUCIONES', lista);
 
 			/*const pagination = {
@@ -211,7 +212,7 @@ const actions = {
 		});
 	},
 
-	async enviarResolucion({ commit }, id) {
+	async enviarResolucion({ commit }, object) {
 		commit('SET_SAVING_RESOLUCION', true);
 		await axios.put(`${process.env.VUE_APP_API_URL}resoluciones/enviar/${object.idResolucion}`, object)
 		.then(res => {
@@ -445,7 +446,7 @@ const actions = {
 		})
 	},
 
-	async buscarResolucionesSimple({ commit }, textSearch) {
+	/*async buscarResolucionesSimple({ commit }, textSearch) {
 		commit('SET_IS_LOADING_RESOLUCION', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}busqueda/general/${textSearch}`)
 		.then(res => {
@@ -546,7 +547,7 @@ const actions = {
 			console.log('error', err);
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		});
-	},
+	},*/
 
 	async fetchDownloadPdfResolucion({ commit }, id) {
 		axios({
