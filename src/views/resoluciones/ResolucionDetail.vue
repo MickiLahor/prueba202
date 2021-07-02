@@ -44,7 +44,7 @@
 							<div class="card-body bd-example bd-example-row">
 								<h5>Datos Generales</h5>
 
-								<div class="row">
+								<div class="row mx-0">
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
 										<strong>Nro. Resolución</strong>
@@ -52,7 +52,7 @@
 									</div>
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
-										<strong>Codigo Expediente</strong>
+										<strong>Código o Nurej</strong>
 										<div>{{resolucion.codigoResolucion}}</div>
 									</div>
 
@@ -87,7 +87,7 @@
 									</div>
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
-										<strong>Relator</strong>
+										<strong>Juez Relator</strong>
 										<div>{{resolucion.relator}}</div>
 									</div>
 
@@ -109,7 +109,7 @@
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
 										<strong>Estado</strong>
-										<div v-if="resolucion.HistorialEstados[0].fidEstado==1">Pendiente</div>
+										<div v-if="resolucion.HistorialEstados[0].fidEstado==1">Pendiente de Envío</div>
 										<div v-else-if="resolucion.HistorialEstados[0].fidEstado==2">Enviado</div>
 										<div v-else-if="resolucion.HistorialEstados[0].fidEstado==3">Rechazado</div>
 										<div v-else>Validado</div>
@@ -124,79 +124,6 @@
 									</div>
 
 								</div>
-
-								<!--<div class="row">
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Nro. Resolución</label>
-										<input v-model="resolucion.numeroResolucion" type="text" class="form-control" readonly>
-									</div>
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Codigo Expediente</label>
-										<input v-model="resolucion.codigoResolucion" type="text" class="form-control" readonly>
-									</div>
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Fecha de Emisión</label>
-										<input v-model="resolucion.fechaResolucion" type="text" class="form-control" readonly>
-									</div>
-									
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Sala o Juzgado:</label>
-										<input type="text" class="form-control" value="Sala Penal 1era" readonly>
-									</div>
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Tipo de Resolución</label>
-										<input v-model="resolucion.TipoResolucion.descripcion" type="text" class="form-control" readonly>
-									</div>
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Forma de Resolución</label>
-										<input v-model="resolucion.FormaResolucion.descripcion" type="text" class="form-control" readonly>
-									</div>
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Relator</label>
-										<input type="text" class="form-control" readonly>
-									</div>
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Materia</label>
-										<input v-model="resolucion.Proceso.Materium.descripcion" type="text" class="form-control" readonly>
-									</div>
-
-									<div class="form-group col-lg-4 col-sm-6">
-										<label>Proceso</label>
-										<input v-model="resolucion.Proceso.descripcion" type="text" class="form-control" readonly>
-									</div>
-
-									<div class="form-group col-md-6">
-										<label>Demandante</label>
-										<textarea v-model="resolucion.demandante" type="text" class="form-control" rows="2" readonly/>
-									</div>
-
-									<div class="form-group col-md-6">
-										<label>Demandado</label>
-										<textarea v-model="resolucion.demandado" type="text" class="form-control" rows="2" readonly/>
-									</div>
-
-									<div class="form-group col-12">
-										<label>Visible para la población litigante?</label>
-										<div>
-											<div class="custom-control custom-radio custom-control-inline">
-												<input type="radio" class="custom-control-input" id="radioSI" :checked="resolucion.visible">
-												<label class="custom-control-label" for="radioSI">SI</label>
-											</div>
-											<div class="custom-control custom-radio custom-control-inline">
-												<input type="radio" class="custom-control-input" id="radioNO" :checked="!resolucion.visible">
-												<label class="custom-control-label" for="radioNO">NO</label>
-											</div>
-										</div>
-									</div>
-
-								</div>-->
 							</div>
 						</div>
 						<div class="card">
@@ -224,7 +151,7 @@
 
 <style scoped>
 .bd-example {
-	padding: 1.5rem;
+	padding: 1.25rem;
 	margin-right: 0;
 	margin-left: 0;
 	border-width: .2rem;

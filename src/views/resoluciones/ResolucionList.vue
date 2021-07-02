@@ -24,7 +24,7 @@
 								</div>
 								<div class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
-										<label for="nroResolucion" class="col-sm-4 col-form-label text-sm-right">Numero de Resolución:</label>
+										<label for="nroResolucion" class="col-sm-4 col-form-label text-sm-right">Número de Resolución:</label>
 										<div class="col">
 											<input type="search" v-model="params.nroResolucion" class="form-control" id="nroResolucion" placeholder="Ingrese el Nro. de la Resolución ...">
 										</div>
@@ -66,7 +66,7 @@
 
 								<div class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
-										<label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestion:</label>
+										<label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestión:</label>
 										<div class="col">
 											<select v-model="params.gestion" class="form-control" id="gestion" @keypress.enter.prevent="search">
 												<option v-for="item in gestionesDropList" v-bind:value="item">{{ item }}</option>
@@ -105,10 +105,11 @@
 										<div class="col">
 											<select v-model="params.idEstado" class="form-control" id="estado" @keypress.enter.prevent="search">
 												<option v-bind:value="0">Todos</option>
-												<option v-bind:value="1">Pendiente</option>
+												<option v-for="item in estadosDropList" v-bind:value="item.value">{{ item.text }}</option>
+												<!--<option v-bind:value="1">Pendiente</option>
 												<option v-bind:value="2">Enviado</option>
 												<option v-bind:value="3">Rechazado</option>
-												<option v-bind:value="4">Validado</option>
+												<option v-bind:value="4">Validado</option>-->
 											</select>
 										</div>
 									</div>
@@ -138,36 +139,21 @@
 							</div>
 						</div>
 					</div>
-					<!--<div class="row">
-						<div class="col-sm-12 col-md-6 form-inline">
-							<label class="mr-2">Buscar:</label>
-							<input class="form-control" type="search" v-model="params.search" placeholder="Ingrese texto..." @input="getItems()"/>
-						</div>
-						<div class="col-sm-12 col-md-6 form-inline justify-content-sm-end">
-							<label class="mr-2">Mostrar:</label>
-							<select @change="getItems()" class="form-control">
-								<option value="10">10</option>
-								<option value="25">25</option>
-								<option value="50">50</option>
-								<option value="100">100</option>
-							</select>
-						</div>
-					</div>-->
 					<div class="card">
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-hover table-sm datatable">
 									<thead>
 										<tr>
-											<th @click="sort('id')" style="width: 5%" class="pr-4">N° <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('num_res')" class="pr-4">Nro. Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'num_res' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('tipoResolucion')" class="pr-4">Tipo Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'tipoResolucion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('formaResolucion')" class="pr-4">Forma Resolución <i class="c-icon arrow-position" :class="params.orderBy === 'formaResolucion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('proceso')" class="pr-4">Proceso <i class="c-icon arrow-position" :class="params.orderBy === 'proceso' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('materia')" class="pr-4">Materia <i class="c-icon arrow-position" :class="params.orderBy === 'materia' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('fecha')" class="pr-4">Fecha <i class="c-icon arrow-position" :class="params.orderBy === 'fecha' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('codigo')" class="pr-4">Codigo <i class="c-icon arrow-position" :class="params.orderBy === 'codigo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sort('activo')" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th class="text-center">N°</th>
+											<th @click="sortItems('numeroResolucion')" class="pr-4">Nro. Resolución <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'numeroResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('fechaResolucion')" class="pr-4">Fecha Emisión <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'fechaResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('tipoResolucion')" class="pr-4">Tipo Resolución <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'tipoResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('formaResolucion')" class="pr-4">Forma Resolución <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'formaResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('proceso')" class="pr-4">Proceso <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'proceso' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('materia')" class="pr-4">Materia <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'materia' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('codigoResolucion')" class="pr-4">Codigo o Nurej <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'codigoResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('estado')" class="pr-4">Estado <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'activo' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
@@ -183,26 +169,26 @@
 											</td>
 										</tr>
 										<tr v-for="(item, index) in resoluciones" :key="index">
-											<td class="text-left">{{index + 1}}</td>
+											<td class="text-center">{{index + 1}}</td>
 											<td>{{item.numeroResolucion}}</td>
+											<td>{{item.fechaResolucion}}</td>
 											<td>{{item.tipoResolucion}}</td>
 											<td>{{item.formaResolucion}}</td>
 											<td>{{item.proceso}}</td>
 											<td>{{item.materia}}</td>
-											<td>{{item.fechaResolucion}}</td>
 											<td>{{item.codigoResolucion}}</td>
 											<td>
-												<span v-if="item.idEstado==1" class="badge badge-info">Pendiente</span>
+												<span v-if="item.idEstado==1" class="badge badge-info">Pendiente de Envío</span>
 												<span v-else-if="item.idEstado==2" class="badge badge-warning">Enviado</span>
 												<span v-else-if="item.idEstado==3" class="badge badge-danger">Rechazado</span>
 												<span v-else class="badge badge-success">Validado</span>
 											</td>
 											<td class="fit">
-												<router-link class="btn btn-success btn-sm" :to="{ name: 'resoluciones.detail', params: { id: item.idResolucion } }">
-													<i class="c-icon cil-zoom-in"></i>
-												</router-link>
-												<router-link v-if="item.idEstado==1 || item.idEstado==3" class="btn btn-info btn-sm ml-1" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
+												<router-link v-if="userLogged.rol=='Juzgado' && (item.idEstado==1 || item.idEstado==3)" class="btn btn-info btn-sm" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-pencil"></i>
+												</router-link>
+												<router-link v-else class="btn btn-success btn-sm" :to="{ name: 'resoluciones.detail', params: { id: item.idResolucion } }">
+													<i class="c-icon cil-zoom-in"></i>
 												</router-link>
 												<button v-if="item.registroActivo && userLogged.rol.includes('Administrador')" title="Eliminar" class="btn btn-danger btn-sm ml-1" @click="deleteItem(item.idResolucion)">
 													<i class="c-icon cil-x"></i>
@@ -236,8 +222,6 @@
 		data() {
 			return {
 				params: {
-					//orderBy: "id",
-					//orderType: "desc",
 					idDepartamento: 0,
 					idMunicipio: 0,
 					idOficina: 0,
@@ -247,6 +231,10 @@
 					idEstado: 0,
 					codigoResolucion: '',
 					nroResolucion: '',
+				},
+				paramsSort: {
+					orderBy: "id",
+					orderDirection: "desc",
 				}
 			};
 		},
@@ -269,17 +257,18 @@
 			this.params.gestion = this.gestionesDropList[0];
 			await this.fetchTiposResolucionesDropList();
 			await this.fetchProcesosDropList();
+			await this.fetchEstadosDropList();
 			this.fetchAllResoluciones(this.params);
 			
 		},
-		computed: { ...mapGetters(["userLogged","resoluciones", "isLoadingResolucion", "departamentosDropList", "municipiosDropList", "oficinasDropList",  "gestionesDropList", "tiposResolucionesDropList", "procesosDropList"]) },
+		computed: { ...mapGetters(["userLogged","resoluciones", "isLoadingResolucion", "departamentosDropList", "municipiosDropList", "oficinasDropList",  "gestionesDropList", "tiposResolucionesDropList", "procesosDropList", "estadosDropList"]) },
 		methods: {
-			...mapActions(["fetchAllResoluciones", "deleteResolucion", "activarResolucion", "fetchDepartamentosDropList", "fetchMunicipiosDropList", "fetchOficinasDropList", "fetchGestionesDropList", "fetchTiposResolucionesDropList", "fetchProcesosDropList"]),
+			...mapActions(["fetchAllResoluciones", "fetchOrderResoluciones", "deleteResolucion", "activarResolucion", "fetchDepartamentosDropList", "fetchMunicipiosDropList", "fetchOficinasDropList", "fetchGestionesDropList", "fetchTiposResolucionesDropList", "fetchProcesosDropList", "fetchEstadosDropList"]),
 			...mapMutations(["SET_EDIT_MODE_RESOLUCION"]),
 
 			getItems() {
 				if (this.params.idOficina || this.params.gestion || this.params.idTipoResolucion || this.params.idProceso || this.params.idEstado || this.params.codigoResolucion || this.params.nroResolucion) {
-					console.log(this.params);
+					//console.log(this.params);
 					this.fetchAllResoluciones(this.params);
 				}
 				else {
@@ -287,8 +276,11 @@
 				}
 			},
 			sortItems: function(column) {
-				this.params.orderBy = column;
-				this.fetchAllResoluciones(this.params);
+				if (column === this.paramsSort.orderBy) {
+					this.paramsSort.orderDirection = this.paramsSort.orderDirection === "asc" ? "desc" : "asc";
+				}
+				this.paramsSort.orderBy = column;
+				this.fetchOrderResoluciones(this.paramsSort);
 			},
 			addItem() {
 				this.SET_EDIT_MODE_RESOLUCION(false);
@@ -344,10 +336,10 @@
 			limpiarCampos() {
 				this.params.codigoResolucion = "";
 				this.params.nroResolucion = "";
-		        this.params.idTipoResolucion = 0;
-		        this.params.idProceso = 0;
-		        this.params.idEstado = 0;
-			    },
-			}
+				this.params.idTipoResolucion = 0;
+				this.params.idProceso = 0;
+				this.params.idEstado = 0;
+			},
 		}
-	</script>
+	}
+</script>

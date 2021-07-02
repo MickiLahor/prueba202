@@ -21,7 +21,7 @@
 						<div class="card">
 							<div class="card-body bd-example bd-example-row">
 								<h5>Datos Generales</h5>
-								<div class="row">
+								<div class="row mx-0">
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
 										<strong>Nro. Resolución</strong>
@@ -29,7 +29,7 @@
 									</div>
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
-										<strong>Codigo Expediente</strong>
+										<strong>Código o Nurej</strong>
 										<div>{{resolucion.codigoResolucion}}</div>
 									</div>
 
@@ -64,7 +64,7 @@
 									</div>
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
-										<strong>Relator</strong>
+										<strong>Juez Relator</strong>
 										<div>{{resolucion.relator}}</div>
 									</div>
 
@@ -99,7 +99,7 @@
 
 <style scoped>
 .bd-example {
-	padding: 1.5rem;
+	padding: 1.25rem;
 	margin-right: 0;
 	margin-left: 0;
 	border-width: .2rem;

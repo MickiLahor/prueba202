@@ -65,7 +65,7 @@
 
             <div class="my-1 col-lg-6">
               <div class="form-group row mb-0">
-                <label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestion:</label>
+                <label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestión:</label>
                 <div class="col">
                   <select v-model="paramsGestion.gestion" class="form-control" id="gestion" @keypress.enter.prevent="search">
                     <option v-for="item in gestionesOptions2" v-bind:value="item">{{ item }}</option>
@@ -110,7 +110,7 @@
 
             <div class="my-1 col-lg-6">
               <div class="form-group row mb-0">
-                <label for="nroResolucion" class="col-sm-4 col-form-label text-sm-right">Numero de Resolución:</label>
+                <label for="nroResolucion" class="col-sm-4 col-form-label text-sm-right">Número de Resolución:</label>
                 <div class="col">
                   <input type="search" v-model.trim="paramsAvanzado.nroResolucion" class="form-control" id="nroResolucion" placeholder="Ingrese el Nro. de la Resolución ...">
                 </div>
@@ -153,7 +153,7 @@
 
             <div class="my-1 col-lg-6">
               <div class="form-group row mb-0">
-                <label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestion:</label>
+                <label for="gestion" class="col-sm-4 col-form-label text-sm-right">Gestión:</label>
                 <div class="col">
                   <select v-model="paramsAvanzado.gestion" class="form-control" id="gestion" @keypress.enter.prevent="search">
                     <option v-bind:value="0">Todos</option>

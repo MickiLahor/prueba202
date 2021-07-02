@@ -26,9 +26,9 @@
 						<table class="table table-hover table-sm datatable">
 							<thead>
 								<tr>
-									<th @click="sortItems('id')" style="width: 10%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sortItems('descripcion')" class="pr-4">Descripcion <i class="c-icon arrow-position" :class="params.orderBy === 'descripcion' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sortItems('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th class="text-center">N°</th>
+									<th>Descripción</th>
+									<th>Estado</th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
@@ -44,7 +44,7 @@
 									</td>
 								</tr>
 								<tr v-for="(item, index) in formasResoluciones" :key="index">
-									<td class="text-center">{{item.idFormaResolucion}}</td>
+									<td class="text-center">{{index + 1}}</td>
 									<td>{{item.descripcion}}</td>
 									<td>
 										<span v-if="item.registroActivo" class="badge badge-success">Activo</span>

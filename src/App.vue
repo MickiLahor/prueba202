@@ -91,4 +91,10 @@ table.datatable {
 .form-group > label {
   font-weight: 500;
 }
+
+/* Color texto en badge warning */
+.badge-warning {
+  color: #fff !important;
+  background-color: #EBA83A !important;
+}
 </style>

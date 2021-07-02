@@ -9,31 +9,37 @@
 			<div v-else class="card card-accent-info">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5 class="card-title mb-0"><i class="c-icon cil-pencil"></i> Editar Resolución</h5>
-					<div>
+					<div v-if="userLogged.rol.includes('Secretario') && resolucion.HistorialEstados[0].fidEstado==2">
+						<button type="button" @click="validarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-check"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Validando...' : 'Validar' }}
+						</button>
+
+						<button type="button" @click="rechazarItem()" class="btn btn-danger ml-1" :disabled="isSavingResolucion">
+							<i v-if="!isSavingResolucion" class="cil-x"></i>
+							<span v-else class="spinner-border spinner-border-sm"></span>
+							{{ isSavingResolucion ? 'Rechazando...' : 'Rechazar' }}
+						</button>
+
+						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					</div>
+					<div v-else-if="userLogged.rol=='Juzgado' && (resolucion.HistorialEstados[0].fidEstado==1 || resolucion.HistorialEstados[0].fidEstado==3)">
 						<button type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
 							{{ isSavingResolucion ? 'Procesando...' : 'Actualizar' }}
 						</button>
 
-						<!--<button v-if="userLogged.rol=='Juzgado' && resolucion.HistorialEstados[0].fidEstado==1" type="button" @click="updateAndSendItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
+						<button type="button" @click="enviarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
 							<i v-if="!isSavingResolucion" class="cil-save"></i>
 							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Procesando...' : 'Actualizar y Enviar' }}
-						</button>-->
-
-						<button v-if="userLogged.rol.includes('Secretario') && resolucion.HistorialEstados[0].fidEstado==2" type="button" @click="validarItem()" class="btn btn-success ml-1" :disabled="isSavingResolucion">
-							<i v-if="!isSavingResolucion" class="cil-check"></i>
-							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Validando...' : 'Validar' }}
+							{{ isSavingResolucion ? 'Procesando...' : 'Enviar' }}
 						</button>
 
-						<button v-if="userLogged.rol.includes('Secretario') && resolucion.HistorialEstados[0].fidEstado==2" type="button" @click="rechazarItem()" class="btn btn-danger ml-1" :disabled="isSavingResolucion">
-							<i v-if="!isSavingResolucion" class="cil-x"></i>
-							<span v-else class="spinner-border spinner-border-sm"></span>
-							{{ isSavingResolucion ? 'Rechazando...' : 'Rechazar' }}
-						</button>
-
+						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
+					</div>
+					<div v-else>
 						<button type="button" class="btn btn-dark ml-1" @click="$router.go(-1)"><i class="cil-arrow-left"></i> Volver</button>
 					</div>
 				</div>
@@ -51,7 +57,7 @@
 									</div>
 
 									<div class="form-group col-lg-4 col-sm-6">
-										<label for="codigoResolucion">Codigo Expediente</label>
+										<label for="codigoResolucion">Código o Nurej</label>
 										<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }" @blur="getDatosNurej">
 										<em class="invalid-feedback">{{error.codigoResolucion}}</em>
 									</div>
@@ -84,7 +90,7 @@
 									</div>
 
 									<div class="form-group col-lg-4 col-sm-6">
-										<label for="idFuncionario">Relator</label>
+										<label for="idFuncionario">Juez Relator</label>
 										<select id="idFuncionario" v-model="resolucion.fidFuncionarioRelator" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }">
 											<option v-for="item in relatoresDropList" v-bind:value="item.value">{{ item.text }}</option>
 										</select>
@@ -171,7 +177,7 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<button type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingResolucion">
+					<button v-if="userLogged.rol=='Juzgado' && (resolucion.HistorialEstados[0].fidEstado==1 || resolucion.HistorialEstados[0].fidEstado==3)" type="button" @click="updateItem()" class="btn btn-info" :disabled="isSavingResolucion">
 						<i v-if="!isSavingResolucion" class="cil-save"></i>
 						<span v-else class="spinner-border spinner-border-sm"></span>
 						{{ isSavingResolucion ? 'Procesando...' : 'Actualizar' }}
@@ -259,7 +265,7 @@
 		},
 		computed: { ...mapGetters([, "resolucion", "isLoadingResolucion", "isSavingResolucion", "isEditModeResolucion", "tiposResolucionesDropList", "formasResolucionesDropList", "materiasDropList",  "procesosDropList", "relatoresDropList", "datosNurej", "userLogged"]) },
 		methods: {
-			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList", "fetchProcesosByMateriaDropList", "storeResolucion", "updateResolucion", "fetchDetailResolucion", "fetchRelatoresDropList", "fetchDatosNurej", "validarResolucion", "rechazarResolucion", "fetchViewPdfResolucion"]),
+			...mapActions(["fetchTiposResolucionesDropList", "fetchFormasResolucionesDropList", "fetchMateriasDropList", "fetchProcesosByMateriaDropList", "storeResolucion", "updateResolucion", "fetchDetailResolucion", "enviarResolucion", "fetchRelatoresDropList", "fetchDatosNurej", "validarResolucion", "rechazarResolucion", "fetchViewPdfResolucion"]),
 
 			validate() {
 				this.valid = false;
@@ -340,17 +346,13 @@
 					Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
 				}
 			},
-			/*async updateAndSendItem() {
-				this.validate();
-				if(this.valid) {
-					this.resolucion.HistorialEstados[0].fidEstado = 2;
-					await this.updateResolucion(this.resolucion);
+			async enviarItem() {
+				await this.enviarResolucion({idResolucion: this.resolucion.idResolucion, usuarioRegistro: this.userLogged.cuenta})
+				.then((result) => {
+					Swal.fire('Enviado!', 'La resolución ha sido enviada correctamente.', 'success');
 					this.$router.push({ name: "resoluciones" });
-				}
-				else {
-					Swal.fire("Existen errores en los datos", "Por favor corrija los errores que aparecen en pantalla!", "warning");
-				}
-			},*/
+				});
+			},
 			async validarItem() {
 				await this.validarResolucion(this.resolucion);
 				this.$router.push({ name: "resoluciones" });

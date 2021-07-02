@@ -29,8 +29,8 @@ const actions = {
       commit('SET_USER_LOGGED', response.data.data)
       commit('SET_TOKEN', response.data.token)
       commit('SET_LAYOUT', "main-layout")
-      router.replace('/');
-      //window.location.href="/";
+      //router.replace('/');
+      window.location.href="/";
     })
     .catch(error => {
       console.log(error)
@@ -48,7 +48,8 @@ const actions = {
         console.log(response.data)
         commit('SET_USER_LOGGED', response.data.data)
         commit('SET_TOKEN', response.data.token)
-        router.replace('/');
+        //router.replace('/');
+        window.location.href="/";
     })
     .catch(error => {
       console.log(error)
@@ -66,7 +67,8 @@ const actions = {
     .catch(error => {
       console.log(error);
     });*/
-    router.replace('/login');
+    //router.replace('/login');
+    window.location.href="/login";
     commit("SET_USER_LOGGED", null);
     commit('SET_TOKEN', null);
     commit('SET_LAYOUT', "login-layout");

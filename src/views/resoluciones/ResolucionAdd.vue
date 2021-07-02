@@ -22,11 +22,12 @@
 								<div class="form-group col-lg-4 col-sm-6">
 									<label for="numeroResolucion">Nro. Resolución</label>
 									<input v-maska="'####/####'" v-model="resolucion.numeroResolucion" type="text" id="numeroResolucion" placeholder="Numero Resolución" class="form-control" :class="{ 'is-invalid': error.numeroResolucion }">
+									<p class="help is-family-code">Ej. formato numero: "0001/2021"</p>
 									<em class="invalid-feedback">{{error.numeroResolucion}}</em>
 								</div>
 
 								<div class="form-group col-lg-4 col-sm-6">
-									<label for="codigoResolucion">Codigo Expediente</label>
+									<label for="codigoResolucion">Código o Nurej</label>
 									<input v-model="resolucion.codigoResolucion" type="text" id="codigoResolucion" placeholder="Codigo o Nurej" class="form-control" :class="{ 'is-invalid': error.codigoResolucion }" @blur="getDatosNurej">
 									<em class="invalid-feedback">{{error.codigoResolucion}}</em>
 								</div>
@@ -63,7 +64,7 @@
 								</div>
 
 								<div class="form-group col-lg-4 col-sm-6">
-									<label for="idFuncionario">Relator</label>
+									<label for="idFuncionario">Juez Relator</label>
 									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idFuncionario" v-model="resolucion.fidFuncionarioRelator" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }">
 										<option v-for="item in relatoresDropList" v-bind:value="item.value">{{ item.text }}</option>

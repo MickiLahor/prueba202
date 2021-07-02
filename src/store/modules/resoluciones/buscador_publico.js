@@ -271,7 +271,7 @@ const actions = {
 		});
 	},
 
-	/*async fetchProcesosOptions({ commit }) {
+	async fetchProcesosOptions({ commit }) {
 
 		await axios.get(`${process.env.VUE_APP_API_URL}procesos`)
 		.then(res => {
@@ -285,7 +285,7 @@ const actions = {
 		.catch(err => {
 			console.log('error', err);
 		});
-	},*/
+	},
 
 	async fetchRelatoresOptions({ commit }, id_oficina) {
 		await axios.get(`${process.env.VUE_APP_API_URL}funcionario_relator/${id_oficina}`)
@@ -306,7 +306,7 @@ const actions = {
 		commit('SET_IS_LOADING_SEARCH', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}busqueda/general/${textSearch}`)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			/*const lista = [];
 			res.data.forEach(function(item, index) {
 				lista.push({
@@ -335,7 +335,7 @@ const actions = {
 		commit('SET_IS_LOADING_SEARCH', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}busqueda/gestion/${params.fidOficina}/${params.gestion}`)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			/*const lista = [];
 			res.data.forEach(function(item, index) {
 				lista.push({
@@ -395,7 +395,7 @@ const actions = {
 		commit('SET_IS_LOADING_SEARCH', true);
 		await axios.get(`${process.env.VUE_APP_API_URL}resoluciones/publico/${id}`)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			let item = res.data.data;
 			item.oficina = res.data.datosZeus.oficina;
 			item.relator = res.data.datosZeus.relator;

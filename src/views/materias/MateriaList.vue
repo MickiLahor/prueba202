@@ -26,11 +26,11 @@
 						<table class="table table-hover table-sm datatable">
 							<thead>
 								<tr>
-									<th @click="sort('id')" style="width: 10%" class="pr-4">ID <i class="c-icon arrow-position" :class="params.orderBy === 'id' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('descriMat')" class="pr-4">Descripcion <i class="c-icon arrow-position" :class="params.orderBy === 'descriMat' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('denDemandante')" class="pr-4">Denominación Demandante <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandante' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('denDemandado')" class="pr-4">Denominación Demandado <i class="c-icon arrow-position" :class="params.orderBy === 'denDemandado' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-									<th @click="sort('activo')" style="width: 20%" class="pr-4">Estado <i class="c-icon arrow-position" :class="params.orderBy === 'activo' ? (params.orderType == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+									<th class="text-center">N°</th>
+									<th>Descripción</th>
+									<th>Denominación Demandante</th>
+									<th>Denominación Demandado</th>
+									<th>Estado</th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
@@ -46,7 +46,7 @@
 									</td>
 								</tr>
 								<tr v-for="(item, index) in materias" :key="index">
-									<td class="text-center">{{item.idMateria}}</td>
+									<td class="text-center">{{index + 1}}</td>
 									<td>{{item.descripcion}}</td>
 									<td>{{item.denominacionDemandante}}</td>
 									<td>{{item.denominacionDemandado}}</td>

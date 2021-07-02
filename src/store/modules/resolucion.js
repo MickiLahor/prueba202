@@ -24,6 +24,7 @@ const state = {
 	formasResolucionesDropList: [],
 	materiasDropList: [],
 	procesosDropList: [],
+	estadosDropList: [],
 	relatoresDropList: [],
 	datosNurej: null,
 	//demandante: null,
@@ -107,6 +108,10 @@ const mutations = {
 		state.procesosDropList = items
 	},
 
+	SET_ESTADOS: (state, items) => {
+		state.estadosDropList = items
+	},
+
 	SET_RELATOR_OF (state, items) {
 		state.relatoresDropList = items;
 	},
@@ -129,7 +134,7 @@ const actions = {
 		commit('SET_IS_LOADING_RESOLUCION', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}resoluciones/interno`, params)
 		.then(res => {
-			console.log(res.data);
+			//console.log(res.data);
 			const lista = [];
 			res.data.forEach(function(item, index) {
 				lista.push({
@@ -142,25 +147,32 @@ const actions = {
 					fechaResolucion: item.fechaResolucion,
 					codigoResolucion: item.codigoResolucion,
 					registroActivo: item.registroActivo,
-					idEstado: item.HistorialEstados[0].fidEstado
+					idEstado: item.HistorialEstados[0].fidEstado,
+					//estado: item.HistorialEstados[0].fidEstado == 1 ? 'Pendiente de Envío' : ()
 				});
 			});
-			//console.log(lista);
+			console.log(lista);
 			commit('SET_RESOLUCIONES', lista);
-
-			/*const pagination = {
-				total: res.data.data.total,
-				per_page: res.data.data.per_page,
-				current_page: res.data.data.current_page,
-				total_pages: res.data.data.last_page
-			}
-			commit('SET_PAGINATE_RESOLUCIONES', pagination);*/
+			
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		})
 		.catch(err => {
 			console.log('error', err);
 			commit('SET_IS_LOADING_RESOLUCION', false);
 		});
+	},
+
+	async fetchOrderResoluciones({ commit }, params = null) {
+		commit('SET_IS_LOADING_RESOLUCION', true);
+		const lista = state.resoluciones;
+		lista.sort((p1,p2) => {
+			let modifier = 1;
+			if(params.orderDirection === 'desc') modifier = -1;
+			if(p1[params.orderBy] < p2[params.orderBy]) return -1 * modifier; if(p1[params.orderBy] > p2[params.orderBy]) return 1 * modifier;
+			return 0;
+		});
+		commit('SET_RESOLUCIONES', lista);
+		commit('SET_IS_LOADING_RESOLUCION', false);
 	},
 
 	async fetchDetailResolucion({ commit }, id) {
@@ -419,6 +431,22 @@ const actions = {
 		});
 	},
 
+	async fetchEstadosDropList({ commit }) {
+
+		await axios.get(`${process.env.VUE_APP_API_URL}estados`)
+		.then(res => {
+			//console.log(res.data);
+			const lista = [];
+			res.data.forEach((item, index) => {
+				lista.push({value: item.idEstado, text: item.descripcion});
+			});
+			commit('SET_ESTADOS', lista);
+		})
+		.catch(err => {
+			console.log('error', err);
+		});
+	},
+
 	async fetchRelatoresDropList({ commit }, id_oficina) {
 		await axios.get(`${process.env.VUE_APP_API_URL}funcionario_relator/${id_oficina}`)
 		.then(res => {
@@ -601,6 +629,7 @@ const getters = {
 	formasResolucionesDropList: state => state.formasResolucionesDropList,
 	materiasDropList: state => state.materiasDropList,
 	procesosDropList: state => state.procesosDropList,
+	estadosDropList: state => state.estadosDropList,
 	relatoresDropList: state => state.relatoresDropList,
 	datosNurej: state => state.datosNurej,
 	resultSearch: state => state.resultSearch,

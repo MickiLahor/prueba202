@@ -33,149 +33,153 @@ const routes = [
       //     content: ''
       //   }
       // ],  
-    hideForAuth: true,
-    breadcrumb: [
-    { name: 'Login' }
-    ]
-  }
-},
-{
-  path: '/',
-  name: 'home',
-  component: Home,
-  meta: {
-    title: 'Krima - Inicio',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio' }
-    ]
-  }
-},
-{
-  path: '/about',
-  name: 'about',
-  component: About,
-  meta: {
-    title: 'Krima - Acerca de',
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Acerca De' }
-    ]
-  }
-},
-{
-  path: '/materias',
-  name: 'materias',
-  component: MateriaList,
-  meta: {
-    title: 'Krima - Materias',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Materias' }
-    ]
-  }
-},
-{
-  path: '/procesos',
-  name: 'procesos',
-  component: ProcesoList,
-  meta: {
-    title: 'Krima - Procesos',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Procesos' }
-    ]
-  }
-},
-{
-  path: '/tipos_resoluciones',
-  name: 'tipos_resoluciones',
-  component: TipoResolucionList,
-  meta: {
-    title: 'Krima - Tipo de Resoluciones',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Tipo de Resoluciones' }
-    ]
-  }
-},
-{
-  path: '/formas_resoluciones',
-  name: 'formas_resoluciones',
-  component: FormaResolucionList,
-  meta: {
-    title: 'Krima - Formas de Resoluciones',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Formas de Resoluciones' }
-    ]
-  }
-},
-{
-  path: '/resoluciones',
-  name: 'resoluciones',
-  component: ResolucionList,
-  meta: {
-    title: 'Krima - Resoluciones',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Resoluciones' }
-    ]
-  }
-},
-{
-  path: '/resoluciones/create',
-  name: 'resoluciones.create',
-  component: ResolucionAdd,
-  meta: {
-    title: 'Krima - Registrar Resolución',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Resoluciones', link: '/resoluciones' },
-    { name: 'Registrar Resolución' }
-    ]
-  }
-},
-{
-  path: '/resoluciones/:id/edit',
-  name: 'resoluciones.edit',
-  component: ResolucionEdit,
-  meta: {
-    title: 'Krima - Editar Resolución',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Resoluciones', link: '/resoluciones' },
-    { name: 'Editar Resolución' }
-    ]
-  }
-},
-{
-  path: '/resoluciones/:id',
-  name: 'resoluciones.detail',
-  component: ResolucionDetail,
-  meta: {
-    title: 'Krima - Visualizar Resolución',
-    requiresAuth: true,
-    breadcrumb: [
-    { name: 'Inicio', link: '/' },
-    { name: 'Resoluciones', link: '/resoluciones' },
-    { name: 'Ver Resolución' }
-    ]
-  }
-},
-{
-  path: '/buscador_resoluciones',
-  name: 'buscador_resoluciones',
-  component: BuscadorResoluciones,
-  meta: {  
-    title: 'Krima - Búsqueda de Resoluciones',
+      hideForAuth: true,
+      breadcrumb: [
+      { name: 'Login' }
+      ]
+    }
+  },
+  {
+    path: '/',
+    name: 'home',
+    component: Home,
+    meta: {
+      title: 'Krima - Inicio',
+      requiresAuth: true,
+      breadcrumb: [
+      { name: 'Inicio' }
+      ]
+    }
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About,
+    meta: {
+      title: 'Krima - Acerca de',
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Acerca De' }
+      ]
+    }
+  },
+  {
+    path: '/materias',
+    name: 'materias',
+    component: MateriaList,
+    meta: {
+      title: 'Krima - Materias',
+      requiresAuth: true,
+      isAdmin : true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Materias' }
+      ]
+    }
+  },
+  {
+    path: '/procesos',
+    name: 'procesos',
+    component: ProcesoList,
+    meta: {
+      title: 'Krima - Procesos',
+      requiresAuth: true,
+      isAdmin : true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Procesos' }
+      ]
+    }
+  },
+  {
+    path: '/tipos_resoluciones',
+    name: 'tipos_resoluciones',
+    component: TipoResolucionList,
+    meta: {
+      title: 'Krima - Tipo de Resoluciones',
+      requiresAuth: true,
+      isAdmin : true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Tipo de Resoluciones' }
+      ]
+    }
+  },
+  {
+    path: '/formas_resoluciones',
+    name: 'formas_resoluciones',
+    component: FormaResolucionList,
+    meta: {
+      title: 'Krima - Formas de Resoluciones',
+      requiresAuth: true,
+      isAdmin : true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Formas de Resoluciones' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones',
+    name: 'resoluciones',
+    component: ResolucionList,
+    meta: {
+      title: 'Krima - Resoluciones',
+      requiresAuth: true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Resoluciones' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones/create',
+    name: 'resoluciones.create',
+    component: ResolucionAdd,
+    meta: {
+      title: 'Krima - Registrar Resolución',
+      requiresAuth: true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Resoluciones', link: '/resoluciones' },
+      { name: 'Registrar Resolución' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones/:id/edit',
+    name: 'resoluciones.edit',
+    component: ResolucionEdit,
+    meta: {
+      title: 'Krima - Editar Resolución',
+      requiresAuth: true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Resoluciones', link: '/resoluciones' },
+      { name: 'Editar Resolución' }
+      ]
+    }
+  },
+  {
+    path: '/resoluciones/:id',
+    name: 'resoluciones.detail',
+    component: ResolucionDetail,
+    meta: {
+      title: 'Krima - Visualizar Resolución',
+      requiresAuth: true,
+      breadcrumb: [
+      { name: 'Inicio', link: '/' },
+      { name: 'Resoluciones', link: '/resoluciones' },
+      { name: 'Ver Resolución' }
+      ]
+    }
+  },
+  {
+    path: '/buscador_resoluciones',
+    name: 'buscador_resoluciones',
+    component: BuscadorResoluciones,
+    meta: {  
+      title: 'Krima - Búsqueda de Resoluciones',
     //requiresGuest: true,
     breadcrumb: [
     { name: 'Inicio', link: '/' },
@@ -248,6 +252,14 @@ router.beforeEach((to, from, next) => {
     else {
       if (to.name == "login") {
         next('/')
+      }
+      else if(to.matched.some(record => record.meta.isAdmin)) {
+        if (store.getters.userLogged.rol.includes('Administrador')) {
+          next()
+        }
+        else {
+          next('/')
+        }
       }
       else {
         next()
