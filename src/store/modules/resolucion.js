@@ -1,13 +1,5 @@
 import axios from 'axios';
-
-/*axios.interceptors.request.use(function(config) {
-    const access_token = localStorage.getItem('access_token');
-    config.headers.Authorization = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNpIjoiNzU2NDQyMCIsImlhdCI6MTYxOTcxMDMwNCwiZXhwIjoxNjIyMzAyMzA0fQ.PJJMmUijPUKzYjkFPg-_To18xiMOg6Ldz7eZmIrS2C0';
-	config.headers.Accept = 'application/json';
-    return config;
-}, function(err) {
-    return Promise.reject(err);
-});*/
+import moment from 'moment'
 
 const state = {
 	resoluciones: [],
@@ -145,13 +137,17 @@ const actions = {
 					proceso: item.Proceso.descripcion,
 					materia: item.Proceso.Materium.descripcion,
 					fechaResolucion: item.fechaResolucion,
+					fechaResolucionFormat: moment(item.fechaResolucion).format('DD-MM-YYYY'),
 					codigoResolucion: item.codigoResolucion,
 					registroActivo: item.registroActivo,
+					fechaRegistro: item.fechaRegistro,
+					fechaRegistroFormat: moment(item.fechaRegistro).format('DD-MM-YYYY hh:mm:ss'),
 					idEstado: item.HistorialEstados[0].fidEstado,
 					//estado: item.HistorialEstados[0].fidEstado == 1 ? 'Pendiente de Envío' : ()
 				});
 			});
-			console.log(lista);
+			//this.fetchOrderResoluciones({orderBy: "fechaRegistro", orderDirection: "desc",});
+			//console.log(lista);
 			commit('SET_RESOLUCIONES', lista);
 			
 			commit('SET_IS_LOADING_RESOLUCION', false);
@@ -171,6 +167,7 @@ const actions = {
 			if(p1[params.orderBy] < p2[params.orderBy]) return -1 * modifier; if(p1[params.orderBy] > p2[params.orderBy]) return 1 * modifier;
 			return 0;
 		});
+		//console.log(lista);
 		commit('SET_RESOLUCIONES', lista);
 		commit('SET_IS_LOADING_RESOLUCION', false);
 	},

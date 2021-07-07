@@ -154,6 +154,7 @@
 											<th @click="sortItems('materia')" class="pr-4">Materia <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'materia' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sortItems('codigoResolucion')" class="pr-4">Codigo o Nurej <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'codigoResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sortItems('estado')" class="pr-4">Estado <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'activo' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('fechaRegistro')" class="pr-4">Fecha Registro <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'fechaRegistro' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
@@ -171,10 +172,10 @@
 										<tr v-for="(item, index) in resoluciones" :key="index">
 											<td class="text-center">{{index + 1}}</td>
 											<td>{{item.numeroResolucion}}</td>
-											<td>{{item.fechaResolucion}}</td>
+											<td>{{item.fechaResolucionFormat}}</td>
 											<td>{{item.tipoResolucion}}</td>
 											<td>{{item.formaResolucion}}</td>
-											<td>{{item.proceso}}</td>
+											<td width="20%">{{item.proceso}}</td>
 											<td>{{item.materia}}</td>
 											<td>{{item.codigoResolucion}}</td>
 											<td>
@@ -183,6 +184,7 @@
 												<span v-else-if="item.idEstado==3" class="badge badge-danger">Rechazado</span>
 												<span v-else class="badge badge-success">Validado</span>
 											</td>
+											<td>{{item.fechaRegistroFormat}}</td>
 											<td class="fit">
 												<router-link v-if="userLogged.rol=='Juzgado' && (item.idEstado==1 || item.idEstado==3)" class="btn btn-info btn-sm" :to="{ name: 'resoluciones.edit', params: { id: item.idResolucion } }">
 													<i class="c-icon cil-pencil"></i>
@@ -233,7 +235,7 @@
 					nroResolucion: '',
 				},
 				paramsSort: {
-					orderBy: "id",
+					orderBy: "fechaRegistro",
 					orderDirection: "desc",
 				}
 			};
@@ -258,7 +260,8 @@
 			await this.fetchTiposResolucionesDropList();
 			await this.fetchProcesosDropList();
 			await this.fetchEstadosDropList();
-			this.fetchAllResoluciones(this.params);
+			await this.fetchAllResoluciones(this.params);
+			this.fetchOrderResoluciones(this.paramsSort);
 			
 		},
 		computed: { ...mapGetters(["userLogged","resoluciones", "isLoadingResolucion", "departamentosDropList", "municipiosDropList", "oficinasDropList",  "gestionesDropList", "tiposResolucionesDropList", "procesosDropList", "estadosDropList"]) },
@@ -266,10 +269,11 @@
 			...mapActions(["fetchAllResoluciones", "fetchOrderResoluciones", "deleteResolucion", "activarResolucion", "fetchDepartamentosDropList", "fetchMunicipiosDropList", "fetchOficinasDropList", "fetchGestionesDropList", "fetchTiposResolucionesDropList", "fetchProcesosDropList", "fetchEstadosDropList"]),
 			...mapMutations(["SET_EDIT_MODE_RESOLUCION"]),
 
-			getItems() {
+			async getItems() {
 				if (this.params.idOficina || this.params.gestion || this.params.idTipoResolucion || this.params.idProceso || this.params.idEstado || this.params.codigoResolucion || this.params.nroResolucion) {
 					//console.log(this.params);
-					this.fetchAllResoluciones(this.params);
+					await this.fetchAllResoluciones(this.params);
+					this.fetchOrderResoluciones(this.paramsSort);
 				}
 				else {
 					Swal.fire('Aviso', 'Debe seleccionar al menos un campo de búsqueda.', 'warning');

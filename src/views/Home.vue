@@ -78,18 +78,13 @@
            return {
             params: {
                 idOficina: 0,
-                idEstado: 0,
+                usuario: 0,
             }
         }
     },
     async created() {
         this.params.idOficina = this.userLogged.idOficina;
-        if(this.userLogged.rol.includes('Secretario')) {
-            this.params.idEstado = 2;
-        }
-        else {
-            this.params.idEstado = 1;
-        }
+        this.params.usuario = this.userLogged.rol;
         this.fetchUltimasResoluciones(this.params);
     },
     computed: { ...mapGetters(["userLogged","ultimasResoluciones", "isLoadingDataHome"]) },
