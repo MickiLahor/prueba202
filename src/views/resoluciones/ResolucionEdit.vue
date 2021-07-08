@@ -240,7 +240,8 @@
 		data() {
 			return {
 				idMateria: '',
-				file: null,
+				archivoPdf: null,
+				archivoDocx: null,
 				nombre_pdf: '',
 				error: {},
 				valid: false,
@@ -333,11 +334,12 @@
 						fidOficina: this.resolucion.fidOficina,
 						fidFuncionarioRelator: this.resolucion.fidFuncionarioRelator,
 						contenidoHtml: this.resolucion.contenidoHtml,
+						archivoDocx: this.archivoDocx,
 						visible: this.resolucion.visible,
 						usuarioRegistro: this.userLogged.cuenta
 					}
-					if(this.file)
-						item.file = this.file;
+					if(this.archivoPdf)
+						item.archivoPdf = this.archivoPdf;
 
 					await this.updateResolucion(item);
 					this.$router.push({ name: "resoluciones" });
@@ -384,23 +386,23 @@
 				var reader = new FileReader();
 				reader.onloadend = () => {
 					var arrayBuffer = reader.result;
-
+					this.archivoDocx = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
 					mammoth.convertToHtml({arrayBuffer: arrayBuffer}).then( (resultObject) => {
-						this.resolucion.contenidoHtml = resultObject.value
-						//console.log(resultObject.value);
+						this.resolucion.contenidoHtml = resultObject.value;
 					})
 				}
 				reader.readAsArrayBuffer(file);
 			},
 			openPdf () {
-				this.$refs.fileInputPdf.click()
+				this.$refs.fileInputPdf.click();
 			},
 			onPdfChange (event) {
 				let fileObject = event.target.files[0];
 				const reader = new FileReader();
 				reader.onloadend = (e) => {
-					this.file = e.target.result;
+					this.archivoPdf = e.target.result;
 					this.nombre_pdf = '<i class="cil-file"></i> ' + event.target.files[0].name;
+					document.getElementById('view_pdf').href = URL.createObjectURL(fileObject);
 				}
 				reader.readAsDataURL(fileObject);
 			},
@@ -416,6 +418,10 @@
 					let array_ruta_pdf = this.resolucion.rutaArchivoPdf.split('\\');
 					this.nombre_pdf = this.resolucion.rutaArchivoPdf ? '<i class="cil-file"></i> ' + array_ruta_pdf[array_ruta_pdf.length-1] : ''
 				}
+				/*if(this.resolucion.rutaArchivoDocx) {
+					let array_ruta_docx = this.resolucion.rutaArchivoDocx.split('\\');
+					this.nombre_docx = this.resolucion.rutaArchivoDocx ? '<i class="cil-file"></i> ' + array_ruta_docx[array_ruta_docx.length-1] : ''
+				}*/
 				this.fetchProcesosByMateriaDropList(this.idMateria)
 				this.fetchRelatoresDropList(this.resolucion.fidOficina);
 				this.editorOptions.readOnly = (this.userLogged.rol=='Juzgado' && (this.resolucion.HistorialEstados[0].fidEstado==1 || this.resolucion.HistorialEstados[0].fidEstado==3)) ? false : true;

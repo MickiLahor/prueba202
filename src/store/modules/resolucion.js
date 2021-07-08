@@ -191,6 +191,7 @@ const actions = {
 	},
 
 	async storeResolucion({ commit }, item) {
+		console.log(item);
 		commit('SET_SAVING_RESOLUCION', true);
 		await axios.post(`${process.env.VUE_APP_API_URL}resoluciones`, item)
 		.then(res => {
