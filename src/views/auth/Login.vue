@@ -42,7 +42,7 @@
             <div>
               <img class="img-fluid" src="../../assets/img/Logo_KrimaOJ_login.png" width="260" height="206" style="margin-bottom:5px; margin-top:5px">
               
-              <h6 style="color:black; font-family: Arial, Impact, helvética; font-weight: bold">REGISTRO DE RESOLUCIONES DE LOS TRIBUNALES DEPARTAMENTALES DE JUSTICIA</h6>
+              <h6 style="color:black; font-family: Arial, Impact, helvética; font-weight: bold">REGISTRO DE RESOLUCIONES DE ALZADA DE LOS TRIBUNALES DEPARTAMENTALES DE JUSTICIA</h6>
               <div> 
                 
               </div>

@@ -59,12 +59,12 @@
 									</div>
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
-										<strong>Proceso</strong>
+										<strong>Tipo Penal</strong>
 										<div>{{resolucion.Proceso.descripcion}}</div>
 									</div>
 
 									<div class="col-xl-3 col-lg-4 col-sm-6">
-										<strong>Juez Relator</strong>
+										<strong>Vocal Relator</strong>
 										<div>{{resolucion.relator}}</div>
 									</div>
 

@@ -75,7 +75,7 @@
 
 									<div class="form-group col-lg-4 col-sm-6">
 										<label for="idTipoResolucion">Tipo de Resolución</label>
-										<select id="idTipoResolucion" v-model="resolucion.fidTipoResolucion" class="form-control" :class="{ 'is-invalid': error.fidTipoResolucion }">
+										<select id="idTipoResolucion" v-model="resolucion.fidTipoResolucion" class="form-control" :class="{ 'is-invalid': error.fidTipoResolucion }" disabled>
 											<option v-for="item in tiposResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
 										</select>
 										<em class="invalid-feedback">{{error.fidTipoResolucion}}</em>
@@ -90,7 +90,7 @@
 									</div>
 
 									<div class="form-group col-lg-4 col-sm-6">
-										<label for="idFuncionario">Juez Relator</label>
+										<label for="idFuncionario">Vocal Relator</label>
 										<select id="idFuncionario" v-model="resolucion.fidFuncionarioRelator" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }">
 											<option v-for="item in relatoresDropList" v-bind:value="item.value">{{ item.text }}</option>
 										</select>
@@ -99,14 +99,14 @@
 
 									<div class="form-group col-lg-4 col-sm-6">
 										<label for="idMateria">Materia</label>
-										<select id="idMateria" v-model="idMateria" class="form-control" :class="{ 'is-invalid': error.idMateria }" @change="onSelectMateria($event)">
+										<select id="idMateria" v-model="idMateria" class="form-control" :class="{ 'is-invalid': error.idMateria }" @change="onSelectMateria($event)" disabled>
 											<option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
 										</select>
 										<em class="invalid-feedback">{{error.idMateria}}</em>
 									</div>
 
 									<div class="form-group col-lg-4 col-sm-6">
-										<label for="idProceso">Proceso</label>
+										<label for="idProceso">Tipo Penal</label>
 										<select id="idProceso" v-model="resolucion.fidProceso" class="form-control" :class="{ 'is-invalid': error.fidProceso }">
 											<option v-for="item in procesosDropList" v-bind:value="item.value">{{ item.text }}</option>
 										</select>

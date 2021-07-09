@@ -48,7 +48,7 @@
 									<label for="idTipoResolucion">Tipo de Resolución</label>
 									<!--<Select2 id="idTipoResolucion" v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<!--<vue-select v-model="resolucion.idTipoResolucion" :options="tiposResolucionesDropList" label-by="text" valuel-by="value" searchable clear-on-select close-on-select search-placeholder="Escriba para buscar"></vue-select>-->
-									<select id="idTipoResolucion" v-model="resolucion.fidTipoResolucion" class="form-control" :class="{ 'is-invalid': error.fidTipoResolucion }">
+									<select id="idTipoResolucion" v-model="resolucion.fidTipoResolucion" class="form-control" :class="{ 'is-invalid': error.fidTipoResolucion }" disabled>
 										<option v-for="item in tiposResolucionesDropList" v-bind:value="item.value">{{ item.text }}</option>
 									</select>
 									<em class="invalid-feedback">{{error.fidTipoResolucion}}</em>
@@ -64,7 +64,7 @@
 								</div>
 
 								<div class="form-group col-lg-4 col-sm-6">
-									<label for="idFuncionario">Juez Relator</label>
+									<label for="idFuncionario">Vocal Relator</label>
 									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idFuncionario" v-model="resolucion.fidFuncionarioRelator" class="form-control" :class="{ 'is-invalid': error.fidFuncionarioRelator }">
 										<option v-for="item in relatoresDropList" v-bind:value="item.value">{{ item.text }}</option>
@@ -75,14 +75,14 @@
 								<div class="form-group col-lg-4 col-sm-6">
 									<label for="idMateria">Materia</label>
 									<!--<Select2 id="idMateria" v-model="idMateria" :options="materiasDropList" @update="onSelectMateria" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
-									<select id="idMateria" v-model="idMateria" class="form-control" :class="{ 'is-invalid': error.idMateria }" @change="onSelectMateria($event)">
+									<select id="idMateria" v-model="idMateria" class="form-control" :class="{ 'is-invalid': error.idMateria }" @change="onSelectMateria($event)" disabled>
 										<option v-for="item in materiasDropList" v-bind:value="item.value">{{ item.text }}</option>
 									</select>
 									<em class="invalid-feedback">{{error.idMateria}}</em>
 								</div>
 
 								<div class="form-group col-lg-4 col-sm-6">
-									<label for="idProceso">Proceso</label>
+									<label for="idProceso">Tipo Penal</label>
 									<!--<Select2 id="idProceso" v-model="resolucion.idProceso" :options="procesosDropList" :settings="{ width: '100%', theme: 'bootstrap4' }" placeholder="-- Seleccione --"/>-->
 									<select id="idProceso" v-model="resolucion.fidProceso" class="form-control" :class="{ 'is-invalid': error.fidProceso }">
 										<option v-for="item in procesosDropList" v-bind:value="item.value">{{ item.text }}</option>
@@ -179,7 +179,7 @@
 					fidDepartamento: null,
 					fidMunicipio: null,
 					fidOficina: null,
-					fidTipoResolucion: '',
+					fidTipoResolucion: 1,
 					fidFormaResolucion: '',
 					fidProceso: '',
 					demandante: '',
@@ -193,7 +193,7 @@
 					fidEstado: null,
 					usuarioRegistro: ''
 				},
-				idMateria: null,
+				idMateria: 2,
 				nombreOficina: '',
 				nombre_pdf: '',
 				//embedSrc: '',

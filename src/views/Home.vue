@@ -1,5 +1,5 @@
 <template>
-	<h2 class="text-center mb-4">Bienvenidos al Sistema de Registro de Resoluciones de los Tribunales Departamentales de Justicia</h2>
+	<h2 class="text-center mb-4">Bienvenidos al Sistema de Registro de Resoluciones de Alzada de los Tribunales Departamentales de Justicia</h2>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
