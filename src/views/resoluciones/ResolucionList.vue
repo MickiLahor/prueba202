@@ -89,7 +89,7 @@
 
 								<div class="my-1 col-lg-6">
 									<div class="form-group row mb-0">
-										<label for="proceso" class="col-sm-4 col-form-label text-sm-right">Proceso:</label>
+										<label for="proceso" class="col-sm-4 col-form-label text-sm-right">Tipo Penal:</label>
 										<div class="col">
 											<select v-model="params.idProceso" class="form-control" id="proceso" @keypress.enter.prevent="search">
 												<option v-bind:value="0">Todos</option>
@@ -150,7 +150,7 @@
 											<th @click="sortItems('fechaResolucion')" class="pr-4">Fecha Emisión <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'fechaResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sortItems('tipoResolucion')" class="pr-4">Tipo Resolución <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'tipoResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sortItems('formaResolucion')" class="pr-4">Forma Resolución <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'formaResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
-											<th @click="sortItems('proceso')" class="pr-4">Proceso <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'proceso' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
+											<th @click="sortItems('proceso')" class="pr-4">Tipo Penal <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'proceso' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sortItems('materia')" class="pr-4">Materia <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'materia' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sortItems('codigoResolucion')" class="pr-4">Codigo o Nurej <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'codigoResolucion' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
 											<th @click="sortItems('estado')" class="pr-4">Estado <i class="c-icon arrow-position" :class="paramsSort.orderBy === 'activo' ? (paramsSort.orderDirection == 'asc' ? 'cil-arrow-top' : 'cil-arrow-bottom') : 'cil-arrow-top icon-transparent'"></i></th>
