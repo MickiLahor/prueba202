@@ -10,7 +10,7 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-inline">
 							<label class="mr-2">Buscar:</label>
-							<input class="form-control" type="search" v-model="params.search" placeholder="Ingrese texto..." @input="getItems()"/>
+							<input class="form-control" type="search" v-model="params.search" placeholder="Ingrese texto......" @input="getItems()"/>
 						</div>
 						<div class="col-sm-12 col-md-6 form-inline justify-content-sm-end">
 							<label class="mr-2">Mostrar:</label>
