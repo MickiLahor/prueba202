@@ -22,7 +22,7 @@ const routes = [
   name: 'login',
   component: Login,
   meta: {
-    title: 'Krima - Iniciar Sesión',
+    title: 'Krima - Iniciar Sesión - Nuevo',
     // metaTags: [
       //   {
       //     name: '',
